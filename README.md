@@ -1,5 +1,13 @@
 # Subscribers Plugin #
 
+## Description ##
+
+The plugin provides three pages, which are added to the Subscribers menu:
+
+* subscriber attributes - shows each subscriber with attributes, and confirmed and blacklisted status
+* subscriber history - shows history events: all, since a start date or those containing specific text
+* subscriptions - lists the number of subscriptions and unsubscriptions for each month with a chart showing the data graphically
+
 ## Installation ##
 
 ### Dependencies ###
