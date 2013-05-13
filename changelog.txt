@@ -1,2 +1,6 @@
+version 2013-05-13
+      Fixes for issues #1, #2, #3
+      Added description for plugin page
+
 version 2013-05-10
     Initial commit
