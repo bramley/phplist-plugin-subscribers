@@ -49,7 +49,7 @@ class SubscribersPlugin extends phplistPlugin
 
     public function adminmenu()
     {
-        return $pageTitles;
+        return $this->pageTitles;
     }
 
     public function __construct()
