@@ -31,7 +31,7 @@ class SubscribersPlugin_ControllerFactory extends CommonPlugin_ControllerFactory
      * @return CommonPlugin_Controller 
      * @access public
      */
-    public function createController($pi, $params)
+    public function createController($pi, array $params)
     {
         $class = $pi . '_Controller_' . ucfirst($params['page']);
         return new $class();
