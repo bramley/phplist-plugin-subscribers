@@ -12,6 +12,8 @@ The plugin provides three pages, which are added to the Subscribers menu:
 
 ### Dependencies ###
 
+This plugin is for phplist 2.11.8 and later.
+
 Requires php version 5.2 or later.
 
 Requires the Common Plugin to be installed. 
