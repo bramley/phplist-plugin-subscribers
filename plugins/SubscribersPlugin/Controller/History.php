@@ -32,6 +32,7 @@ class SubscribersPlugin_Controller_History
     implements CommonPlugin_IPopulator, CommonPlugin_IExportable
 {
     const TEMPLATE = '/../view/history.tpl.php';
+    const FORMTEMPLATE = '/../view/history_form.tpl.php';
 
     protected $model;
     /*
@@ -47,7 +48,6 @@ class SubscribersPlugin_Controller_History
             exit;
         }
         $params = array(
-            'model' => $this->model,
             'tabs' => $this->tabs($this->model->type)->display(),
         );
         $toolbar = new CommonPlugin_Toolbar($this);
@@ -61,6 +61,11 @@ class SubscribersPlugin_Controller_History
         }
         $toolbar->addHelpButton('history');
         $params['toolbar'] = $toolbar->display();
+        $panel = new UIPanel(
+            'title',
+            $this->render(dirname(__FILE__) . self::FORMTEMPLATE, array('model' => $this->model))
+        );
+        $params['panel'] = $panel->display();
         echo $this->render(dirname(__FILE__) . self::TEMPLATE, $params);
     }
 

@@ -30,65 +30,22 @@
 /**
  *
  * Available fields
- * - listing: raw HTML output of CommonPlugin_Listing
+ * - toolbar: raw HTML output of CommonPlugin_Toolbar
+ * - tabs: raw HTML output of CommonPlugin_Tabs
  * - message: exception message
- * - model: SubscribersPlugin_Model
+ * - panel: raw HTML output of UIPanel
+ * - listing: raw HTML output of CommonPlugin_Listing
  */
 ?>
-<style type="text/css">
-div inline {
-    display: inline;
-    white-space: nowrap
-}
-.inline label{
-    display: inline;
-}
-input[type="text"], select {
-    width: auto !important;
-    display: inline !important;
-}
-fieldset {
-    border: 1px solid !important;
-}
-</style>
 <div >
     <hr/>
 <?php echo $toolbar; ?>
 <?php echo $tabs; ?>
     <div style='padding-top: 10px;'>
 <?php if (isset($message)) echo $message; ?>
-        <form method='POST' class='inline'>
-            <fieldset>
-                <legend><?php echo $this->i18n->get('Show events'); ?></legend>
-                <label>
-                    <input type='radio' name='ShowForm[option]' value='all' 
-                    <?php if ($model->option == 'all') echo "checked='checked'" ?> />
-                    <?php echo $this->i18n->get('All'); ?>
-                </label>
-                <label>
-                    <input type='radio' name='ShowForm[option]' value='date'  id='radioDate'
-                    <?php if ($model->option == 'date') echo "checked='checked'" ?> />
-                    <?php echo $this->i18n->get('Since'); ?>
-                </label>
-                &nbsp;
-                <input type='text' name='ShowForm[from]' size='10' title='yyyy-mm-dd'
-                value="<?php if ($model->option == 'date') echo htmlspecialchars($model->from) ?>"
-                onFocus='document.getElementById("radioDate").checked = true;'
-                />
-                <label>
-                    <input type='radio' name='ShowForm[option]' value='pattern' id='radioPattern'
-                    <?php if ($model->option == 'pattern') echo "checked='checked'" ?> />
-                    <?php echo $this->i18n->get('Contains'); ?>
-                </label>
-                &nbsp;
-                <input type='text' name='ShowForm[pattern]' size='16' 
-                value="<?php if ($model->option == 'pattern') echo htmlspecialchars($model->pattern) ?>"
-                onFocus='document.getElementById("radioPattern").checked = true;'
-                />
-                &nbsp;
-                <input type='submit' value='<?php echo $this->i18n->get('Show'); ?>' />
-            </fieldset>
-        </form>
+<?php echo $panel; ?>
+    </div>
+    <div style='padding-top: 10px;'>
 <?php if (isset($listing)) echo $listing; ?>
         <p><a href='#top'>[<?php echo $this->i18n->get('top'); ?>]</a></p>
     </div>
