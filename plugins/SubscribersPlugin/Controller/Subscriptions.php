@@ -27,7 +27,7 @@
  * @package   SubscribersPlugin
  */
 class SubscribersPlugin_Controller_Subscriptions
-    extends CommonPlugin_Controller
+    extends SubscribersPlugin_Controller
     implements CommonPlugin_IPopulator, CommonPlugin_IChartable, CommonPlugin_IExportable
 {
     const TEMPLATE = '/../view/subscriptions.tpl.php';
@@ -77,9 +77,10 @@ class SubscribersPlugin_Controller_Subscriptions
 
         $params = array();
         $toolbar = new CommonPlugin_Toolbar($this);
-        $toolbar->addExportButton();
+		$toolbar->addExportButton(array('type' => $this->model->type));
         $toolbar->addHelpButton('subscriptions');
         $params['toolbar'] = $toolbar->display();
+        $params['tabs'] = $this->tabs($this->model->type)->display();
 
         $listing = new CommonPlugin_Listing($this, $this);
         $listing->sort = false;

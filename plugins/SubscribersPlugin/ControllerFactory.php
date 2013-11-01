@@ -21,9 +21,10 @@
  
 class SubscribersPlugin_ControllerFactory extends CommonPlugin_ControllerFactoryBase
 {
+    protected $defaultType = 'details';
 
     /**
-     * Custom implementation to create a controller using plugin and page
+     * Custom implementation to create a controller using plugin and type
      *
      * @param string $pi the plugin
      * @param array $params further parameters from the URL
@@ -31,9 +32,8 @@ class SubscribersPlugin_ControllerFactory extends CommonPlugin_ControllerFactory
      * @return CommonPlugin_Controller 
      * @access public
      */
-    public function createController($pi, array $params)
+    public function createController($pi, $params)
     {
-        $class = $pi . '_Controller_' . ucfirst($params['page']);
-        return new $class();
-    }
+		return $this->createControllerType($pi, $params);
+	}
 }

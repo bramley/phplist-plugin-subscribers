@@ -28,7 +28,7 @@
  */
 $lan = array(
     'plugin_title' => 'Subscribers Plugin',
-    'tab_details' => 'Details',
+    'tab_details' => 'Subscribers',
     'tab_history' => 'History',
     'tab_subscriptions' => 'Subscriptions',
 /*  User Details */

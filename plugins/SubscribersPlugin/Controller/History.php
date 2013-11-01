@@ -28,7 +28,7 @@
  * @package   SubscribersPlugin
  */
 class SubscribersPlugin_Controller_History
-    extends CommonPlugin_Controller
+    extends SubscribersPlugin_Controller
     implements CommonPlugin_IPopulator, CommonPlugin_IExportable
 {
     const TEMPLATE = '/../view/history.tpl.php';
@@ -47,14 +47,15 @@ class SubscribersPlugin_Controller_History
             exit;
         }
         $params = array(
-            'model' => $this->model
+            'model' => $this->model,
+            'tabs' => $this->tabs($this->model->type)->display(),
         );
         $toolbar = new CommonPlugin_Toolbar($this);
         $listing = new CommonPlugin_Listing($this, $this);
 
         try {
             $params['listing'] = $listing->display();
-            $toolbar->addExportButton();
+            $toolbar->addExportButton(array('type' => $this->model->type));
         } catch (Exception $e) {
             $params['message'] = $e->getMessage();
         }

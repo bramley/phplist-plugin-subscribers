@@ -2,7 +2,7 @@
 
 ## Description ##
 
-The plugin provides three pages, which are added to the Subscribers menu:
+The plugin adds a page to the Subscribers menu that displays three tabs:
 
 * subscriber attributes - shows each subscriber with attributes, and confirmed and blacklisted status
 * subscriber history - shows history events: all, since a start date or those containing specific text
@@ -12,7 +12,7 @@ The plugin provides three pages, which are added to the Subscribers menu:
 
 ### Dependencies ###
 
-This plugin is for phplist 2.11.8 and later.
+This plugin is for phplist 3.0.0 and later.
 
 Requires php version 5.2 or later.
 
@@ -40,3 +40,4 @@ This should contain
 
     version     Description
     2013-05-10  Initial version for phplist 2.11.9 converted from 2.10 version
+    2013-10-27  Display each page as a tab

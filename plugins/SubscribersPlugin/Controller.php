@@ -1,4 +1,4 @@
-<?php 
+<?php
 /**
  * SubscribersPlugin for phplist
  * 
@@ -21,32 +21,32 @@
  */
 
 /**
- * This is the HTML template for the plugin page
- * 
+ * This is a base class that provides common processing for each controller
  */
+abstract class SubscribersPlugin_Controller extends CommonPlugin_Controller
+{
+	/*
+	 *	Protected methods
+	 */
+	protected function tabs($current)
+	{
+        $pages = array(
+            'details' => $this->i18n->get('tab_details'),
+            'history' => $this->i18n->get('tab_history'),
+            'subscriptions' => $this->i18n->get('tab_subscriptions')
+        );
+		$tabs = new CommonPlugin_Tabs();
 
-/**
- *
- * Available fields
- * - chartURL: optional
- * - chartMessage: optional chart exception message
- * - listing: optional HTML output of CommonPlugin_Listing
- */
-?>
-<div >
-    <hr/>
-<?php echo $toolbar; ?>
-<?php echo $tabs; ?>
-    <div style='padding-top: 10px;'>
-<?php if (isset($chartURL)): ?>
-        <img src='<?php echo htmlspecialchars($chartURL); ?>' width='600'  height='300' />
-<?php endif; ?>
-<?php if (isset($chartMessage)): ?>
-        <p><?php echo $chartMessage; ?></p>
-<?php endif; ?>
-    <div style='padding-top: 10px;'>
-<?php if (isset($listing)) echo $listing; ?>
-    </div>
-        <p><a href='#top'>[<?php echo $this->i18n->get('top'); ?>]</a></p>
-    </div>
-</div>
+		foreach ($pages as $page => $caption) {
+			$tabs->addTab($caption, new CommonPlugin_PageURL(null, array('type' => $page)));
+		}
+		$tabs->setCurrent($pages[$current]);
+
+		return $tabs;
+	}
+
+    public function __construct()
+    {
+        parent::__construct();
+    }
+}

@@ -28,7 +28,7 @@
  * @package   SubscribersPlugin
  */
 class SubscribersPlugin_Controller_Details
-    extends CommonPlugin_Controller
+    extends SubscribersPlugin_Controller
     implements CommonPlugin_IPopulator, CommonPlugin_IExportable
 {
     const TEMPLATE = '/../view/details.tpl.php';
@@ -50,12 +50,13 @@ class SubscribersPlugin_Controller_Details
         }
 
         $toolbar = new CommonPlugin_Toolbar($this);
-        $toolbar->addExportButton();
+		$toolbar->addExportButton(array('type' => $this->model->type));
         $toolbar->addHelpButton('details');
         $listing = new CommonPlugin_Listing($this, $this);
         $params = array(
             'toolbar' => $toolbar->display(),
             'form' => CommonPlugin_Widget::attributeForm($this, $this->model),
+            'tabs' => $this->tabs($this->model->type)->display(),
             'listing' => $listing->display()
         );
         echo $this->render(dirname(__FILE__) . self::TEMPLATE, $params);
