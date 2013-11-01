@@ -39,8 +39,10 @@
 <?php echo $toolbar; ?>
 <?php echo $tabs; ?>
     <div style='padding-top: 10px;'>
-<?php if (isset($form)) echo $form; ?>
+<?php echo $form; ?>
     </div>
+    <div style='padding-top: 10px;'>
 <?php echo $listing; ?>
+    </div>
         <p><a href='#top'>[<?php echo $this->i18n->get('top') ?>]</a></p>
 </div>
