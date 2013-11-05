@@ -1,3 +1,7 @@
+version 2013-11-05
+      Display as tabs instead of separate pages
+      Improve layout to be similar to core phplist
+
 version 2013-05-13
       Fixes for issues #1, #2, #3
       Added description for plugin page

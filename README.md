@@ -36,8 +36,15 @@ This should contain
 * the file SubscribersPlugin.php
 * the directory SubscribersPlugin
 
+## Donation ##
+
+This plugin is free but if you install and find it useful then a donation to support further development is greatly appreciated.
+
+[![Donate](https://www.paypalobjects.com/en_US/i/btn/btn_donate_LG.gif)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=W5GLX53WDM7T4)
+
 ## Version history ##
 
     version     Description
     2013-05-10  Initial version for phplist 2.11.9 converted from 2.10 version
     2013-10-27  Display each page as a tab
+    2013-11-05  Improve layout to be similar to core phplist
