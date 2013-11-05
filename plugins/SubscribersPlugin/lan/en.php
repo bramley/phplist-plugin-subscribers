@@ -45,13 +45,15 @@ $lan = array(
     'All' => 'All',
     'Since' => 'Since',
     'Contains' => 'Contains',
+    'Show' => 'Show',
 //    controller
+    'filter' => 'Filter',
+    'Events' => 'Events',
     'event' => 'event',
     'date' => 'date',
     'email' => 'email',
     'summary' => 'summary',
     'detail' => 'detail',
-    'Show' => 'Show',
 /*  Subscriptions */
     'period' => 'Period',
     'subscriptions' => 'Subscriptions',

@@ -62,7 +62,7 @@ class SubscribersPlugin_Controller_History
         $toolbar->addHelpButton('history');
         $params['toolbar'] = $toolbar->display();
         $panel = new UIPanel(
-            'title',
+            $this->i18n->get('Filter'),
             $this->render(dirname(__FILE__) . self::FORMTEMPLATE, array('model' => $this->model))
         );
         $params['panel'] = $panel->display();
@@ -86,7 +86,7 @@ class SubscribersPlugin_Controller_History
         /*
          * Populates the webbler list with event details
          */
-        $w->setTitle($this->i18n->get('event'));
+        $w->setTitle($this->i18n->get('Events'));
 
         foreach ($this->model->listEvents($start, $limit) as $row) {
             $w->addElement($row['id']);

@@ -30,7 +30,7 @@ $lan = array(
     'tab_details' => 'Détails',
     'tab_history' => 'Historique',
     'tab_subscriptions' => 'Souscriptions',
-/* Details */
+/*  User Details */
     'ID' => 'N°',
     'lists' => 'Listes',
     'email' => 'Courriel',
@@ -39,19 +39,20 @@ $lan = array(
     'blacklisted_heading' => 'Liste noire',
     'User is blacklisted' => 'Utilisateur en liste noire',
     'email is blacklisted' => 'Adresse en liste noire',
-/* History */
-//    view
+/* User History */
     'Show events' => 'Voir les événements',
     'All' => 'Tout',
     'Since' => 'Depuis',
     'Contains' => 'Contient',
+    'Show' => 'Afficher',
 //    controller
+    'filter' => ' Filtre',
+    'Events' => 'Evénements',
     'event' => 'Événement',
     'date' => 'Date',
     'email' => 'Courriel',
     'summary' => 'Résumé',
     'detail' => 'détails',
-    'Show' => 'Afficher',
 /* Subscriptions */
     'period' => 'Periode',
     'subscriptions' => 'Souscriptions',
