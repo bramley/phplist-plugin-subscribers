@@ -45,6 +45,7 @@ This plugin is free but if you install and find it useful then a donation to sup
 ## Version history ##
 
     version     Description
-    2013-05-10  Initial version for phplist 2.11.9 converted from 2.10 version
-    2013-10-27  Display each page as a tab
+    2013-11-20  Bug fix
     2013-11-05  Improve layout to be similar to core phplist
+    2013-10-27  Display each page as a tab
+    2013-05-10  Initial version for phplist 2.11.9 converted from 2.10 version

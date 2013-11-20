@@ -1,3 +1,6 @@
+version 2013-11-20
+      Corrected redirect URL
+
 version 2013-11-05
       Display as tabs instead of separate pages
       Improve layout to be similar to core phplist
