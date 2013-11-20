@@ -43,7 +43,7 @@ class SubscribersPlugin_Controller_History
         if (isset($_POST['ShowForm'])) {
             $this->normalise($_POST['ShowForm']);
             $this->model->setProperties($_POST['ShowForm']);
-            $redirect = new CommonPlugin_PageURL();
+            $redirect = new CommonPlugin_PageURL(null, array('type' => 'history'));
             header("Location: $redirect");
             exit;
         }

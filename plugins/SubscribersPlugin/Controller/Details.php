@@ -44,7 +44,7 @@ class SubscribersPlugin_Controller_Details
         if (isset($_POST['SearchForm'])) {
             $this->normalise($_POST['SearchForm']);
             $this->model->setProperties($_POST['SearchForm'], true);
-            $redirect = new CommonPlugin_PageURL;
+            $redirect = new CommonPlugin_PageURL(null, array('type' => 'details'));
             header("Location: $redirect");
             exit;
         }
