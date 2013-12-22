@@ -105,8 +105,8 @@ class SubscribersPlugin_Controller_Details
         $result[] = $row['id'];
         $result[] = $row['email'];
         $result[] = $row['confirmed'];
-        $result[] = $row['blacklisted'];
-        
+        $result[] = $row['blacklisted'] ? 'subscriber' : ($row['ub_email'] ? 'email' : '');
+
         foreach ($this->model->selectedAttrs as $attr) {
             $result[] = $row["attr{$attr}"];
         }
