@@ -95,8 +95,9 @@ class SubscribersPlugin_Controller_History
             );
             $w->addColumn($row['id'], $this->i18n->get('date'),$row['date']);
             $w->addColumn($row['id'], $this->i18n->get('summary'),$row['summary']);
-            // The detail column in user_history already contains html encoded text, so need to decode
+            // The detail column in user_history already contains html encoded text, so need to decode twice
             $detail = htmlspecialchars_decode(trim($row['detail']));
+            $detail = htmlspecialchars_decode(trim($detail));
 
             if (strpos($detail, '<') === false || strpos($detail, '>') === false) {
                 $w->addRow($row['id'], $this->i18n->get('detail'), $detail);
