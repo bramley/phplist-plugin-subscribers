@@ -28,7 +28,7 @@
  */
 class SubscribersPlugin_Controller_Subscriptions
     extends SubscribersPlugin_Controller
-    implements CommonPlugin_IPopulator, CommonPlugin_IChartable, CommonPlugin_IExportable
+    implements CommonPlugin_IPopulator, CommonPlugin_IExportable
 {
     const TEMPLATE = '/../view/subscriptions.tpl.php';
     const IMAGE_WIDTH = 600;
@@ -68,6 +68,51 @@ class SubscribersPlugin_Controller_Subscriptions
         );
         $w->addColumn($key, $this->i18n->get('unsubscriptions'), $row['unsubscriptions']);
     }
+
+    private function createChart($chartDiv)
+    {
+        $currentYear = '';
+        $data = array();
+
+        foreach ($this->subscriptions as $k => $row) {
+            $monthLabel = '';
+
+            if ($row['month'] % 3 == 1 || $k == 0 || $k == count($this->subscriptions) - 1) {
+                $monthLabel = $row['month'];
+
+                if ($currentYear != $row['year']) {
+                    $monthLabel = $row['year'] . ' ' . $monthLabel;
+                }
+            }
+
+            $data[] = array(
+                'month' => $monthLabel,
+                'Active' => (int) $row['active'],
+                'Blacklisted' => (int) $row['blacklisted'],
+                'Unconfirmed' => (int) $row['unconfirmed'],
+                'Unsubscriptions' => (int) $row['unsubscriptions']
+            );
+
+            $currentYear = $row['year'];
+        }
+        $chart = new Chart('ComboChart');
+        $chart->load($data, 'array');
+        $options = array(
+            'chartArea' => array('left' => 50, 'width' => '90%'),
+            'height' => self::IMAGE_HEIGHT,
+            'axisTitlesPosition' => 'out',
+            'vAxis' => array('format' => '#', 'title' => 'Subscribers'),
+            'hAxis' => array('title' => 'Period', 'textStyle' => array('fontSize' => 9)),
+            'bar' => array('groupWidth' => '90%'),
+            'seriesType' => 'bars',
+            'series' => array(3 => array('type' => 'line')),
+            'legend' => array('position' => 'bottom'),
+            'isStacked' => true
+        );
+        $result = $chart->draw($chartDiv, $options);
+        return $result;
+    }
+
     /*
      *    Protected methods
      */
@@ -87,23 +132,8 @@ class SubscribersPlugin_Controller_Subscriptions
         $listing->pager->setItemsPerPage(array(12, 24), 24);
         $params['listing'] = $listing->display();
 
-        $chart = new CommonPlugin_GoogleChart();
-
-        if (isset($google_chart_direct) && !$google_chart_direct) {
-            try {
-                $id = $chart->createChart($this);
-                $params['chartURL'] = new CommonPlugin_PageURL(
-                    null, $_GET + array('action' => 'chart', 'chartID' => $id)
-                );
-            } catch (CommonPlugin_GoogleChartException $e) {
-                $params['chartMessage'] = $e->getMessage();
-            } catch (ErrorException $e) {
-                $params['chartMessage'] = 'ErrorException ' . $e->getMessage();
-            }
-        } else {
-            $params['chartURL'] = $chart->url($this);
-        }
-
+        $params['chart_div'] = 'chart_div';
+        $params['chart'] = $this->createChart($params['chart_div']);
         echo $this->render(dirname(__FILE__) . self::TEMPLATE, $params);
     }
 
@@ -157,50 +187,6 @@ class SubscribersPlugin_Controller_Subscriptions
         return $this->model->totalPeriods();
     }
 
-    /*
-     * Implementation of CommonPlugin_IChartable
-     */
-    public function chartParameters()
-    {
-        $currentYear = '';
-
-        foreach ($this->subscriptions as $k => $row) {
-            $active[] = $row['active'];
-            $unconfirmed[] = $row['unconfirmed'];
-            $blacklisted[] = $row['blacklisted'];
-            $unsubscriptions[] = $row['unsubscriptions'];
-
-            $monthLabel[] = ($row['month'] % 3 == 1 || $k == 0 || $k == count($this->subscriptions) - 1)
-                ? $row['month']
-                : ' ';
-
-            $yearLabel[] = ($currentYear == $row['year'])
-                ? ''
-                : $row['year'];
-            $currentYear = $row['year'];
-        }
-        $barWidth = min(
-            23,
-            intval((self::IMAGE_WIDTH - self::LEFT_MARGIN - self::RIGHT_MARGIN) / count($this->subscriptions)) - self::COLUMN_GAP
-        );
-        return array(
-            'cht' => 'bvs',
-            'chco' => '00C000,FF4040,B8EAB8,00C0C0',
-            'chbh' => sprintf('%d,%d,%d', $barWidth, self::COLUMN_GAP, self::COLUMN_GAP),
-            'chd' => sprintf('t3:%s|%s|%s|%s',
-                implode(',', $active), implode(',', $blacklisted), implode(',', $unconfirmed), implode(',', $unsubscriptions)
-            ),
-            'chm' => 'D,00C0C0,3,0,1',
-            'chds' => 'a',
-            'chf' => 'bg,s,EFEFEF',
-            'chdl' => implode('|', $this->i18n->getUtf8(array('active', 'blacklisted', 'unconfirmed', 'unsubscriptions'))),
-            'chdlp' => 'b|l',
-            'chxt' => 'x,x,y',
-            'chxl' => sprintf('0:|%s|1:|%s', implode('|', $monthLabel), implode('|', $yearLabel)),
-            'chs' => sprintf('%dx%d', self::IMAGE_WIDTH, self::IMAGE_HEIGHT),
-            'chma' => sprintf('%d,%d,20,20', self::LEFT_MARGIN, self::RIGHT_MARGIN),
-        );
-    }
     /*
      * Implementation of CommonPlugin_IExportable
      */

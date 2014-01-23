@@ -28,8 +28,7 @@
 /**
  *
  * Available fields
- * - chartURL: optional
- * - chartMessage: optional chart exception message
+ * - chart: optional chart
  * - listing: optional HTML output of CommonPlugin_Listing
  */
 ?>
@@ -38,11 +37,9 @@
 <?php echo $toolbar; ?>
 <?php echo $tabs; ?>
     <div style='padding-top: 10px;'>
-<?php if (isset($chartURL)): ?>
-        <img src='<?php echo htmlspecialchars($chartURL); ?>' width='600'  height='300' />
-<?php endif; ?>
-<?php if (isset($chartMessage)): ?>
-        <p><?php echo $chartMessage; ?></p>
+<?php if (isset($chart)): ?>
+    <?php echo $chart; ?>
+        <div id="<?php echo $chart_div; ?>"></div>
 <?php endif; ?>
     <div style='padding-top: 10px;'>
 <?php if (isset($listing)) echo $listing; ?>
