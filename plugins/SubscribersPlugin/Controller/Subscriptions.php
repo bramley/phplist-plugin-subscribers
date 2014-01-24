@@ -31,11 +31,7 @@ class SubscribersPlugin_Controller_Subscriptions
     implements CommonPlugin_IPopulator, CommonPlugin_IExportable
 {
     const TEMPLATE = '/../view/subscriptions.tpl.php';
-    const IMAGE_WIDTH = 600;
     const IMAGE_HEIGHT = 300;
-    const LEFT_MARGIN = 50;
-    const RIGHT_MARGIN = 20;
-    const COLUMN_GAP = 2;
 
     private $subscriptions;
 
