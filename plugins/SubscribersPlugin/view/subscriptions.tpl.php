@@ -39,7 +39,7 @@
     <div style='padding-top: 10px;'>
 <?php if (isset($chart)): ?>
     <?php echo $chart; ?>
-        <div id="<?php echo $chart_div; ?>"></div>
+        <div id="<?php echo $chart_div; ?>" style="width: 100%; height: <?php echo SubscribersPlugin_Controller_Subscriptions::IMAGE_HEIGHT; ?>px;"></div>
 <?php endif; ?>
     <div style='padding-top: 10px;'>
 <?php if (isset($listing)) echo $listing; ?>
