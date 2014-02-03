@@ -21,27 +21,19 @@
  */
 
 /**
- * This is the HTML template for the plugin page
+ * This is the entry code invoked by phplist
  * 
  * @category  phplist
  * @package   SubscribersPlugin
  */
 
-/**
- *
- * Available fields
- * - $form: optional raw HTML for attribute search/select form
- * - $listing: raw HTML output of CommonPlugin_Listing
- */
-?>
-<div>
-    <hr/>
-<?php echo $toolbar; ?>
-    <div style='padding-top: 10px;'>
-<?php echo $form; ?>
-    </div>
-    <div style='padding-top: 10px;'>
-<?php echo $listing; ?>
-    </div>
-        <p><a href='#top'>[<?php echo $this->i18n->get('top') ?>]</a></p>
-</div>
+$commonPlugin = isset($plugins['CommonPlugin']) ? $plugins['CommonPlugin'] : null;
+
+if (!($commonPlugin && $commonPlugin->enabled)) {
+    echo "phplist-plugin-common must be installed and enabled to use this plugin";
+    return;
+}
+
+include $commonPlugin->coderoot . 'Autoloader.php';
+
+CommonPlugin_Main::run(new SubscribersPlugin_ControllerFactory);

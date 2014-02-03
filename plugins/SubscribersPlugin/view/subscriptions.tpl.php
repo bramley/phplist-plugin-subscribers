@@ -35,7 +35,6 @@
 <div >
     <hr/>
 <?php echo $toolbar; ?>
-<?php echo $tabs; ?>
     <div style='padding-top: 10px;'>
 <?php if (isset($chart)): ?>
     <?php echo $chart; ?>
