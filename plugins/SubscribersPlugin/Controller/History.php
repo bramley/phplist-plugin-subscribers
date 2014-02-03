@@ -28,7 +28,7 @@
  * @package   SubscribersPlugin
  */
 class SubscribersPlugin_Controller_History
-    extends SubscribersPlugin_Controller
+    extends CommonPlugin_Controller
     implements CommonPlugin_IPopulator, CommonPlugin_IExportable
 {
     const TEMPLATE = '/../view/history.tpl.php';
@@ -43,19 +43,19 @@ class SubscribersPlugin_Controller_History
         if (isset($_POST['ShowForm'])) {
             $this->normalise($_POST['ShowForm']);
             $this->model->setProperties($_POST['ShowForm']);
-            $redirect = new CommonPlugin_PageURL(null, array('type' => 'history'));
+            $redirect = new CommonPlugin_PageURL();
             header("Location: $redirect");
             exit;
         }
         $params = array(
-            'tabs' => $this->tabs($this->model->type)->display(),
+            'model' => $this->model,
         );
         $toolbar = new CommonPlugin_Toolbar($this);
         $listing = new CommonPlugin_Listing($this, $this);
 
         try {
             $params['listing'] = $listing->display();
-            $toolbar->addExportButton(array('type' => $this->model->type));
+            $toolbar->addExportButton();
         } catch (Exception $e) {
             $params['message'] = $e->getMessage();
         }

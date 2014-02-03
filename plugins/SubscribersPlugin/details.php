@@ -24,7 +24,7 @@
  * This is the entry code invoked by phplist
  * 
  * @category  phplist
- * @package   UsersPlugin
+ * @package   SubscribersPlugin
  */
 
 $commonPlugin = isset($plugins['CommonPlugin']) ? $plugins['CommonPlugin'] : null;
@@ -36,4 +36,4 @@ if (!($commonPlugin && $commonPlugin->enabled)) {
 
 include $commonPlugin->coderoot . 'Autoloader.php';
 
-CommonPlugin_Main::run(new SubscribersPlugin_ControllerFactory());
+CommonPlugin_Main::run(new SubscribersPlugin_ControllerFactory);

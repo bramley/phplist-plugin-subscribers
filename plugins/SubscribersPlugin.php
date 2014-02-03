@@ -38,10 +38,14 @@ class SubscribersPlugin extends phplistPlugin
     public $authors = 'Duncan Cameron';
     public $description = 'Provides pages to display subscriber attributes, subscriber history, and subscriptions.';
     public $topMenuLinks = array(
-        'main' => array('category' => 'subscribers'),
+        'details' => array('category' => 'subscribers'),
+        'history' => array('category' => 'subscribers'),
+        'subscriptions' => array('category' => 'subscribers')
     );
     public $pageTitles = array(
-        'main' => 'Subscribers Plugin',
+        'details' => 'Subscriber Attributes',
+        'history' => 'Subscriber History',
+        'subscriptions' => 'Subscriptions',
     );
 
     public function adminmenu()
