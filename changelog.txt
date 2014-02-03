@@ -1,3 +1,6 @@
+version 2014-02-03
+      Display as pages instead of tabs
+
 version 2014-01-25
       Show whether user or email is blacklisted in export
       Extra html decode

@@ -45,6 +45,7 @@ This plugin is free but if you install and find it useful then a donation to sup
 ## Version history ##
 
     version     Description
+    2014-02-03  Display as pages instead of tabs
     2014-01-25  Use Google Chart, minor changes
     2013-11-20  Bug fix
     2013-11-05  Improve layout to be similar to core phplist
