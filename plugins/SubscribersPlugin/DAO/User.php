@@ -70,25 +70,25 @@ class SubscribersPlugin_DAO_User extends CommonPlugin_DAO {
             $id = $attr['id'];
             $tableName = $this->table_prefix . 'listattr_' . $attr['tablename'];
 
-            $joinType = ($searchTerm && $searchAttr == $id) ? 'JOIN' : 'LEFT JOIN';
-            $thisJoin = "
-                $joinType {$this->tables['user_attribute']} ua{$id} 
-                ON ua{$id}.userid = u.id AND ua{$id}.attributeid = {$id} ";
-            
+            $thisJoin = "\n" . (($searchTerm && $searchAttr == $id) ? '' : 'LEFT ');
+
             switch ($attr['type']) {
             case 'radio':
             case 'select':
-                $thisJoin .= "
-                    $joinType {$tableName} la{$id} ON la{$id}.id = ua{$id}.value ";
-                
+                $thisJoin .= "JOIN ({$this->tables['user_attribute']} ua{$id} JOIN {$tableName} la{$id} ON la{$id}.id = ua{$id}.value)
+                    ON ua{$id}.userid = u.id AND ua{$id}.attributeid = {$id}";
+
                 if ($searchTerm && $searchAttr == $id) {
-                    $thisJoin .= "AND la{$id}.name LIKE '%$searchTerm%' ";
+                    $thisJoin .= " AND la{$id}.name LIKE '%$searchTerm%'";
                 }
                 $attr_fields .= ", la{$id}.name as attr{$id}";
                 break;
             default:
+                $thisJoin .= "JOIN {$this->tables['user_attribute']} ua{$id} 
+                    ON ua{$id}.userid = u.id AND ua{$id}.attributeid = {$id}";
+
                 if ($searchTerm && $searchAttr == $id) {
-                    $thisJoin .= "AND ua{$id}.value LIKE '%$searchTerm%' ";
+                    $thisJoin .= " AND ua{$id}.value LIKE '%$searchTerm%' ";
                 }
                 $attr_fields .= ", ua{$id}.value as attr{$id}";
                 break;
