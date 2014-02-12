@@ -76,13 +76,6 @@ class SubscribersPlugin_Model_Details extends CommonPlugin_Model
          */
         $this->properties['selectedAttrs'] 
             = array_values(array_filter($this->properties['selectedAttrs'], array($this, 'filter')));
-
-        if ($this->properties['searchBy']) {
-            if (!isset($this->attributes[$this->properties['searchBy']])) {
-                $this->properties['searchBy'] = null;
-                $this->properties['searchTerm'] = null;
-            }
-        }
     }
     /*
      *    Public methods
