@@ -1,3 +1,7 @@
+version 2014-02-12
+      Allow searching on email address
+      Internal changes
+
 version 2014-02-03
       Display as pages instead of tabs
 

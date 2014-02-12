@@ -2,7 +2,7 @@
 
 ## Description ##
 
-The plugin adds a page to the Subscribers menu that displays three tabs:
+The plugin adds pages to the Subscribers menu:
 
 * subscriber attributes - shows each subscriber with attributes, and confirmed and blacklisted status
 * subscriber history - shows history events: all, since a start date or those containing specific text
@@ -45,6 +45,7 @@ This plugin is free but if you install and find it useful then a donation to sup
 ## Version history ##
 
     version     Description
+    2014-02-12  Allow searching on email address
     2014-02-03  Display as pages instead of tabs
     2014-01-25  Use Google Chart, minor changes
     2013-11-20  Bug fix
