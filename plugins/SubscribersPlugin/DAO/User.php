@@ -62,7 +62,6 @@ class SubscribersPlugin_DAO_User extends CommonPlugin_DAO {
      */
     private function userAttributeJoin($attributes, $searchTerm, $searchAttr)
     {
-        $searchTerm = sql_escape($searchTerm);
         $attr_fields = '';
         $attr_join = '';
 
@@ -99,14 +98,19 @@ class SubscribersPlugin_DAO_User extends CommonPlugin_DAO {
     }
 
     public function users($listID, $owner, $attributes, $searchTerm, $searchAttr,
-        $unconfirmed = 0, $blacklisted = 0,    $start = null, $limit = null)
+        $unconfirmed = 0, $blacklisted = 0, $start = null, $limit = null)
     {
         /*
          * 
          */
+        $searchTerm = sql_escape($searchTerm);
         list($attr_join, $attr_fields) = $this->userAttributeJoin($attributes, $searchTerm, $searchAttr);
         $limitClause = is_null($start) ? '' : "LIMIT $start, $limit";
         $w = array();
+
+        if ($searchAttr == 'email' && $searchTerm) {
+            $w[] = "u.email LIKE '%$searchTerm%'";
+        }
 
         if ($le = $this->list_exists($listID, $owner))
             $w[] = $le;
@@ -131,12 +135,18 @@ class SubscribersPlugin_DAO_User extends CommonPlugin_DAO {
 
     public function totalUsers($listID, $owner, $attributes, $searchTerm, $searchAttr, $unconfirmed = 0, $blacklisted = 0)
     {
+        $searchTerm = sql_escape($searchTerm);
+
         if ($searchTerm) {
             list($attr_join) = $this->userAttributeJoin($attributes, $searchTerm, $searchAttr);
         } else {
             $attr_join = '';
         }
         $w = array();
+
+        if ($searchAttr == 'email' && $searchTerm) {
+            $w[] = "u.email LIKE '%$searchTerm%'";
+        }
 
         if ($le = $this->list_exists($listID, $owner))
             $w[] = $le;
