@@ -1,3 +1,8 @@
+version 2014-03-11
+      Change menu item caption
+      Remove display of blacklisted email
+      Support searching on confirmed/unconfirmed and blacklisted/not blacklisted
+
 version 2014-02-12
       Allow searching on email address
       Internal changes
