@@ -104,7 +104,7 @@ class SubscribersPlugin_Controller_Details
         $result[] = $row['id'];
         $result[] = $row['email'];
         $result[] = $row['confirmed'];
-        $result[] = $row['blacklisted'] ? 'subscriber' : ($row['ub_email'] ? 'email' : '');
+        $result[] = $row['blacklisted'];
 
         foreach ($this->model->selectedAttrs as $attr) {
             $result[] = $row["attr{$attr}"];
@@ -126,9 +126,9 @@ class SubscribersPlugin_Controller_Details
         $w->setTitle($this->i18n->get('Subscribers'));
 
         foreach ($this->model->users($start, $limit) as $row) {
-            $key = $row['id'];
+            $key = $row['email'];
             $w->addElement($key, new CommonPlugin_PageURL('user', array('id' => $row['id'])));
-            $w->addColumnEmail($key, $this->i18n->get('email'), $row['email']);
+//            $w->addColumnEmail($key, $this->i18n->get('email'), $row['email']);
 
             $value = $row['confirmed']
                 ? ''
@@ -137,9 +137,7 @@ class SubscribersPlugin_Controller_Details
 
             $value = $row['blacklisted']
                 ? new CommonPlugin_ImageTag('user.png', $this->i18n->get('User is blacklisted'))
-                : ($row['ub_email']
-                    ? new CommonPlugin_ImageTag('email.png', $this->i18n->get('email is blacklisted'))
-                    : '');
+                : '';
             $w->addColumnHtml($key, $this->i18n->get('blacklisted_heading'), $value);
 
             foreach ($selectedAttrs as $attr) {
