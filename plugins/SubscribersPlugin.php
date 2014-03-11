@@ -16,7 +16,7 @@
  * @category  phplist
  * @package   SubscribersPlugin
  * @author    Duncan Cameron
- * @copyright 2011-2013 Duncan Cameron
+ * @copyright 2011-2014 Duncan Cameron
  * @license   http://www.gnu.org/licenses/gpl.html GNU General Public License, Version 3
  */
 
@@ -43,7 +43,7 @@ class SubscribersPlugin extends phplistPlugin
         'subscriptions' => array('category' => 'subscribers')
     );
     public $pageTitles = array(
-        'details' => 'Subscriber Attributes',
+        'details' => 'Advanced search',
         'history' => 'Subscriber History',
         'subscriptions' => 'Subscriptions',
     );
