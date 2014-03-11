@@ -4,7 +4,7 @@
 
 The plugin adds pages to the Subscribers menu:
 
-* subscriber attributes - shows each subscriber with attributes, and confirmed and blacklisted status
+* advanced search - search for subscribers and show subscriber attributes with confirmed and blacklisted status
 * subscriber history - shows history events: all, since a start date or those containing specific text
 * subscriptions - lists the number of subscriptions and unsubscriptions for each month with a chart showing the data graphically
 
@@ -27,6 +27,12 @@ The benefit of this is that plugins will not be affected when you upgrade phplis
 ### Install through phplist ###
 Install on the Plugins page (menu Config > Plugins) using the package URL `https://github.com/bramley/phplist-plugin-subscribers/archive/master.zip`.
 
+There is a bug that can cause a plugin to be incompletely installed on some configurations (<https://mantis.phplist.com/view.php?id=16865>). 
+Check that these files are in the plugin directory. If not then you will need to install manually.
+
+* the file SubscribersPlugin.php
+* the directory SubscribersPlugin
+
 ### Install manually ###
 Download the plugin zip file from <https://github.com/bramley/phplist-plugin-subscribers/archive/master.zip>
 
@@ -45,6 +51,7 @@ This plugin is free but if you install and find it useful then a donation to sup
 ## Version history ##
 
     version     Description
+    2014-03-11  Search on confirmed/unconfirmed and blacklisted/not blacklisted
     2014-02-12  Allow searching on email address
     2014-02-03  Display as pages instead of tabs
     2014-01-25  Use Google Chart, minor changes

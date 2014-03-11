@@ -41,7 +41,7 @@ class SubscribersPlugin_Model_Details extends CommonPlugin_Model
      */
     protected $properties = array(
         'type' => 'details',
-        'unconfirmed' => 0,
+        'confirmed' => 0,
         'blacklisted' => 0,
         'selectedAttrs' => array(),
         'searchTerm' => null,
@@ -49,7 +49,7 @@ class SubscribersPlugin_Model_Details extends CommonPlugin_Model
         'listID' => null
     );
     protected $persist = array(
-        'unconfirmed' => '',
+        'confirmed' => '',
         'blacklisted' => '',
         'selectedAttrs' => '',
         'searchTerm' => '',
@@ -98,7 +98,7 @@ class SubscribersPlugin_Model_Details extends CommonPlugin_Model
     public function users($start = null, $limit = null)
     {
         return $this->dao->users($this->listID, $this->loginId, $this->attributes,
-            $this->searchTerm, $this->searchBy, $this->unconfirmed, $this->blacklisted, $start, $limit
+            $this->searchTerm, $this->searchBy, $this->confirmed, $this->blacklisted, $start, $limit
         );
     }
 
@@ -106,7 +106,7 @@ class SubscribersPlugin_Model_Details extends CommonPlugin_Model
     {
         return $this->dao->totalUsers(
             $this->listID, $this->loginId, $this->attributes, $this->searchTerm, $this->searchBy,
-            $this->unconfirmed, $this->blacklisted
+            $this->confirmed, $this->blacklisted
         );
     }
 }

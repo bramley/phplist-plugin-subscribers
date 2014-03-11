@@ -98,7 +98,7 @@ class SubscribersPlugin_DAO_User extends CommonPlugin_DAO {
     }
 
     public function users($listID, $owner, $attributes, $searchTerm, $searchAttr,
-        $unconfirmed = 0, $blacklisted = 0, $start = null, $limit = null)
+        $confirmed = 0, $blacklisted = 0, $start = null, $limit = null)
     {
         /*
          * 
@@ -115,25 +115,31 @@ class SubscribersPlugin_DAO_User extends CommonPlugin_DAO {
         if ($le = $this->list_exists($listID, $owner))
             $w[] = $le;
 
-        if ($unconfirmed)
+        if ($confirmed == 2) {
+            $w[] = 'u.confirmed = 1';
+        } elseif ($confirmed == 3) {
             $w[] = 'u.confirmed = 0';
+        }
+
+        if ($blacklisted == 2) {
+            $w[] = 'u.blacklisted = 1';
+        } elseif ($blacklisted == 3) {
+            $w[] = 'u.blacklisted = 0';
+        }
 
         $where = $w ? 'WHERE ' . implode(' AND ', $w) : '';
-        $bl_join = $blacklisted ? '' : 'LEFT ';
-        $bl_join .= "JOIN {$this->tables['user_blacklist']} ub ON u.email = ub.email";
 
-        $sql = "SELECT u.id, u.email, u.confirmed, u.blacklisted, u.htmlemail, ub.email as ub_email $attr_fields,
+        $sql = "SELECT u.id, u.email, u.confirmed, u.blacklisted, u.htmlemail $attr_fields,
             (SELECT count(lu.listid) FROM {$this->tables['listuser']} lu WHERE lu.userid = u.id) AS lists
             FROM {$this->tables['user']} u
             $attr_join
-            $bl_join
             $where
             ORDER by u.id
             $limitClause";
         return $this->dbCommand->queryAll($sql);
     }
 
-    public function totalUsers($listID, $owner, $attributes, $searchTerm, $searchAttr, $unconfirmed = 0, $blacklisted = 0)
+    public function totalUsers($listID, $owner, $attributes, $searchTerm, $searchAttr, $confirmed = 0, $blacklisted = 0)
     {
         $searchTerm = sql_escape($searchTerm);
 
@@ -151,17 +157,23 @@ class SubscribersPlugin_DAO_User extends CommonPlugin_DAO {
         if ($le = $this->list_exists($listID, $owner))
             $w[] = $le;
 
-        if ($unconfirmed)
+        if ($confirmed == 2) {
+            $w[] = 'u.confirmed = 1';
+        } elseif ($confirmed == 3) {
             $w[] = 'u.confirmed = 0';
+        }
+
+        if ($blacklisted == 2) {
+            $w[] = 'u.blacklisted = 1';
+        } elseif ($blacklisted == 3) {
+            $w[] = 'u.blacklisted = 0';
+        }
 
         $where = $w ? 'WHERE ' . implode(' AND ', $w) : '';
-        $bl_join = $blacklisted ? '' : 'LEFT ';
-        $bl_join .= "JOIN {$this->tables['user_blacklist']} ub ON u.email = ub.email";
 
         $sql = "SELECT count(*) as t 
             FROM {$this->tables['user']} u
             $attr_join
-            $bl_join
             $where";
         return $this->dbCommand->queryOne($sql, 't');
     }
