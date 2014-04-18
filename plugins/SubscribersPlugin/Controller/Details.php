@@ -50,7 +50,7 @@ class SubscribersPlugin_Controller_Details
         }
 
         $toolbar = new CommonPlugin_Toolbar($this);
-		$toolbar->addExportButton();
+        $toolbar->addExportButton();
         $toolbar->addHelpButton('details');
         $listing = new CommonPlugin_Listing($this, $this);
         $params = array(
@@ -128,7 +128,6 @@ class SubscribersPlugin_Controller_Details
         foreach ($this->model->users($start, $limit) as $row) {
             $key = $row['email'];
             $w->addElement($key, new CommonPlugin_PageURL('user', array('id' => $row['id'])));
-//            $w->addColumnEmail($key, $this->i18n->get('email'), $row['email']);
 
             $value = $row['confirmed']
                 ? ''
