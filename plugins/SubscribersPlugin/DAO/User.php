@@ -108,8 +108,14 @@ class SubscribersPlugin_DAO_User extends CommonPlugin_DAO {
         $limitClause = is_null($start) ? '' : "LIMIT $start, $limit";
         $w = array();
 
-        if ($searchAttr == 'email' && $searchTerm) {
-            $w[] = "u.email LIKE '%$searchTerm%'";
+        if ($searchTerm) {
+            if ($searchAttr == 'email') {
+                $w[] = "u.email LIKE '%$searchTerm%'";
+            } elseif ($searchAttr == 'id') {
+                $w[] = "u.id = '$searchTerm'";
+            } elseif ($searchAttr == 'uniqid') {
+                $w[] = "u.uniqid = '$searchTerm'";
+            }
         }
 
         if ($le = $this->list_exists($listID, $owner))
@@ -129,7 +135,7 @@ class SubscribersPlugin_DAO_User extends CommonPlugin_DAO {
 
         $where = $w ? 'WHERE ' . implode(' AND ', $w) : '';
 
-        $sql = "SELECT u.id, u.email, u.confirmed, u.blacklisted, u.htmlemail $attr_fields,
+        $sql = "SELECT u.id, u.email, u.confirmed, u.blacklisted, u.htmlemail, u.uniqid $attr_fields,
             (SELECT count(lu.listid) FROM {$this->tables['listuser']} lu WHERE lu.userid = u.id) AS lists
             FROM {$this->tables['user']} u
             $attr_join
@@ -150,8 +156,14 @@ class SubscribersPlugin_DAO_User extends CommonPlugin_DAO {
         }
         $w = array();
 
-        if ($searchAttr == 'email' && $searchTerm) {
-            $w[] = "u.email LIKE '%$searchTerm%'";
+        if ($searchTerm) {
+            if ($searchAttr == 'email') {
+                $w[] = "u.email LIKE '%$searchTerm%'";
+            } elseif ($searchAttr == 'id') {
+                $w[] = "u.id = '$searchTerm'";
+            } elseif ($searchAttr == 'uniqid') {
+                $w[] = "u.uniqid = '$searchTerm'";
+            }
         }
 
         if ($le = $this->list_exists($listID, $owner))

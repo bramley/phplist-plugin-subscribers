@@ -1,3 +1,6 @@
+version 2014-04-18
+      Add searching on id and uniqid
+
 version 2014-03-11
       Change menu item caption
       Remove display of blacklisted email

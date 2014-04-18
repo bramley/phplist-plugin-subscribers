@@ -27,11 +27,13 @@ The benefit of this is that plugins will not be affected when you upgrade phplis
 ### Install through phplist ###
 Install on the Plugins page (menu Config > Plugins) using the package URL `https://github.com/bramley/phplist-plugin-subscribers/archive/master.zip`.
 
-There is a bug that can cause a plugin to be incompletely installed on some configurations (<https://mantis.phplist.com/view.php?id=16865>). 
-Check that these files are in the plugin directory. If not then you will need to install manually.
+In phplist releases 3.0.5 and earlier there is a bug that can cause a plugin to be incompletely installed on some configurations (<https://mantis.phplist.com/view.php?id=16865>). 
+Check that these files are in the plugin directory. If not then you will need to install manually. The bug has been fixed in release 3.0.6.
 
 * the file SubscribersPlugin.php
 * the directory SubscribersPlugin
+
+Then click the small orange icon to enable the plugin.
 
 ### Install manually ###
 Download the plugin zip file from <https://github.com/bramley/phplist-plugin-subscribers/archive/master.zip>
@@ -51,6 +53,7 @@ This plugin is free but if you install and find it useful then a donation to sup
 ## Version history ##
 
     version     Description
+    2014-04-18  Search on id and uniqid
     2014-03-11  Search on confirmed/unconfirmed and blacklisted/not blacklisted
     2014-02-12  Allow searching on email address
     2014-02-03  Display as pages instead of tabs
