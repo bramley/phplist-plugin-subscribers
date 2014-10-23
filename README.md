@@ -25,7 +25,7 @@ You can use a directory outside of the web root by changing the definition of `P
 The benefit of this is that plugins will not be affected when you upgrade phplist.
 
 ### Install through phplist ###
-Install on the Plugins page (menu Config > Plugins) using the package URL `https://github.com/bramley/phplist-plugin-subscribers/archive/master.zip`.
+Install on the Plugins page (menu Config > Manage Plugins) using the package URL `https://github.com/bramley/phplist-plugin-subscribers/archive/master.zip`.
 
 In phplist releases 3.0.5 and earlier there is a bug that can cause a plugin to be incompletely installed on some configurations (<https://mantis.phplist.com/view.php?id=16865>). 
 Check that these files are in the plugin directory. If not then you will need to install manually. The bug has been fixed in release 3.0.6.
@@ -43,6 +43,13 @@ This should contain
 
 * the file SubscribersPlugin.php
 * the directory SubscribersPlugin
+
+## Known problems ##
+
+### Export fails with "Error, incorrect session token" ###
+phplist 3.0.9 had a change that stopped the plugin export working. Instead the message "Error, incorrect session token" is displayed.
+
+To fix this problem upgrade to the latest version of CommonPlugin.
 
 ## Donation ##
 
