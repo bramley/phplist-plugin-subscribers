@@ -88,7 +88,7 @@ class SubscribersPlugin_Model_History extends CommonPlugin_Model
     public function __construct($db)
     {
         $this->dao = new SubscribersPlugin_DAO_Event($db);
-        parent::__construct('SubscribersPlugin_History');
+        parent::__construct('SubscribersPl_H');
         $this->init();
     }
 

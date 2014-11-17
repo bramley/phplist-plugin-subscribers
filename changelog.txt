@@ -1,3 +1,6 @@
+version 2014-11-17
+      Shorten config table keys
+
 version 2014-04-18
       Add searching on id and uniqid
 

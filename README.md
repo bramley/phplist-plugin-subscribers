@@ -60,6 +60,7 @@ This plugin is free but if you install and find it useful then a donation to sup
 ## Version history ##
 
     version     Description
+    2014-11-17  Shorten keys on config table to allow longer admin ids
     2014-04-18  Search on id and uniqid
     2014-03-11  Search on confirmed/unconfirmed and blacklisted/not blacklisted
     2014-02-12  Allow searching on email address

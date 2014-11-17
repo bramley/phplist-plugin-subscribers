@@ -82,7 +82,7 @@ class SubscribersPlugin_Model_Details extends CommonPlugin_Model
      */
     public function __construct($db)
     {
-        parent::__construct('SubscribersPlugin_Details');
+        parent::__construct('SubscribersPl_D');
         $this->access = accessLevel('users');
         $this->loginId = ($this->access == 'owner') ? $_SESSION['logindetails']['id'] : '';
 
