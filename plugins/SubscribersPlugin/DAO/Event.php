@@ -43,7 +43,7 @@ class SubscribersPlugin_DAO_Event extends CommonPlugin_DAO
             break;
         case 'pattern':
             $order = 'ASC';
-            $where = $param ? "WHERE uh.summary RLIKE '$param' OR uh.detail RLIKE '$param'" : '';
+            $where = $param ? "WHERE uh.summary RLIKE '$param' OR uh.detail RLIKE '$param' OR INSTR(uh.ip, '$param') > 0" : '';
             break;
         default:
             $order = 'DESC';
@@ -67,7 +67,7 @@ class SubscribersPlugin_DAO_Event extends CommonPlugin_DAO
         if ($type == 'date') {
             $where = "WHERE date >= '$param'";
         } else {
-            $where = $param ? "WHERE uh.summary RLIKE '$param' OR uh.detail RLIKE '$param'" : '';
+            $where = $param ? "WHERE uh.summary RLIKE '$param' OR uh.detail RLIKE '$param' OR INSTR(uh.ip, '$param') > 0" : '';
         }
 
         $sql = "SELECT count(*) as t 

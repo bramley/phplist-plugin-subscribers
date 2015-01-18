@@ -1,3 +1,6 @@
+version 2015-01-18
+      Search on user history IP address, fixes #4
+
 version 2014-11-17
       Shorten config table keys
 

@@ -104,6 +104,10 @@ class SubscribersPlugin_Controller_History
             } else {
                 $w->addRowHtml($row['id'], $this->i18n->get('detail'), $detail);
             }
+
+            if ($row['ip']) {
+                $w->addRow($row['id'], $this->i18n->get('IP address'), $row['ip']);
+            }
         }
     }
 
