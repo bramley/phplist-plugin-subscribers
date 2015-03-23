@@ -1,3 +1,6 @@
+version 2015-03-23
+      Change to autoload approach
+
 version 2015-01-18
       Search on user history IP address, fixes #4
 

@@ -16,7 +16,7 @@ This plugin is for phplist 3.0.0 and later.
 
 Requires php version 5.2 or later.
 
-Requires the Common Plugin to be installed. 
+Requires the Common Plugin version 2015-03-23 or later to be installed. You should install or upgrade to the latest version.
 
 See <https://github.com/bramley/phplist-plugin-common>
 
@@ -60,6 +60,7 @@ This plugin is free but if you install and find it useful then a donation to sup
 ## Version history ##
 
     version     Description
+    2015-03-23  Change to autoload approach
     2015-01-18  Allow searching on user history IP address
     2014-11-17  Shorten keys on config table to allow longer admin ids
     2014-04-18  Search on id and uniqid
