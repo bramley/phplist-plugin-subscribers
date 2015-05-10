@@ -12,13 +12,11 @@ The plugin adds pages to the Subscribers menu:
 
 ### Dependencies ###
 
-This plugin is for phplist 3.0.0 and later.
+This plugin is for phplist 3.
 
-Requires php version 5.2 or later.
+Requires php version 5.3 or later.
 
-Requires the Common Plugin version 2015-03-23 or later to be installed. You should install or upgrade to the latest version.
-
-See <https://github.com/bramley/phplist-plugin-common>
+Requires the Common Plugin version 2015-03-23 or later to be installed. You should install or upgrade to the latest version. See <https://github.com/bramley/phplist-plugin-common>
 
 ### Set the plugin directory ###
 You can use a directory outside of the web root by changing the definition of `PLUGIN_ROOTDIR` in config.php.
@@ -60,6 +58,7 @@ This plugin is free but if you install and find it useful then a donation to sup
 ## Version history ##
 
     version     Description
+    2015-05-10  Add dependency checks
     2015-03-23  Change to autoload approach
     2015-01-18  Allow searching on user history IP address
     2014-11-17  Shorten keys on config table to allow longer admin ids
