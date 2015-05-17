@@ -136,6 +136,7 @@ class SubscribersPlugin_Controller_History
         $result[] = $this->i18n->get('date');
         $result[] = $this->i18n->get('summary');
         $result[] = $this->i18n->get('detail');
+        $result[] = $this->i18n->get('IP address');
         return $result;
     }
 
@@ -147,6 +148,7 @@ class SubscribersPlugin_Controller_History
         $result[] = $row['date'];
         $result[] = $row['summary'];
         $result[] = htmlspecialchars_decode(trim($row['detail']));
+        $result[] = $row['ip'];
         return $result;
     }
 }

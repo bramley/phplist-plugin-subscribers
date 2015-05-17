@@ -1,3 +1,6 @@
+version 2015-05-17
+      Include IP address in export of subscriber history. Resolves issue #5
+
 version 2015-05-10
       Add dependency checks
 
