@@ -28,34 +28,38 @@
  */
 $lan = array(
     'plugin_title' => 'Subscribers Plugin',
-    'tab_details' => 'Subscribers',
-    'tab_history' => 'History',
-    'tab_subscriptions' => 'Subscriptions',
-/*  User Details */
+    'Advanced search' => 'Advanced search',
+    'Subscriber History' => 'Subscriber history',
+    'Subscriptions' => 'Subscriptions',
+/*  Advanced Search page */
     'ID' => 'ID',
     'lists' => 'lists',
     'email' => 'email',
+    'Subscribers' => 'Subscribers',
     'confirmed_heading' => 'Conf',
     'not confirmed' => 'not confirmed',
     'blacklisted_heading' => 'Bl',
     'User is blacklisted' => 'User is blacklisted',
     'email is blacklisted' => 'email is blacklisted',
-/* User History */
+/* Subscriber History page */
     'Show events' => 'Show events',
     'All' => 'All',
     'Since' => 'Since',
     'Contains' => 'Contains',
     'Show' => 'Show',
 //    controller
-    'filter' => 'Filter',
+    'Find ' => 'Filter',
     'Events' => 'Events',
     'event' => 'event',
     'date' => 'date',
     'email' => 'email',
     'summary' => 'summary',
     'detail' => 'detail',
-/*  Subscriptions */
+    'IP address' => 'IP address',
+/*  Subscriptions page */
     'period' => 'Period',
+    'year' => 'year',
+    'month' => 'month',
     'subscriptions' => 'Subscriptions',
     'confirmed' => 'Confirmed',
     'unconfirmed' => 'Unconfirmed',

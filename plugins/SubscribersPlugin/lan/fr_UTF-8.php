@@ -27,13 +27,14 @@
 
 $lan = array(
     'plugin_title' => 'Greffon utilisateur',
-    'tab_details' => 'Détails',
-    'tab_history' => 'Historique',
-    'tab_subscriptions' => 'Souscriptions',
+    'Advanced search' => 'Détails',
+    'Subscriber History' => 'Historique',
+    'Subscriptions' => 'Souscriptions',
 /*  User Details */
     'ID' => 'N°',
     'lists' => 'Listes',
     'email' => 'Courriel',
+    'Subscribers' => 'Subscribers',
     'confirmed_heading' => 'confirmé',
     'not confirmed' => 'non confirmé',
     'blacklisted_heading' => 'Liste noire',
