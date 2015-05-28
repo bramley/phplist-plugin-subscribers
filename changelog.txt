@@ -1,3 +1,9 @@
+version 2015-05-28
+      remove redundant files left from phplist 2.10.*
+      Allow menu items to be translated
+      Tidy-up translation items
+      Remove out of date comment
+
 version 2015-05-17
       Include IP address in export of subscriber history. Resolves issue #5
 
