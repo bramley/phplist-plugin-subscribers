@@ -31,7 +31,6 @@
  *
  * Available fields
  * - toolbar: raw HTML output of CommonPlugin_Toolbar
- * - tabs: raw HTML output of CommonPlugin_Tabs
  * - message: exception message
  * - panel: raw HTML output of UIPanel
  * - listing: raw HTML output of CommonPlugin_Listing
