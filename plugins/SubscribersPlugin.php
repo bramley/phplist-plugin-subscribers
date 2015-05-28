@@ -42,11 +42,6 @@ class SubscribersPlugin extends phplistPlugin
         'history' => array('category' => 'subscribers'),
         'subscriptions' => array('category' => 'subscribers')
     );
-    public $pageTitles = array(
-        'details' => 'Advanced search',
-        'history' => 'Subscriber History',
-        'subscriptions' => 'Subscriptions',
-    );
 
     public function adminmenu()
     {
@@ -60,6 +55,20 @@ class SubscribersPlugin extends phplistPlugin
             ? file_get_contents($f)
             : '';
         parent::__construct();
+    }
+
+    public function sendFormats()
+    {
+        global $plugins;
+
+        require_once $plugins['CommonPlugin']->coderoot . 'Autoloader.php';
+        $i18n = new CommonPlugin_I18N($this);
+        $this->pageTitles = array(
+            'details' => $i18n->get('Advanced search'),
+            'history' => $i18n->get('Subscriber History'),
+            'subscriptions' => $i18n->get('Subscriptions'),
+        );
+        return null;
     }
 
     public function dependencyCheck()
