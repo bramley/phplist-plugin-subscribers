@@ -1,3 +1,7 @@
+version 2015-05-29
+MarcelvC (1):
+      updated German language file
+
 version 2015-05-28
       remove redundant files left from phplist 2.10.*
       Allow menu items to be translated

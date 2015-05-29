@@ -48,11 +48,10 @@ $lan = array(
     'Contains' => 'Contains',
     'Show' => 'Show',
 //    controller
-    'Find ' => 'Filter',
+    'Filter' => 'Filter',
     'Events' => 'Events',
     'event' => 'event',
     'date' => 'date',
-    'email' => 'email',
     'summary' => 'summary',
     'detail' => 'detail',
     'IP address' => 'IP address',

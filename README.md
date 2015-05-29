@@ -58,6 +58,7 @@ This plugin is free but if you install and find it useful then a donation to sup
 ## Version history ##
 
     version     Description
+    2015-05-29  Improved German translation
     2015-05-28  Allow menu items to be translated
     2015-05-17  Include IP address in export of subscriber history
     2015-05-10  Add dependency checks
