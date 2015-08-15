@@ -58,19 +58,20 @@ This plugin is free but if you install and find it useful then a donation to sup
 ## Version history ##
 
     version     Description
-    2015-05-29  Improved German translation
-    2015-05-28  Allow menu items to be translated
-    2015-05-17  Include IP address in export of subscriber history
-    2015-05-10  Add dependency checks
-    2015-03-23  Change to autoload approach
-    2015-01-18  Allow searching on user history IP address
-    2014-11-17  Shorten keys on config table to allow longer admin ids
-    2014-04-18  Search on id and uniqid
-    2014-03-11  Search on confirmed/unconfirmed and blacklisted/not blacklisted
-    2014-02-12  Allow searching on email address
-    2014-02-03  Display as pages instead of tabs
-    2014-01-25  Use Google Chart, minor changes
-    2013-11-20  Bug fix
-    2013-11-05  Improve layout to be similar to core phplist
-    2013-10-27  Display each page as a tab
-    2013-05-10  Initial version for phplist 2.11.9 converted from 2.10 version
+    2.0.0+20150815  Added dependencies
+    2015-05-29      Improved German translation
+    2015-05-28      Allow menu items to be translated
+    2015-05-17      Include IP address in export of subscriber history
+    2015-05-10      Add dependency checks
+    2015-03-23      Change to autoload approach
+    2015-01-18      Allow searching on user history IP address
+    2014-11-17      Shorten keys on config table to allow longer admin ids
+    2014-04-18      Search on id and uniqid
+    2014-03-11      Search on confirmed/unconfirmed and blacklisted/not blacklisted
+    2014-02-12      Allow searching on email address
+    2014-02-03      Display as pages instead of tabs
+    2014-01-25      Use Google Chart, minor changes
+    2013-11-20      Bug fix
+    2013-11-05      Improve layout to be similar to core phplist
+    2013-10-27      Display each page as a tab
+    2013-05-10      Initial version for phplist 2.11.9 converted from 2.10 version
