@@ -16,7 +16,7 @@ This plugin is for phplist 3.
 
 Requires php version 5.3 or later.
 
-Requires the Common Plugin version 2015-03-23 or later to be installed. You should install or upgrade to the latest version. See <https://github.com/bramley/phplist-plugin-common>
+Requires the Common Plugin version 3 to be installed. You should install or upgrade to the latest version. See <https://github.com/bramley/phplist-plugin-common>
 
 ### Set the plugin directory ###
 You can use a directory outside of the web root by changing the definition of `PLUGIN_ROOTDIR` in config.php.
@@ -58,6 +58,7 @@ This plugin is free but if you install and find it useful then a donation to sup
 ## Version history ##
 
     version     Description
+    2.1.0+20150904  Show totals of campaigns opened and clicked
     2.0.0+20150815  Added dependencies
     2015-05-29      Improved German translation
     2015-05-28      Allow menu items to be translated

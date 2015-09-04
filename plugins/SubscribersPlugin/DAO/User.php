@@ -135,8 +135,20 @@ class SubscribersPlugin_DAO_User extends CommonPlugin_DAO {
 
         $where = $w ? 'WHERE ' . implode(' AND ', $w) : '';
 
-        $sql = "SELECT u.id, u.email, u.confirmed, u.blacklisted, u.htmlemail, u.uniqid $attr_fields,
-            (SELECT count(lu.listid) FROM {$this->tables['listuser']} lu WHERE lu.userid = u.id) AS lists
+        $sql =
+            "SELECT u.id, u.email, u.confirmed, u.blacklisted, u.htmlemail, u.uniqid $attr_fields,
+                (SELECT count(lu.listid)
+                FROM {$this->tables['listuser']} lu
+                WHERE lu.userid = u.id
+                ) AS lists,
+                (SELECT COUNT(viewed)
+                FROM {$this->tables['usermessage']}
+                WHERE userid = u.id
+                ) AS opens,
+                (SELECT COUNT(DISTINCT messageid)
+                FROM {$this->tables['linktrack_uml_click']}
+                WHERE userid = u.id
+                ) AS clicks
             FROM {$this->tables['user']} u
             $attr_join
             $where

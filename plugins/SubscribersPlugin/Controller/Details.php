@@ -95,6 +95,8 @@ class SubscribersPlugin_Controller_Details
         }
         $result[] = $this->i18n->get('HTML');
         $result[] = $this->i18n->get('Lists');
+        $result[] = $this->i18n->get('Campaigns opened');
+        $result[] = $this->i18n->get('Campaigns clicked');
         return $result;
     }
 
@@ -111,6 +113,8 @@ class SubscribersPlugin_Controller_Details
         }
         $result[] = $row['htmlemail'];
         $result[] = $row['lists'];
+        $result[] = $row['opens'];
+        $result[] = $row['clicks'];
         return $result;
     }
     /*
@@ -144,6 +148,8 @@ class SubscribersPlugin_Controller_Details
             }
             $w->addColumn($key, $this->i18n->get('HTML'), $row['htmlemail']);
             $w->addColumn($key, $this->i18n->get('Lists'), $row['lists']);
+            $w->addColumn($key, $this->i18n->get('Campaigns opened'), $row['opens']);
+            $w->addColumn($key, $this->i18n->get('Campaigns clicked'), $row['clicks']);
         }
     }
 

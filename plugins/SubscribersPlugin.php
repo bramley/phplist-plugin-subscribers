@@ -42,6 +42,7 @@ class SubscribersPlugin extends phplistPlugin
         'history' => array('category' => 'subscribers'),
         'subscriptions' => array('category' => 'subscribers')
     );
+    public $documentationUrl = 'https://resources.phplist.com/plugin/subscribers';
 
     public function adminmenu()
     {
