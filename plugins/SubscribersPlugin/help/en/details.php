@@ -69,11 +69,11 @@ The form shows only the first 15 attributes, with the attribute name truncated t
 <td>The number of lists to which the subscriber belongs.</td>
 </tr>
 <tr>
-<td>Lists</td>
+<td>Campaigns opened</td>
 <td>The number of campaigns that the subscriber has opened.</td>
 </tr>
 <tr>
-<td>Lists</td>
+<td>Campaigns clicked</td>
 <td>The number of campaigns of which the subscriber has clicked at least one link.</td>
 </tr>
 </table>
