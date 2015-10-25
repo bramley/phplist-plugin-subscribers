@@ -1,6 +1,6 @@
 <?php
 /**
- * SubscribersPlugin for phplist
+ * SubscribersPlugin for phplist.
  * 
  * This file is a part of SubscribersPlugin.
  *
@@ -14,17 +14,16 @@
  * GNU General Public License for more details.
  * 
  * @category  phplist
- * @package   SubscribersPlugin
+ *
  * @author    Duncan Cameron
  * @copyright 2011 Duncan Cameron
  * @license   http://www.gnu.org/licenses/gpl.html GNU General Public License, Version 3
  */
 
 /**
- * This class holds the properties entered in the search form
+ * This class holds the properties entered in the search form.
  * 
  * @category  phplist
- * @package   SubscribersPlugin
  */
 class SubscribersPlugin_Model_History extends CommonPlugin_Model
 {
@@ -42,12 +41,12 @@ class SubscribersPlugin_Model_History extends CommonPlugin_Model
         'type' => null,
         'option' => 'all',
         'pattern' => null,
-        'from' => null
+        'from' => null,
     );
     protected $persist = array(
         'option' => '',
         'pattern' => '',
-        'from' => ''
+        'from' => '',
     );
     /*
      *    Private methods
@@ -99,13 +98,12 @@ class SubscribersPlugin_Model_History extends CommonPlugin_Model
     }
 
     public function listEvents($start = null, $limit = null)
-     {
+    {
         return $this->dao->listEvents($this->searchBy, $this->param, $start, $limit);
     }
 
     public function totalEvents()
-     {
+    {
         return $this->dao->totalEvents($this->searchBy, $this->param);
     }
-
 }

@@ -1,6 +1,7 @@
-<?php 
+<?php
+
 /**
- * SubscribersPlugin for phplist
+ * SubscribersPlugin for phplist.
  * 
  * This file is a part of SubscribersPlugin.
  *
@@ -14,7 +15,7 @@
  * GNU General Public License for more details.
  * 
  * @category  phplist
- * @package   SubscribersPlugin
+ *
  * @author    Duncan Cameron
  * @copyright 2011 Duncan Cameron
  * @license   http://www.gnu.org/licenses/gpl.html GNU General Public License, Version 3
@@ -22,10 +23,9 @@
 
 /**
  * This class is the controller for the plugin providing the action methods
- * Implements the IPopulator interface
+ * Implements the IPopulator interface.
  * 
  * @category  phplist
- * @package   SubscribersPlugin
  */
 class SubscribersPlugin_Controller_History
     extends CommonPlugin_Controller
@@ -93,8 +93,8 @@ class SubscribersPlugin_Controller_History
             $w->addColumnEmail($row['id'], $this->i18n->get('email'), $row['email'],
                 new CommonPlugin_PageURL('user', array('id' => $row['userid']))
             );
-            $w->addColumn($row['id'], $this->i18n->get('date'),$row['date']);
-            $w->addColumn($row['id'], $this->i18n->get('summary'),$row['summary']);
+            $w->addColumn($row['id'], $this->i18n->get('date'), $row['date']);
+            $w->addColumn($row['id'], $this->i18n->get('summary'), $row['summary']);
             // The detail column in user_history already contains html encoded text, so need to decode twice
             $detail = htmlspecialchars_decode(trim($row['detail']));
             $detail = htmlspecialchars_decode(trim($detail));
@@ -137,6 +137,7 @@ class SubscribersPlugin_Controller_History
         $result[] = $this->i18n->get('summary');
         $result[] = $this->i18n->get('detail');
         $result[] = $this->i18n->get('IP address');
+
         return $result;
     }
 
@@ -149,7 +150,7 @@ class SubscribersPlugin_Controller_History
         $result[] = $row['summary'];
         $result[] = htmlspecialchars_decode(trim($row['detail']));
         $result[] = $row['ip'];
+
         return $result;
     }
 }
-?>

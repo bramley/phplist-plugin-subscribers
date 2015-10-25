@@ -1,6 +1,6 @@
 <?php
 /**
- * SubscribersPlugin for phplist
+ * SubscribersPlugin for phplist.
  * 
  * This file is a part of SubscribersPlugin.
  *
@@ -14,17 +14,16 @@
  * GNU General Public License for more details.
  * 
  * @category  phplist
- * @package   SubscribersPlugin
+ *
  * @author    Duncan Cameron
  * @copyright 2011-2013 Duncan Cameron
  * @license   http://www.gnu.org/licenses/gpl.html GNU General Public License, Version 3
  */
 
 /**
- * This class holds the properties entered in the search form
+ * This class holds the properties entered in the search form.
  * 
  * @category  phplist
- * @package   SubscribersPlugin
  */
 class SubscribersPlugin_Model_Details extends CommonPlugin_Model
 {
@@ -46,7 +45,7 @@ class SubscribersPlugin_Model_Details extends CommonPlugin_Model
         'selectedAttrs' => array(),
         'searchTerm' => null,
         'searchBy' => null,
-        'listID' => null
+        'listID' => null,
     );
     protected $persist = array(
         'confirmed' => '',
@@ -54,7 +53,7 @@ class SubscribersPlugin_Model_Details extends CommonPlugin_Model
         'selectedAttrs' => '',
         'searchTerm' => '',
         'searchBy' => '',
-        'listID' => ''
+        'listID' => '',
     );
     /*
      *    Public variables
@@ -74,7 +73,7 @@ class SubscribersPlugin_Model_Details extends CommonPlugin_Model
         /*         
          * remove selected attributes that no longer exist and re-index
          */
-        $this->properties['selectedAttrs'] 
+        $this->properties['selectedAttrs']
             = array_values(array_filter($this->properties['selectedAttrs'], array($this, 'filter')));
     }
     /*

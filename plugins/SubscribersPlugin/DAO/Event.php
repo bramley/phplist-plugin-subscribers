@@ -1,6 +1,6 @@
 <?php
 /**
- * SubscribersPlugin for phplist
+ * SubscribersPlugin for phplist.
  * 
  * This file is a part of SubscribersPlugin.
  *
@@ -14,17 +14,16 @@
  * GNU General Public License for more details.
  * 
  * @category  phplist
- * @package   SubscribersPlugin
+ *
  * @author    Duncan Cameron
  * @copyright 2011 Duncan Cameron
  * @license   http://www.gnu.org/licenses/gpl.html GNU General Public License, Version 3
  */
 
 /**
- * DAO class that provides access to the user_history and related tables
+ * DAO class that provides access to the user_history and related tables.
  * 
  * @category  phplist
- * @package   SubscribersPlugin
  */
 class SubscribersPlugin_DAO_Event extends CommonPlugin_DAO
 {
@@ -50,7 +49,7 @@ class SubscribersPlugin_DAO_Event extends CommonPlugin_DAO
             $where = '';
         }
 
-        $sql = 
+        $sql =
             "SELECT u.email, uh.* 
             FROM {$this->tables['user_history']} uh 
             JOIN {$this->tables['user']} u ON uh.userid = u.id 

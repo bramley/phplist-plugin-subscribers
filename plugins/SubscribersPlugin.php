@@ -1,6 +1,6 @@
 <?php
 /**
- * SubscribersPlugin for phplist
+ * SubscribersPlugin for phplist.
  * 
  * This file is a part of SubscribersPlugin.
  *
@@ -14,17 +14,16 @@
  * GNU General Public License for more details.
  * 
  * @category  phplist
- * @package   SubscribersPlugin
+ *
  * @author    Duncan Cameron
  * @copyright 2011-2014 Duncan Cameron
  * @license   http://www.gnu.org/licenses/gpl.html GNU General Public License, Version 3
  */
 
 /**
- * Registers the plugin with phplist
+ * Registers the plugin with phplist.
  * 
  * @category  phplist
- * @package   SubscribersPlugin
  */
 class SubscribersPlugin extends phplistPlugin
 {
@@ -40,7 +39,7 @@ class SubscribersPlugin extends phplistPlugin
     public $topMenuLinks = array(
         'details' => array('category' => 'subscribers'),
         'history' => array('category' => 'subscribers'),
-        'subscriptions' => array('category' => 'subscribers')
+        'subscriptions' => array('category' => 'subscribers'),
     );
     public $documentationUrl = 'https://resources.phplist.com/plugin/subscribers';
 
@@ -69,22 +68,21 @@ class SubscribersPlugin extends phplistPlugin
             'history' => $i18n->get('Subscriber History'),
             'subscriptions' => $i18n->get('Subscriptions'),
         );
-        return null;
+
+        return;
     }
 
     /**
-     * Provide the dependencies for enabling this plugin
+     * Provide the dependencies for enabling this plugin.
      *
-     * @access  public
-     * @return  array
+     * @return array
      */
     public function dependencyCheck()
     {
         global $plugins;
 
         return array(
-            'Common plugin v3 installed' =>
-                phpListPlugin::isEnabled('CommonPlugin')
+            'Common plugin v3 installed' => phpListPlugin::isEnabled('CommonPlugin')
                     && preg_match('/\d+\.\d+\.\d+/', $plugins['CommonPlugin']->version, $matches)
                     && version_compare($matches[0], '3') > 0,
             'PHP version 5.3.0 or greater' => version_compare(PHP_VERSION, '5.3') > 0,

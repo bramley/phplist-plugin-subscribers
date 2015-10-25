@@ -1,6 +1,6 @@
 <?php
 /**
- * SubscribersPlugin for phplist
+ * SubscribersPlugin for phplist.
  * 
  * This file is a part of SubscribersPlugin.
  *
@@ -14,24 +14,22 @@
  * GNU General Public License for more details.
  * 
  * @category  phplist
- * @package   SubscribersPlugin
+ *
  * @author    Duncan Cameron
  * @copyright 2011-2013 Duncan Cameron
  * @license   http://www.gnu.org/licenses/gpl.html GNU General Public License, Version 3
  */
 
 /**
- * This is the HTML template for the plugin page
+ * This is the HTML template for the plugin page.
  * 
  * @category  phplist
- * @package   SubscribersPlugin
  */
 
 /**
- *
  * Available fields
  * - $form: optional raw HTML for attribute search/select form
- * - $listing: raw HTML output of CommonPlugin_Listing
+ * - $listing: raw HTML output of CommonPlugin_Listing.
  */
 ?>
 <div>
