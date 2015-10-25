@@ -141,6 +141,10 @@ class SubscribersPlugin_DAO_User extends CommonPlugin_DAO {
                 FROM {$this->tables['listuser']} lu
                 WHERE lu.userid = u.id
                 ) AS lists,
+                (SELECT COUNT(*)
+                FROM {$this->tables['usermessage']}
+                WHERE userid = u.id AND status = 'sent'
+                ) AS sent,
                 (SELECT COUNT(viewed)
                 FROM {$this->tables['usermessage']}
                 WHERE userid = u.id

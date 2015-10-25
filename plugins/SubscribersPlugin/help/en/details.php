@@ -69,11 +69,8 @@ The form shows only the first 15 attributes, with the attribute name truncated t
 <td>The number of lists to which the subscriber belongs.</td>
 </tr>
 <tr>
-<td>Campaigns opened</td>
-<td>The number of campaigns that the subscriber has opened.</td>
-</tr>
-<tr>
-<td>Campaigns clicked</td>
-<td>The number of campaigns of which the subscriber has clicked at least one link.</td>
+<td>Campaigns</td>
+<td>This shows three figures: the number of campaigns sent to the subscriber, the number which the subscriber has opened,
+and the number in which the subscriber has clicked at least one link.</td>
 </tr>
 </table>

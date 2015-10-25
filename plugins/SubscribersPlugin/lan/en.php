@@ -41,6 +41,8 @@ $lan = array(
     'blacklisted_heading' => 'Bl',
     'User is blacklisted' => 'User is blacklisted',
     'email is blacklisted' => 'email is blacklisted',
+    'Campaigns' => 'Campaigns',
+    'Campaigns sent' => 'Campaigns sent',
     'Campaigns opened' => 'Campaigns opened',
     'Campaigns clicked' => 'Campaigns clicked',
 /* Subscriber History page */
