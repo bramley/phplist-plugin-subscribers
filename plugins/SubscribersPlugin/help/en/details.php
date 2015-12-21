@@ -1,6 +1,6 @@
 <?php
 /**
- * SubscribersPlugin for phplist
+ * SubscribersPlugin for phplist.
  * 
  * This file is a part of SubscribersPlugin.
  *
@@ -14,29 +14,29 @@
  * GNU General Public License for more details.
  * 
  * @category  phplist
- * @package   SubscribersPlugin
+ *
  * @author    Duncan Cameron
  * @copyright 2011-2013 Duncan Cameron
  * @license   http://www.gnu.org/licenses/gpl.html GNU General Public License, Version 3
  */
 
 /**
- * Help text
+ * Help text.
  * 
  * @category  phplist
- * @package   SubscribersPlugin
  */
 ?>
 <p>The page displays the status and attributes for each subscriber.</p>
 <p>You can filter the results by 
 <ul>
-<li>searching on the email address or value of an attribute,
+<li>searching on the subscriber's email address, id or unique id, or the value of an attribute,
 <li>subscribers who belong to a specific list,
 <li>restricting to confirmed subscribers or unconfirmed subscribers,
 <li>restricting to blacklisted subscribers or not blacklisted subscribers.
 </ul>
 </p>
-<p>Attributes can be displayed as separate columns in the listing. The form shows only the first 15 attributes, with the attribute name truncated to 20 characters.</p>
+<p>Attributes can be displayed as separate columns in the listing.
+The form shows only the first 15 attributes, with the attribute name truncated to 20 characters.</p>
 <p>If no attributes have been created then the selection form is not displayed.</p>
 <table>
 <tr>
@@ -66,5 +66,10 @@
 <tr>
 <td>Lists</td>
 <td>The number of lists to which the subscriber belongs.</td>
+</tr>
+<tr>
+<td>Campaigns</td>
+<td>This shows three figures: the number of campaigns sent to the subscriber, the number which the subscriber has opened,
+and the number in which the subscriber has clicked at least one link.</td>
 </tr>
 </table>

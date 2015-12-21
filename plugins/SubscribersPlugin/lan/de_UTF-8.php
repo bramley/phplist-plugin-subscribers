@@ -1,6 +1,6 @@
 <?php
 /**
- * SubscribersPlugin for phplist
+ * SubscribersPlugin for phplist.
  * 
  * This file is a part of SubscribersPlugin.
  *
@@ -14,17 +14,16 @@
  * GNU General Public License for more details.
  * 
  * @category  phplist
- * @package   SubscribersPlugin
+ *
  * @author    Duncan Cameron
  * @copyright 2011-2013 Duncan Cameron
  * @license   http://www.gnu.org/licenses/gpl.html GNU General Public License, Version 3
  */
 
 /**
- * This file contains the German translations of the English text
+ * This file contains the German translations of the English text.
  * 
  * @category  phplist
- * @package   SubscribersPlugin
  */
 
 /*
@@ -54,11 +53,10 @@ $lan = array(
     'Contains' => 'Enthält',
     'Show' => 'Anzeigen',
 //    controller
-    'Find ' => 'Filter',
+    'Filter' => 'Filter',
     'Events' => 'Ereignisse',
     'event' => 'Ereignis',
     'date' => 'Datum',
-    'email' => 'E-Mail',
     'summary' => 'Zusammenfassung',
     'detail' => 'Details',
     'IP address' => 'IP-Adresse',

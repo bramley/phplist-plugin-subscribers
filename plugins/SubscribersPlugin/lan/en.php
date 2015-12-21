@@ -1,6 +1,6 @@
 <?php
 /**
- * SubscribersPlugin for phplist
+ * SubscribersPlugin for phplist.
  * 
  * This file is a part of SubscribersPlugin.
  *
@@ -14,17 +14,16 @@
  * GNU General Public License for more details.
  * 
  * @category  phplist
- * @package   SubscribersPlugin
+ *
  * @author    Duncan Cameron
  * @copyright 2011-2013 Duncan Cameron
  * @license   http://www.gnu.org/licenses/gpl.html GNU General Public License, Version 3
  */
 
 /**
- * This file contains the English text
+ * This file contains the English text.
  * 
  * @category  phplist
- * @package   SubscribersPlugin
  */
 $lan = array(
     'plugin_title' => 'Subscribers Plugin',
@@ -41,6 +40,10 @@ $lan = array(
     'blacklisted_heading' => 'Bl',
     'User is blacklisted' => 'User is blacklisted',
     'email is blacklisted' => 'email is blacklisted',
+    'Campaigns' => 'Campaigns',
+    'Campaigns sent' => 'Campaigns sent',
+    'Campaigns opened' => 'Campaigns opened',
+    'Campaigns clicked' => 'Campaigns clicked',
 /* Subscriber History page */
     'Show events' => 'Show events',
     'All' => 'All',
@@ -48,11 +51,10 @@ $lan = array(
     'Contains' => 'Contains',
     'Show' => 'Show',
 //    controller
-    'Find ' => 'Filter',
+    'Filter' => 'Filter',
     'Events' => 'Events',
     'event' => 'event',
     'date' => 'date',
-    'email' => 'email',
     'summary' => 'summary',
     'detail' => 'detail',
     'IP address' => 'IP address',

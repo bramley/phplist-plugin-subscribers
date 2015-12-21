@@ -1,6 +1,7 @@
-<?php 
+<?php
+
 /**
- * SubscribersPlugin for phplist
+ * SubscribersPlugin for phplist.
  * 
  * This file is a part of SubscribersPlugin.
  *
@@ -14,15 +15,14 @@
  * GNU General Public License for more details.
  * 
  * @category  phplist
- * @package   SubscribersPlugin
+ *
  * @author    Duncan Cameron
  * @copyright 2012-2013 Duncan Cameron
  * @license   http://www.gnu.org/licenses/gpl.html GNU General Public License, Version 3
  */
 
 /**
- * This class
- * 
+ * This class.
  */
 class SubscribersPlugin_Model_Subscriptions extends CommonPlugin_Model
 {
@@ -47,7 +47,7 @@ class SubscribersPlugin_Model_Subscriptions extends CommonPlugin_Model
         $subsRow = $subsIterator->valid() ? $subsIterator->current() : array('period' => '999999');
         $unsubsRow = $unsubsIterator->valid() ? $unsubsIterator->current() : array('period' => '999999');
         list($period, $endPeriod) = $this->dao->periodRange($start, $limit);
-    
+
         $year = substr($period, 0, 4);
         $month = substr($period, 4, 2);
         $result = array();
@@ -57,21 +57,23 @@ class SubscribersPlugin_Model_Subscriptions extends CommonPlugin_Model
                 $out = $subsRow;
                 $subsIterator->next();
 
-                if ($subsIterator->valid())
+                if ($subsIterator->valid()) {
                     $subsRow = $subsIterator->current();
+                }
             } else {
                 $out = array(
                     'period' => $period, 'month' => $month, 'year' => $year,
-                    'subscriptions' => 0, 'confirmed' => 0, 'unconfirmed' => 0, 'blacklisted' => 0, 'active' => 0
+                    'subscriptions' => 0, 'confirmed' => 0, 'unconfirmed' => 0, 'blacklisted' => 0, 'active' => 0,
                 );
             }
 
-            if ($unsubsRow['period'] == $period)     {
+            if ($unsubsRow['period'] == $period) {
                 $out['unsubscriptions'] = $unsubsRow['unsubscriptions'];
                 $unsubsIterator->next();
 
-                if ($unsubsIterator->valid())
+                if ($unsubsIterator->valid()) {
                     $unsubsRow = $unsubsIterator->current();
+                }
             } else {
                 $out['unsubscriptions'] = 0;
             }
@@ -81,10 +83,11 @@ class SubscribersPlugin_Model_Subscriptions extends CommonPlugin_Model
                 $month = str_pad(++$month, 2, '0', STR_PAD_LEFT);
             } else {
                 $month = '01';
-                $year++;
+                ++$year;
             }
             $period = $year . $month;
         }
+
         return $result;
     }
 
@@ -101,8 +104,9 @@ class SubscribersPlugin_Model_Subscriptions extends CommonPlugin_Model
     {
         $result = $this->buildSubscriptions($start, $limit);
 
-        if (!$ascendingOrder)
+        if (!$ascendingOrder) {
             $result = array_reverse($result);
+        }
 
         return $result;
     }
@@ -111,5 +115,4 @@ class SubscribersPlugin_Model_Subscriptions extends CommonPlugin_Model
     {
         return $this->dao->totalPeriods();
     }
-
 }

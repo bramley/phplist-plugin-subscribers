@@ -1,6 +1,7 @@
-<?php 
+<?php
+
 /**
- * SubscribersPlugin for phplist
+ * SubscribersPlugin for phplist.
  * 
  * This file is a part of SubscribersPlugin.
  *
@@ -14,17 +15,16 @@
  * GNU General Public License for more details.
  * 
  * @category  phplist
- * @package   SubscribersPlugin
+ *
  * @author    Duncan Cameron
  * @copyright 2012-2013 Duncan Cameron
  * @license   http://www.gnu.org/licenses/gpl.html GNU General Public License, Version 3
  */
 
 /**
- * This class is the controller for the plugin providing the action methods
+ * This class is the controller for the plugin providing the action methods.
  * 
  * @category  phplist
- * @package   SubscribersPlugin
  */
 class SubscribersPlugin_Controller_Subscriptions
     extends CommonPlugin_Controller
@@ -47,13 +47,13 @@ class SubscribersPlugin_Controller_Subscriptions
         $w->addColumn($key, $this->i18n->get('subscriptions'), $row['subscriptions']);
 
         $format = '%2$d (%1$d%%)';
-        $w->addColumn($key,    $this->i18n->get('active'),
-            sprintf($format, 
+        $w->addColumn($key, $this->i18n->get('active'),
+            sprintf($format,
                 $row['subscriptions'] == 0 ? 0 : round($row['active'] / $row['subscriptions'] * 100),
                 $row['active'])
         );
-        $w->addColumn($key, $this->i18n->get('blacklisted'), 
-            sprintf($format, 
+        $w->addColumn($key, $this->i18n->get('blacklisted'),
+            sprintf($format,
                 $row['subscriptions'] == 0 ? 0 : round($row['blacklisted'] / $row['subscriptions'] * 100),
                 $row['blacklisted'])
         );
@@ -83,10 +83,10 @@ class SubscribersPlugin_Controller_Subscriptions
 
             $data[] = array(
                 'month' => $monthLabel,
-                'Active' => (int) $row['active'],
-                'Blacklisted' => (int) $row['blacklisted'],
-                'Unconfirmed' => (int) $row['unconfirmed'],
-                'Unsubscriptions' => (int) $row['unsubscriptions']
+                $this->i18n->get('Active') => (int) $row['active'],
+                $this->i18n->get('Blacklisted') => (int) $row['blacklisted'],
+                $this->i18n->get('Unconfirmed') => (int) $row['unconfirmed'],
+                $this->i18n->get('Unsubscriptions') => (int) $row['unsubscriptions'],
             );
 
             $currentYear = $row['year'];
@@ -97,15 +97,16 @@ class SubscribersPlugin_Controller_Subscriptions
             'chartArea' => array('left' => 50, 'width' => '90%'),
             'height' => self::IMAGE_HEIGHT,
             'axisTitlesPosition' => 'out',
-            'vAxis' => array('format' => '#', 'title' => 'Subscribers'),
-            'hAxis' => array('title' => 'Period', 'textStyle' => array('fontSize' => 9)),
+            'vAxis' => array('format' => '#', 'title' => $this->i18n->get('Subscribers')),
+            'hAxis' => array('title' => $this->i18n->get('Period'), 'textStyle' => array('fontSize' => 9)),
             'bar' => array('groupWidth' => '90%'),
             'seriesType' => 'bars',
             'series' => array(3 => array('type' => 'line')),
             'legend' => array('position' => 'bottom'),
-            'isStacked' => true
+            'isStacked' => true,
         );
         $result = $chart->draw($chartDiv, $options);
+
         return $result;
     }
 
@@ -118,7 +119,7 @@ class SubscribersPlugin_Controller_Subscriptions
 
         $params = array();
         $toolbar = new CommonPlugin_Toolbar($this);
-		$toolbar->addExportButton();
+        $toolbar->addExportButton();
         $toolbar->addHelpButton('subscriptions');
         $params['toolbar'] = $toolbar->display();
 
@@ -164,7 +165,6 @@ class SubscribersPlugin_Controller_Subscriptions
             $sumUnsubscriptions += $row['unsubscriptions'];
             $this->addRow($w, $row);
         }
-//        $w->addElement('');
         $this->addRow($w, array(
             'year' => 'Total',
             'month' => '',
@@ -198,7 +198,7 @@ class SubscribersPlugin_Controller_Subscriptions
     public function exportFieldNames()
     {
         return $this->i18n->get(array(
-            'year', 'month', 'subscriptions', 'active', 'blacklisted', 'unconfirmed', 'unsubscriptions'
+            'year', 'month', 'subscriptions', 'active', 'blacklisted', 'unconfirmed', 'unsubscriptions',
         ));
     }
 

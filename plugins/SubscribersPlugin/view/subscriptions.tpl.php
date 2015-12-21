@@ -1,6 +1,6 @@
 <?php 
 /**
- * SubscribersPlugin for phplist
+ * SubscribersPlugin for phplist.
  * 
  * This file is a part of SubscribersPlugin.
  *
@@ -14,22 +14,20 @@
  * GNU General Public License for more details.
  * 
  * @category  phplist
- * @package   SubscribersPlugin
+ *
  * @author    Duncan Cameron
  * @copyright 2012-2013 Duncan Cameron
  * @license   http://www.gnu.org/licenses/gpl.html GNU General Public License, Version 3
  */
 
 /**
- * This is the HTML template for the plugin page
- * 
+ * This is the HTML template for the plugin page.
  */
 
 /**
- *
  * Available fields
  * - chart: optional chart
- * - listing: optional HTML output of CommonPlugin_Listing
+ * - listing: optional HTML output of CommonPlugin_Listing.
  */
 ?>
 <div >
@@ -41,7 +39,9 @@
         <div id="<?php echo $chart_div; ?>" style="width: 100%; height: <?php echo SubscribersPlugin_Controller_Subscriptions::IMAGE_HEIGHT; ?>px;"></div>
 <?php endif; ?>
     <div style='padding-top: 10px;'>
-<?php if (isset($listing)) echo $listing; ?>
+<?php if (isset($listing)) {
+    echo $listing;
+} ?>
     </div>
         <p><a href='#top'>[<?php echo $this->i18n->get('top'); ?>]</a></p>
     </div>

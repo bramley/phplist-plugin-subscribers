@@ -1,6 +1,6 @@
 <?php
 /**
- * SubscribersPlugin for phplist
+ * SubscribersPlugin for phplist.
  * 
  * This file is a part of SubscribersPlugin.
  *
@@ -14,7 +14,7 @@
  * GNU General Public License for more details.
  * 
  * @category  phplist
- * @package   SubscribersPlugin
+ *
  * @author    Duncan Cameron
  * @copyright 2011-2013 Duncan Cameron
  * @license   http://www.gnu.org/licenses/gpl.html GNU General Public License, Version 3
@@ -22,10 +22,9 @@
 
 /**
  * This class is the controller for the plugin providing the action methods
- * Implements the IPopulator and IExportable interfaces
+ * Implements the IPopulator and IExportable interfaces.
  * 
  * @category  phplist
- * @package   SubscribersPlugin
  */
 class SubscribersPlugin_Controller_Details
     extends CommonPlugin_Controller
@@ -44,7 +43,7 @@ class SubscribersPlugin_Controller_Details
         if (isset($_POST['SearchForm'])) {
             $this->normalise($_POST['SearchForm']);
             $this->model->setProperties($_POST['SearchForm'], true);
-            $redirect = new CommonPlugin_PageURL;
+            $redirect = new CommonPlugin_PageURL();
             header("Location: $redirect");
             exit;
         }
@@ -56,7 +55,7 @@ class SubscribersPlugin_Controller_Details
         $params = array(
             'toolbar' => $toolbar->display(),
             'form' => CommonPlugin_Widget::attributeForm($this, $this->model),
-            'listing' => $listing->display()
+            'listing' => $listing->display(),
         );
         echo $this->render(dirname(__FILE__) . self::TEMPLATE, $params);
     }
@@ -95,6 +94,10 @@ class SubscribersPlugin_Controller_Details
         }
         $result[] = $this->i18n->get('HTML');
         $result[] = $this->i18n->get('Lists');
+        $result[] = $this->i18n->get('Campaigns sent');
+        $result[] = $this->i18n->get('Campaigns opened');
+        $result[] = $this->i18n->get('Campaigns clicked');
+
         return $result;
     }
 
@@ -111,6 +114,10 @@ class SubscribersPlugin_Controller_Details
         }
         $result[] = $row['htmlemail'];
         $result[] = $row['lists'];
+        $result[] = $row['sent'];
+        $result[] = $row['opens'];
+        $result[] = $row['clicks'];
+
         return $result;
     }
     /*
@@ -144,6 +151,7 @@ class SubscribersPlugin_Controller_Details
             }
             $w->addColumn($key, $this->i18n->get('HTML'), $row['htmlemail']);
             $w->addColumn($key, $this->i18n->get('Lists'), $row['lists']);
+            $w->addColumn($key, $this->i18n->get('Campaigns'), "{$row['sent']} | {$row['opens']} | {$row['clicks']}");
         }
     }
 

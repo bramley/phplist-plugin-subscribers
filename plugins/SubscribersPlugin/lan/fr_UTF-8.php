@@ -1,6 +1,6 @@
 <?php
 /**
- * SubscribersPlugin for phplist
+ * SubscribersPlugin for phplist.
  * 
  * This file is a part of SubscribersPlugin.
  *
@@ -14,7 +14,7 @@
  * GNU General Public License for more details.
  * 
  * @category  phplist
- * @package   SubscribersPlugin
+ *
  * @author    Duncan Cameron
  * @copyright 2011-2013 Duncan Cameron
  * @license   http://www.gnu.org/licenses/gpl.html GNU General Public License, Version 3
@@ -22,9 +22,8 @@
 
 /**
  * This file contains the French translations of the English text
- * Important - this file must be saved in UTF-8 encoding
+ * Important - this file must be saved in UTF-8 encoding.
  */
-
 $lan = array(
     'plugin_title' => 'Greffon utilisateur',
     'Advanced search' => 'Détails',

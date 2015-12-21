@@ -1,6 +1,6 @@
 <?php
 /**
- * SubscribersPlugin for phplist
+ * SubscribersPlugin for phplist.
  * 
  * This file is a part of SubscribersPlugin.
  *
@@ -14,34 +14,34 @@
  * GNU General Public License for more details.
  * 
  * @category  phplist
- * @package   SubscribersPlugin
+ *
  * @author    Duncan Cameron
  * @copyright 2011-2013 Duncan Cameron
  * @license   http://www.gnu.org/licenses/gpl.html GNU General Public License, Version 3
  */
 
 /**
- * DAO class that provides access to the user, user_attribute and related tables
+ * DAO class that provides access to the user, user_attribute and related tables.
  * 
  * @category  phplist
- * @package   SubscribersPlugin
  */
-class SubscribersPlugin_DAO_User extends CommonPlugin_DAO {
-
+class SubscribersPlugin_DAO_User extends CommonPlugin_DAO
+{
     /**
      * Generates a WHERE expression for the user belonging to the specified list and 
-     * optionally the list owned by the specified owner
-     * @param int $listID 
+     * optionally the list owned by the specified owner.
+     *
+     * @param int    $listID
      * @param string $loginid
+     *
      * @return string WHERE expression
-     * @access private
      */
     private function list_exists($listID, $loginid)
     {
         if ($listID || $loginid) {
             $owner = $loginid ? "AND l.owner = $loginid" : '';
             $list = $listID ? "AND l.id = $listID" : '';
-            $where = 
+            $where =
                 "EXISTS (
                     SELECT 1 from {$this->tables['listuser']} lu, {$this->tables['list']} l
                     WHERE u.id = lu.userid AND lu.listid = l.id $list $owner
@@ -49,16 +49,18 @@ class SubscribersPlugin_DAO_User extends CommonPlugin_DAO {
         } else {
             $where = '';
         }
+
         return $where;
     }
 
     /**
-     * Generates a list of join expressions for the FROM table references and a list of attribute fields for the SELECT expression
-     * @param array $attributes 
+     * Generates a list of join expressions for the FROM table references and a list of attribute fields for the SELECT expression.
+     *
+     * @param array  $attributes
      * @param string $searchTerm optional attribute value to be matched
-     * @param int $searchAttr optional attribute id to be matched
+     * @param int    $searchAttr optional attribute id to be matched
+     *
      * @return string WHERE expression
-     * @access private
      */
     private function userAttributeJoin($attributes, $searchTerm, $searchAttr)
     {
@@ -94,6 +96,7 @@ class SubscribersPlugin_DAO_User extends CommonPlugin_DAO {
             }
             $attr_join .= $thisJoin;
         }
+
         return array($attr_join, $attr_fields);
     }
 
@@ -118,8 +121,9 @@ class SubscribersPlugin_DAO_User extends CommonPlugin_DAO {
             }
         }
 
-        if ($le = $this->list_exists($listID, $owner))
+        if ($le = $this->list_exists($listID, $owner)) {
             $w[] = $le;
+        }
 
         if ($confirmed == 2) {
             $w[] = 'u.confirmed = 1';
@@ -135,13 +139,30 @@ class SubscribersPlugin_DAO_User extends CommonPlugin_DAO {
 
         $where = $w ? 'WHERE ' . implode(' AND ', $w) : '';
 
-        $sql = "SELECT u.id, u.email, u.confirmed, u.blacklisted, u.htmlemail, u.uniqid $attr_fields,
-            (SELECT count(lu.listid) FROM {$this->tables['listuser']} lu WHERE lu.userid = u.id) AS lists
+        $sql =
+            "SELECT u.id, u.email, u.confirmed, u.blacklisted, u.htmlemail, u.uniqid $attr_fields,
+                (SELECT count(lu.listid)
+                FROM {$this->tables['listuser']} lu
+                WHERE lu.userid = u.id
+                ) AS lists,
+                (SELECT COUNT(*)
+                FROM {$this->tables['usermessage']}
+                WHERE userid = u.id AND status = 'sent'
+                ) AS sent,
+                (SELECT COUNT(viewed)
+                FROM {$this->tables['usermessage']}
+                WHERE userid = u.id
+                ) AS opens,
+                (SELECT COUNT(DISTINCT messageid)
+                FROM {$this->tables['linktrack_uml_click']}
+                WHERE userid = u.id
+                ) AS clicks
             FROM {$this->tables['user']} u
             $attr_join
             $where
             ORDER by u.id
             $limitClause";
+
         return $this->dbCommand->queryAll($sql);
     }
 
@@ -166,8 +187,9 @@ class SubscribersPlugin_DAO_User extends CommonPlugin_DAO {
             }
         }
 
-        if ($le = $this->list_exists($listID, $owner))
+        if ($le = $this->list_exists($listID, $owner)) {
             $w[] = $le;
+        }
 
         if ($confirmed == 2) {
             $w[] = 'u.confirmed = 1';
@@ -187,6 +209,7 @@ class SubscribersPlugin_DAO_User extends CommonPlugin_DAO {
             FROM {$this->tables['user']} u
             $attr_join
             $where";
+
         return $this->dbCommand->queryOne($sql, 't');
     }
 }
