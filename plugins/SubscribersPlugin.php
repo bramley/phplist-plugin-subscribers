@@ -16,7 +16,7 @@
  * @category  phplist
  *
  * @author    Duncan Cameron
- * @copyright 2011-2014 Duncan Cameron
+ * @copyright 2011-2016 Duncan Cameron
  * @license   http://www.gnu.org/licenses/gpl.html GNU General Public License, Version 3
  */
 
@@ -28,6 +28,15 @@
 class SubscribersPlugin extends phplistPlugin
 {
     const VERSION_FILE = 'version.txt';
+    const PLUGIN = 'SubscribersPlugin';
+    const UNSUBSCRIBE_PAGE = 'unsubscribe';
+
+    /*
+     *  Private variables
+     */
+    private $linkText;
+    private $rootUrl;
+    private $attributes;
 
     /*
      *  Inherited variables
@@ -41,25 +50,65 @@ class SubscribersPlugin extends phplistPlugin
         'history' => array('category' => 'subscribers'),
         'subscriptions' => array('category' => 'subscribers'),
     );
+    public $publicPages = array(self::UNSUBSCRIBE_PAGE);
     public $documentationUrl = 'https://resources.phplist.com/plugin/subscribers';
+
+    /*
+     * Private functions
+     */
+    private function link($linkText, $url, $attributes)
+    {
+        return sprintf('<a href="%s" %s>%s</a>', htmlspecialchars($url), $attributes, htmlspecialchars($linkText));
+    }
+
+    private function unsubscribeUrl($messageid, $uid)
+    {
+        $params = array(
+            'p' => self::UNSUBSCRIBE_PAGE,
+            'pi' => self::PLUGIN,
+            'uid' => $uid,
+            'm' => $messageid,
+        );
+
+        return $this->rootUrl . '?' . http_build_query($params, '', '&');
+    }
+
+    public function __construct()
+    {
+        $this->coderoot = dirname(__FILE__) . '/' . self::PLUGIN . '/';
+        $this->settings = array(
+            'subscribers_linktext' => array(
+              'value' => s('Unsubscribe from this list'),
+              'description' => s('The text of the list unsubscribe link'),
+              'type' => 'text',
+              'allowempty' => false,
+              'category' => 'Subscription',
+            ),
+            'subscribers_attributes' => array(
+              'value' => s(''),
+              'description' => s('Additional attributes for the list unsubscribe html &lt;a> element'),
+              'type' => 'text',
+              'allowempty' => true,
+              'category' => 'Subscription',
+            ),
+        );
+        parent::__construct();
+        $this->version = (is_file($f = $this->coderoot . self::VERSION_FILE))
+            ? file_get_contents($f)
+            : '';
+    }
 
     public function adminmenu()
     {
         return $this->pageTitles;
     }
 
-    public function __construct()
-    {
-        $this->coderoot = dirname(__FILE__) . '/SubscribersPlugin/';
-        $this->version = (is_file($f = $this->coderoot . self::VERSION_FILE))
-            ? file_get_contents($f)
-            : '';
-        parent::__construct();
-    }
-
+    /**
+     * Use this hook to set translatable text and retrieve config entries.
+     */
     public function sendFormats()
     {
-        global $plugins;
+        global $plugins, $public_scheme, $pageroot;
 
         require_once $plugins['CommonPlugin']->coderoot . 'Autoloader.php';
         $i18n = new CommonPlugin_I18N($this);
@@ -68,6 +117,9 @@ class SubscribersPlugin extends phplistPlugin
             'history' => $i18n->get('Subscriber History'),
             'subscriptions' => $i18n->get('Subscriptions'),
         );
+        $this->linkText = getConfig('subscribers_linktext');
+        $this->attributes = stripslashes(getConfig('subscribers_attributes'));
+        $this->rootUrl = sprintf('%s://%s%s/', $public_scheme, getConfig('website'), $pageroot);
 
         return;
     }
@@ -86,6 +138,48 @@ class SubscribersPlugin extends phplistPlugin
                     && preg_match('/\d+\.\d+\.\d+/', $plugins['CommonPlugin']->version, $matches)
                     && version_compare($matches[0], '3') > 0,
             'PHP version 5.3.0 or greater' => version_compare(PHP_VERSION, '5.3') > 0,
+        );
+    }
+
+    /**
+     * Replace placeholders in HTML format message.
+     *
+     * @param int    $messageid   the message id
+     * @param string $content     the message content
+     * @param string $destination the destination email address
+     * @param array  $userdata    the user data values
+     *
+     * @return string content with placeholders replaced
+     */
+    public function parseOutgoingHTMLMessage($messageid, $content, $destination, $userdata = null)
+    {
+        $url = $this->unsubscribeUrl($messageid, $userdata['uniqid']);
+
+        return str_ireplace(
+            array('[LISTUNSUBSCRIBE]', '[LISTUNSUBSCRIBEURL]'),
+            array($this->link($this->linkText, $url, $this->attributes), htmlspecialchars($url)),
+            $content
+        );
+    }
+
+    /**
+     * Replace placeholders in text format message.
+     *
+     * @param int    $messageid   the message id
+     * @param string $content     the message content
+     * @param string $destination the destination email address
+     * @param array  $userdata    the user data values
+     *
+     * @return string content with placeholders replaced
+     */
+    public function parseOutgoingTextMessage($messageid, $content, $destination, $userdata = null)
+    {
+        $url = $this->unsubscribeUrl($messageid, $userdata['uniqid']);
+
+        return str_ireplace(
+            array('[LISTUNSUBSCRIBE]', '[LISTUNSUBSCRIBEURL]'),
+            array("$this->linkText $url", $url),
+            $content
         );
     }
 }
