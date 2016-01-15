@@ -58,6 +58,7 @@ This plugin is free but if you install and find it useful then a donation to sup
 ## Version history ##
 
     version     Description
+    2.3.0+20160110  Add placeholder to unsubscribe from a list
     2.2.0+20151025  Show total of campaigns sent
                     Coding standards changes
     2.1.0+20150904  Show totals of campaigns opened and clicked

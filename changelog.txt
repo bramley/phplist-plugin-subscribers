@@ -1,3 +1,6 @@
+version 2.3.0+20160110
+      Add placeholders and page to unsubscribe from a list
+
 version 2.2.0+20151025
       Show the number of campaigns sent to each subscriber
       Changes made by PHP Coding Standards Fixer
