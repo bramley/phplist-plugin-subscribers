@@ -7,6 +7,9 @@ The plugin adds pages to the Subscribers menu:
 * advanced search - search for subscribers and show subscriber attributes with confirmed and blacklisted status
 * subscriber history - shows history events: all, since a start date or those containing specific text
 * subscriptions - lists the number of subscriptions and unsubscriptions for each month with a chart showing the data graphically
+* action subscribers - apply an action to a file of subcriber email addresses
+
+The plugin also provides a placeholder [LISTUNSUBSCRIBE] to remove a subscriber from the list to which the campaign was sent.
 
 ## Installation ##
 
@@ -58,6 +61,7 @@ This plugin is free but if you install and find it useful then a donation to sup
 ## Version history ##
 
     version     Description
+    2.4.0+20160317  Add page to apply action to set of subscribers
     2.3.0+20160110  Add placeholder to unsubscribe from a list
     2.2.0+20151025  Show total of campaigns sent
                     Coding standards changes

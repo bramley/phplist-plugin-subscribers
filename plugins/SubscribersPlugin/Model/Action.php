@@ -1,0 +1,55 @@
+<?php
+/**
+ * SubscribersPlugin for phplist.
+ *
+ * This file is a part of SubscribersPlugin.
+ *
+ * SubscribersPlugin is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ * SubscribersPlugin is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * @author    Duncan Cameron
+ * @copyright 2011-2013 Duncan Cameron
+ * @license   http://www.gnu.org/licenses/gpl.html GNU General Public License, Version 3
+ */
+class SubscribersPlugin_Model_Action extends CommonPlugin_Model
+{
+    const ACTION_UNCONFIRM = 0;
+    const ACTION_BLACKLIST = 1;
+    const ACTION_DELETE = 2;
+    const ACTION_REMOVE = 3;
+    /*
+     *  Inherited protected variables
+     */
+    protected $properties = array(
+        'file' => null,
+        'update' => self::ACTION_UNCONFIRM,
+        'listId' => null,
+        'pattern' => null,
+        'users' => null,
+    );
+    protected $persist = array(
+    );
+
+    /*
+     *  Public methods
+     */
+    public function __construct()
+    {
+        parent::__construct();
+    }
+
+    public function setProperties(array $new)
+    {
+        parent::setproperties($new);
+
+        if (isset($_FILES['file'])) {
+            $this->file = $_FILES['file'];
+        }
+    }
+}

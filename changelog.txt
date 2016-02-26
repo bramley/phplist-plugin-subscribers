@@ -1,3 +1,6 @@
+version 2.4.0+20160317
+      Add page for applying an action to set of subscribers
+
 version 2.3.0+20160110
       Add placeholders and page to unsubscribe from a list
 

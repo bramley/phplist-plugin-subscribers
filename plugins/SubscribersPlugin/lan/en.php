@@ -27,9 +27,11 @@
  */
 $lan = array(
     'plugin_title' => 'Subscribers Plugin',
+/*  Menu items */
     'Advanced search' => 'Advanced search',
     'Subscriber History' => 'Subscriber history',
     'Subscriptions' => 'Subscriptions',
+    'Action subscribers' => 'Action subscribers',
 /*  Advanced Search page */
     'ID' => 'ID',
     'lists' => 'lists',
@@ -68,4 +70,28 @@ $lan = array(
     'blacklisted' => 'Blacklisted',
     'active' => 'Active',
     'unsubscriptions' => 'Unsubscriptions',
+/*  Action page */
+    'Unconfirm' => 'Unconfirm',
+    'Blacklist' => 'Blacklist',
+    'Delete' => 'Delete',
+    'Remove from list' => 'Remove from list',
+    'Select action and subscribers' => 'Select action and subscribers',
+    'Confirm action and subscribers' => 'Confirm action and subscribers',
+    'error_match_not_entered' => 'A partial email address must be entered',
+    'error_no_match' => 'No subscribers matching "%s" found',
+    'upload_error_0' => 'There is no error, the file uploaded with success',
+    'upload_error_1' => 'The uploaded file exceeds the upload_max_filesize directive in php.ini',
+    'upload_error_2' => 'The uploaded file exceeds the MAX_FILE_SIZE directive that was specified in the HTML form',
+    'upload_error_3' => 'The uploaded file was only partially uploaded',
+    'upload_error_4' => 'No file was uploaded',
+    'upload_error_6' => 'Missing a temporary folder',
+    'error_extension' => 'The file extension must be txt or csv',
+    'error_empty' => 'file "%s" appears to be empty',
+    'history_unconfirmed' => 'Unconfirmed',
+    'history_blacklisted' => 'Blacklisted by %s',
+    'history_removed' => 'Removed from list "%s"',
+    'result_blacklisted' => 'Subscribers blacklisted: %d',
+    'result_unconfirmed' => 'Subscribers unconfirmed: %d',
+    'result_deleted' => 'Subscribers deleted: %d',
+    'result_removed' => 'Subscribers removed from list "%s": %d',
 );
