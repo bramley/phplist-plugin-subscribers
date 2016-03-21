@@ -44,11 +44,12 @@ class SubscribersPlugin extends phplistPlugin
     public $name = 'Subscribers Plugin';
     public $enabled = true;
     public $authors = 'Duncan Cameron';
-    public $description = 'Provides pages to display subscriber attributes, subscriber history, and subscriptions.';
+    public $description = 'Provides pages for advanced searching, subscriber history, subscriptions, and actioning subscribers.';
     public $topMenuLinks = array(
         'details' => array('category' => 'subscribers'),
         'history' => array('category' => 'subscribers'),
         'subscriptions' => array('category' => 'subscribers'),
+        'action' => array('category' => 'subscribers'),
     );
     public $publicPages = array(self::UNSUBSCRIBE_PAGE);
     public $documentationUrl = 'https://resources.phplist.com/plugin/subscribers';
@@ -116,6 +117,7 @@ class SubscribersPlugin extends phplistPlugin
             'details' => $i18n->get('Advanced search'),
             'history' => $i18n->get('Subscriber History'),
             'subscriptions' => $i18n->get('Subscriptions'),
+            'action' => $i18n->get('Action subscribers'),
         );
         $this->linkText = getConfig('subscribers_linktext');
         $this->attributes = stripslashes(getConfig('subscribers_attributes'));
