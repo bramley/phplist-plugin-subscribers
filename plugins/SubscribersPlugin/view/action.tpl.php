@@ -53,13 +53,13 @@ input[type="text"], select {
 <?php if (isset($userArea)): ?>
                     <div class="note"><?php echo $this->i18n->get('Review the action and the email addresses, then click Apply or Cancel.'); ?></div>
                     <?php echo $this->i18n->get('Action for each subscriber'); ?>: <br />
-                    <?php echo $updateList; ?>&nbsp;<?php echo $listSelect;?>
+                    <?php echo $actionList; ?>&nbsp;<?php echo $listSelect;?>
                     <?php echo $userArea; ?>
-                    <br><input type="submit" name="action" value="Apply" />
-                    <?php echo $cancel; ?>
+                    <br><?php echo $cancel; ?>
+                    <input type="submit" name="action" value="Apply" />
 <?php else: ?>
                     <?php echo $this->i18n->get('Action for each subscriber'); ?>: <br />
-                    <?php echo $updateList; ?>&nbsp;<?php echo $listSelect;?>
+                    <?php echo $actionList; ?>&nbsp;<?php echo $listSelect;?>
                     <p><?php echo $this->i18n->get('Select file to upload, then click the Upload button'); ?></p>
                     <input type="file" name="file" value="upload" size='48'/>
                     <input type="submit" name="submit" value="Upload" />

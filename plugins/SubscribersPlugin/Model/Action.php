@@ -19,16 +19,12 @@
  */
 class SubscribersPlugin_Model_Action extends CommonPlugin_Model
 {
-    const ACTION_UNCONFIRM = 0;
-    const ACTION_BLACKLIST = 1;
-    const ACTION_DELETE = 2;
-    const ACTION_REMOVE = 3;
     /*
      *  Inherited protected variables
      */
     protected $properties = array(
         'file' => null,
-        'update' => self::ACTION_UNCONFIRM,
+        'action' => null,
         'listId' => null,
         'pattern' => null,
         'users' => null,
@@ -39,8 +35,9 @@ class SubscribersPlugin_Model_Action extends CommonPlugin_Model
     /*
      *  Public methods
      */
-    public function __construct()
+    public function __construct($defaultAction)
     {
+        $this->properties['action'] = $defaultAction;
         parent::__construct();
     }
 

@@ -61,6 +61,7 @@ This plugin is free but if you install and find it useful then a donation to sup
 ## Version history ##
 
     version     Description
+    2.5.0+20160323  Added action to remove from blacklist
     2.4.0+20160317  Add page to apply action to set of subscribers
     2.3.0+20160110  Add placeholder to unsubscribe from a list
     2.2.0+20151025  Show total of campaigns sent
