@@ -35,46 +35,28 @@ input[type="text"], select {
 <div>
     <hr/>
 <?= $toolbar; ?>
-<?php if (isset($result)) : ?>
-    <div style='padding-top: 10px;'>
-        <div class="result"><?= $result; ?></div>
-    </div>
-<?php endif; ?>
-<?php if (isset($error)) : ?>
-    <div style='padding-top: 10px;'>
-        <div class="error"><?= $error; ?></div>
-    </div>
-<?php endif; ?>
     <div style='padding-top: 10px;' >
         <div class="panel">
-            <div class="header"><h2><?= $this->i18n->get('Apply command to a group of subscribers'); ?></h2></div>
+            <div class="header">
+                <h2>
+<?= $this->i18n->get('Confirm action and subscribers'); ?>
+                </h2>
+            </div>
             <div class="content">
                 <form class="inline" enctype="multipart/form-data" method='post' action="<?= $formURL; ?>">
+                    <div class="note">
+<?= $this->i18n->get('Review the action and the email addresses, then click Apply or Cancel.'); ?>
+                    </div>
 <?= $this->i18n->get('Action for each subscriber'); ?>
                     : <br />
 <?= $commandList; ?>
                     &nbsp;
 <?= $listSelect;?>
-                    <div class="note">
-<?= $this->i18n->get('Select file to upload, then click the Upload button'); ?>
-                    </div>
-                    <input type="file" name="file" value="upload" size='48'/>
-                    <input type="submit" name="submit" value="Upload" />
-                    <div class="note">
-<?= $this->i18n->get('Or enter a partial email address to be matched and click the Match button'); ?>
-                    </div>
-                    <input type='text' name='pattern' size='16' value="" />
-                    <input type="submit" name="submit" value="Match" />
+<?= $userArea; ?>
+                    <br>
+<?= $cancel; ?>
+                    <input type="submit" name="submit" value="Apply" />
                 </form>
-            </div>
-        </div>
-    </div>
-    <div style='padding-top: 10px;' >
-        <div class="panel">
-            <div class="header"><h2><?= $this->i18n->get('Validate subscriber email addresses'); ?></h2></div>
-            <div class="content">
-                <p><?= $this->i18n->get('Show subscribers who have an invalid email address'); ?>
-                <a class="button" href="<?= $validateURL; ?>">Validate</a></p>
             </div>
         </div>
     </div>

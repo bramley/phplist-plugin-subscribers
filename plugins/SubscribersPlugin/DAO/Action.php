@@ -54,6 +54,16 @@ class SubscribersPlugin_DAO_Action extends CommonPlugin_DAO_User
         return $this->dbCommand->queryColumn($sql, 'email');
     }
 
+    public function allUsers()
+    {
+        $sql =
+            "SELECT email, id
+            FROM {$this->tables['user']} u
+            ";
+
+        return $this->dbCommand->queryAll($sql);
+    }
+
     public function removeFromList($email, $listId)
     {
         $email = sql_escape($email);

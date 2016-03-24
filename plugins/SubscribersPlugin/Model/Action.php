@@ -24,7 +24,7 @@ class SubscribersPlugin_Model_Action extends CommonPlugin_Model
      */
     protected $properties = array(
         'file' => null,
-        'action' => null,
+        'command' => null,
         'listId' => null,
         'pattern' => null,
         'users' => null,
@@ -35,9 +35,9 @@ class SubscribersPlugin_Model_Action extends CommonPlugin_Model
     /*
      *  Public methods
      */
-    public function __construct($defaultAction)
+    public function __construct($defaultCommand)
     {
-        $this->properties['action'] = $defaultAction;
+        $this->properties['command'] = $defaultCommand;
         parent::__construct();
     }
 

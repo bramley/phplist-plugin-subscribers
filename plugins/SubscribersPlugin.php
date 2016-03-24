@@ -117,7 +117,7 @@ class SubscribersPlugin extends phplistPlugin
             'details' => $i18n->get('Advanced search'),
             'history' => $i18n->get('Subscriber History'),
             'subscriptions' => $i18n->get('Subscriptions'),
-            'action' => $i18n->get('Action subscribers'),
+            'action' => $i18n->get('Subscriber commands'),
         );
         $this->linkText = getConfig('subscribers_linktext');
         $this->attributes = stripslashes(getConfig('subscribers_attributes'));
@@ -136,10 +136,12 @@ class SubscribersPlugin extends phplistPlugin
         global $plugins;
 
         return array(
-            'Common plugin v3 installed' => phpListPlugin::isEnabled('CommonPlugin')
-                    && preg_match('/\d+\.\d+\.\d+/', $plugins['CommonPlugin']->version, $matches)
-                    && version_compare($matches[0], '3') > 0,
-            'PHP version 5.3.0 or greater' => version_compare(PHP_VERSION, '5.3') > 0,
+            'Common plugin v3 installed' => (
+                phpListPlugin::isEnabled('CommonPlugin')
+                && preg_match('/\d+\.\d+\.\d+/', $plugins['CommonPlugin']->version, $matches)
+                && version_compare($matches[0], '3') > 0
+            ),
+            'PHP version 5.4.0 or greater' => version_compare(PHP_VERSION, '5.4') > 0
         );
     }
 
