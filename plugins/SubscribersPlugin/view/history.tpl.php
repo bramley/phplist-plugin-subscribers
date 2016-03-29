@@ -28,10 +28,10 @@
 
 /**
  * Available fields
- * - toolbar: raw HTML output of CommonPlugin_Toolbar
+ * - toolbar: raw HTML output of Toolbar
  * - message: exception message
  * - panel: raw HTML output of UIPanel
- * - listing: raw HTML output of CommonPlugin_Listing.
+ * - listing: raw HTML output of Listing.
  */
 ?>
 <div >

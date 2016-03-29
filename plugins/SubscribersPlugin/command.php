@@ -1,4 +1,7 @@
 <?php
+
+namespace phpList\plugin\SubscribersPlugin;
+
 /**
  * SubscribersPlugin for phplist.
  * 
@@ -25,4 +28,4 @@
  * 
  * @category  phplist
  */
-CommonPlugin_Main::run(new SubscribersPlugin_ControllerFactory());
+\phpList\plugin\Common\Main::run(new ControllerFactory());

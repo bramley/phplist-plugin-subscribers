@@ -1,5 +1,19 @@
 <?php
 
+namespace phpList\plugin\SubscribersPlugin\Controller;
+
+use CHtml;
+use phpList\plugin\Common\Controller;
+use phpList\plugin\Common\DB;
+use phpList\plugin\Common\IExportable;
+use phpList\plugin\Common\IPopulator;
+use phpList\plugin\Common\Listing;
+use phpList\plugin\Common\PageLink;
+use phpList\plugin\Common\PageURL;
+use phpList\plugin\Common\Toolbar;
+use phpList\plugin\Common\WebblerListing;
+use phpList\plugin\SubscribersPlugin\Model\History as Model;
+
 /**
  * SubscribersPlugin for phplist.
  * 
@@ -27,9 +41,9 @@
  * 
  * @category  phplist
  */
-class SubscribersPlugin_Controller_History
-    extends CommonPlugin_Controller
-    implements CommonPlugin_IPopulator, CommonPlugin_IExportable
+class History
+    extends Controller
+    implements IPopulator, IExportable
 {
     const TEMPLATE = '/../view/history.tpl.php';
     const FORMTEMPLATE = '/../view/history_form.tpl.php';
@@ -43,15 +57,15 @@ class SubscribersPlugin_Controller_History
         if (isset($_POST['ShowForm'])) {
             $this->normalise($_POST['ShowForm']);
             $this->model->setProperties($_POST['ShowForm']);
-            $redirect = new CommonPlugin_PageURL();
+            $redirect = new PageURL();
             header("Location: $redirect");
             exit;
         }
         $params = array(
             'model' => $this->model,
         );
-        $toolbar = new CommonPlugin_Toolbar($this);
-        $listing = new CommonPlugin_Listing($this, $this);
+        $toolbar = new Toolbar($this);
+        $listing = new Listing($this, $this);
 
         try {
             $params['listing'] = $listing->display();
@@ -61,7 +75,7 @@ class SubscribersPlugin_Controller_History
         }
         $toolbar->addHelpButton('history');
         $params['toolbar'] = $toolbar->display();
-        $panel = new UIPanel(
+        $panel = new \UIPanel(
             $this->i18n->get('Filter'),
             $this->render(dirname(__FILE__) . self::FORMTEMPLATE, array('model' => $this->model))
         );
@@ -75,11 +89,11 @@ class SubscribersPlugin_Controller_History
     public function __construct()
     {
         parent::__construct();
-        $this->model = new SubscribersPlugin_Model_History(new CommonPlugin_DB());
+        $this->model = new Model(new DB());
         $this->model->setProperties($_GET);
     }
     /*
-     * Implementation of CommonPlugin_IPopulator
+     * Implementation of IPopulator
      */
     public function populate(WebblerListing $w, $start, $limit)
     {
@@ -91,7 +105,7 @@ class SubscribersPlugin_Controller_History
         foreach ($this->model->listEvents($start, $limit) as $row) {
             $w->addElement($row['id']);
             $w->addColumnEmail($row['id'], $this->i18n->get('email'), $row['email'],
-                new CommonPlugin_PageURL('user', array('id' => $row['userid']))
+                new PageURL('user', array('id' => $row['userid']))
             );
             $w->addColumn($row['id'], $this->i18n->get('date'), $row['date']);
             $w->addColumn($row['id'], $this->i18n->get('summary'), $row['summary']);
@@ -116,7 +130,7 @@ class SubscribersPlugin_Controller_History
         return $this->model->totalEvents();
     }
     /*
-     * Implementation of CommonPlugin_IExportable
+     * Implementation of IExportable
      */
     public function exportFileName()
     {

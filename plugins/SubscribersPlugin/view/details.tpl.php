@@ -29,7 +29,7 @@
 /**
  * Available fields
  * - $form: optional raw HTML for attribute search/select form
- * - $listing: raw HTML output of CommonPlugin_Listing.
+ * - $listing: raw HTML output of Listing.
  */
 ?>
 <div>

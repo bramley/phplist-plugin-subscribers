@@ -112,7 +112,7 @@ class SubscribersPlugin extends phplistPlugin
         global $plugins, $public_scheme, $pageroot;
 
         require_once $plugins['CommonPlugin']->coderoot . 'Autoloader.php';
-        $i18n = new CommonPlugin_I18N($this);
+        $i18n = new phpList\plugin\Common\I18N($this);
         $this->pageTitles = array(
             'details' => $i18n->get('Advanced search'),
             'history' => $i18n->get('Subscriber History'),
@@ -139,7 +139,7 @@ class SubscribersPlugin extends phplistPlugin
             'Common plugin v3 installed' => (
                 phpListPlugin::isEnabled('CommonPlugin')
                 && preg_match('/\d+\.\d+\.\d+/', $plugins['CommonPlugin']->version, $matches)
-                && version_compare($matches[0], '3') > 0
+                && version_compare($matches[0], '3.5.3') >= 0
             ),
             'PHP version 5.4.0 or greater' => version_compare(PHP_VERSION, '5.4') > 0
         );

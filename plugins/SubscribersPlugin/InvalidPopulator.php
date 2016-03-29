@@ -1,8 +1,12 @@
 <?php
 
-use phpList\plugin\Common\ImageTag;
+namespace phpList\plugin\SubscribersPlugin;
+
+use phpList\plugin\Common\I18n;
+use phpList\plugin\Common\IPopulator;
 use phpList\plugin\Common\PageLink;
 use phpList\plugin\Common\PageURL;
+use phpList\plugin\Common\WebblerListing;
 
 /**
  * SubscribersPlugin for phplist.
@@ -20,7 +24,7 @@ use phpList\plugin\Common\PageURL;
  * This class populates a listing with invalid email addresses.
  * 
  */
-class SubscribersPlugin_InvalidPopulator implements CommonPlugin_IPopulator
+class InvalidPopulator implements IPopulator
 {
     private $i18n;
     private $invalid;
@@ -28,11 +32,11 @@ class SubscribersPlugin_InvalidPopulator implements CommonPlugin_IPopulator
     /**
      * Constructor.
      *
-     * @param CommonPlugin_I18n $i18n    language selector
-     * @param array             $invalid invalid subscribers - id and email address
+     * @param I18n  $i18n    language selector
+     * @param array $invalid invalid subscribers - id and email address
      * 
      */
-    public function __construct(CommonPlugin_I18n $i18n, array $invalid)
+    public function __construct(I18n $i18n, array $invalid)
     {
         $this->i18n = $i18n;
         $this->invalid = $invalid;

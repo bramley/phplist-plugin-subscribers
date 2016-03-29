@@ -1,5 +1,10 @@
 <?php
 
+namespace phpList\plugin\SubscribersPlugin\DAO;
+
+use phpList\plugin\Common\DAO;
+
+
 /**
  * SubscribersPlugin for phplist.
  * 
@@ -24,7 +29,7 @@
 /**
  * DAO class providing database queries.
  */
-class SubscribersPlugin_DAO_Subscriptions extends CommonPlugin_DAO
+class Subscriptions extends DAO
 {
     /**
      * The number of unsubscriptions for each month in the period range.

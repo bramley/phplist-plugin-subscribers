@@ -1,4 +1,18 @@
 <?php
+
+namespace phpList\plugin\SubscribersPlugin\Controller;
+
+use CHtml;
+use phpList\plugin\Common\Controller;
+use phpList\plugin\Common\DB;
+use phpList\plugin\Common\Listing;
+use phpList\plugin\Common\PageLink;
+use phpList\plugin\Common\PageURL;
+use phpList\plugin\Common\Toolbar;
+use phpList\plugin\SubscribersPlugin\InvalidPopulator;
+use phpList\plugin\SubscribersPlugin\DAO\Command as DAO;
+use phpList\plugin\SubscribersPlugin\Model\Command as Model;
+
 /**
  * SubscribersPlugin for phplist.
  *
@@ -21,11 +35,8 @@
 /**
  * This class is the controller for the plugin providing the action methods.
  */
-use phpList\plugin\Common\DB;
-use phpList\plugin\Common\PageURL;
-use phpList\plugin\Common\Toolbar;
 
-class SubscribersPlugin_Controller_Command extends CommonPlugin_Controller
+class Command extends Controller
 {
     const COMMAND_UNCONFIRM = 0;
     const COMMAND_BLACKLIST = 1;
@@ -270,11 +281,11 @@ class SubscribersPlugin_Controller_Command extends CommonPlugin_Controller
         }
         $_SESSION[self::PLUGIN]['invalid'] = $invalid;
 
-        $populator = new SubscribersPlugin_InvalidPopulator($this->i18n, $invalid);
-        $listing = new CommonPlugin_Listing($this, $populator);
+        $populator = new InvalidPopulator($this->i18n, $invalid);
+        $listing = new Listing($this, $populator);
         $this->toolbar->addExportButton(array('action' => 'exportinvalid'));
         $this->toolbar->addHelpButton('help');
-        $cancel = new CommonPlugin_PageLink(new PageURL(null), 'Cancel', array('class' => 'button'));
+        $cancel = new PageLink(new PageURL(null), 'Cancel', array('class' => 'button'));
         $params = array(
             'toolbar' => $this->toolbar->display(),
             'listing' => $listing->display(),
@@ -297,7 +308,7 @@ class SubscribersPlugin_Controller_Command extends CommonPlugin_Controller
         }
 
         $this->toolbar->addHelpButton('help');
-        $cancel = new CommonPlugin_PageLink(new PageURL(null), 'Cancel', array('class' => 'button'));
+        $cancel = new PageLink(new PageURL(null), 'Cancel', array('class' => 'button'));
         $params = array(
             'toolbar' => $this->toolbar->display(),
             'commandList' => $this->radioButtonList(self::HTML_DISABLED),
@@ -383,8 +394,8 @@ class SubscribersPlugin_Controller_Command extends CommonPlugin_Controller
     public function __construct()
     {
         parent::__construct();
-        $this->dao = new SubscribersPlugin_DAO_Command(new DB());
-        $this->model = new SubscribersPlugin_Model_Command(self::COMMAND_UNCONFIRM);
+        $this->dao = new DAO(new DB());
+        $this->model = new Model(self::COMMAND_UNCONFIRM);
         $this->model->setProperties($_REQUEST);
         $this->toolbar = new Toolbar($this);
     }

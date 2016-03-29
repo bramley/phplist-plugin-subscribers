@@ -1,4 +1,7 @@
 <?php
+
+namespace phpList\plugin\SubscribersPlugin;
+
 /**
  * SubscribersPlugin for phplist.
  * 
@@ -25,10 +28,10 @@
  * 
  * @category  phplist
  */
-if (!(phplistPlugin::isEnabled('CommonPlugin'))) {
+if (!(\phplistPlugin::isEnabled('CommonPlugin'))) {
     echo 'phplist-plugin-common must be installed and enabled to use this plugin';
 
     return;
 }
 
-CommonPlugin_Main::run(new SubscribersPlugin_ControllerFactory());
+\phpList\plugin\Common\Main::run(new ControllerFactory());

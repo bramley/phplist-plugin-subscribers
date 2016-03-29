@@ -28,7 +28,7 @@
 
 /**
  * Available fields
- * - model: SubscribersPlugin_Model.
+ * - model: SubscribersPlugin\Model.
  */
 ?>
 <style type="text/css">

@@ -1,5 +1,9 @@
 <?php
 
+namespace phpList\plugin\SubscribersPlugin;
+
+use phpList\plugin\Common\DB;
+
 if (!(isset($_GET['m']) && ctype_digit($_GET['m']))) {
     echo s('A numeric message id must be specified');
     exit;
@@ -12,7 +16,7 @@ if (!(isset($_GET['uid']))) {
 
 $mid = $_GET['m'];
 $uid = sql_escape($_GET['uid']);
-$dao = new SubscribersPlugin_DAO_Unsubscribe(new phpList\plugin\Common\DB());
+$dao = new DAO\Unsubscribe(new DB());
 
 $row = $dao->userByUniqid($uid);
 

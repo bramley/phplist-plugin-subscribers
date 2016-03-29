@@ -1,4 +1,9 @@
 <?php
+
+namespace phpList\plugin\SubscribersPlugin\DAO;
+
+use phpList\plugin\Common\DAO\User;
+
 /**
  * SubscribersPlugin for phplist.
  * 
@@ -21,7 +26,7 @@
 /**
  * DAO class that provides database access for the unsubscribe function.
  */
-class SubscribersPlugin_DAO_Unsubscribe extends CommonPlugin_DAO_User
+class Unsubscribe extends User
 {
     public function listsForSubscriberMessage($userId, $mId)
     {

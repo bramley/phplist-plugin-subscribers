@@ -1,4 +1,9 @@
 <?php
+
+namespace phpList\plugin\SubscribersPlugin\DAO;
+
+use phpList\plugin\Common\DAO;
+
 /**
  * SubscribersPlugin for phplist.
  * 
@@ -25,7 +30,7 @@
  * 
  * @category  phplist
  */
-class SubscribersPlugin_DAO_Event extends CommonPlugin_DAO
+class Event extends DAO
 {
     public function listEvents($type, $param = null, $start, $limit)
     {

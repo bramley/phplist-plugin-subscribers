@@ -1,4 +1,12 @@
 <?php
+
+namespace phpList\plugin\SubscribersPlugin\Model;
+
+use phpList\plugin\Common\DAO\Attribute as DAOAttribute;
+use phpList\plugin\Common\DAO\Lists as DAOList;
+use phpList\plugin\Common\Model;
+use phpList\plugin\SubscribersPlugin\DAO\User;
+
 /**
  * SubscribersPlugin for phplist.
  * 
@@ -25,7 +33,7 @@
  * 
  * @category  phplist
  */
-class SubscribersPlugin_Model_Details extends CommonPlugin_Model
+class Details extends Model
 {
     /*
      *    private variables
@@ -85,9 +93,9 @@ class SubscribersPlugin_Model_Details extends CommonPlugin_Model
         $this->access = accessLevel('users');
         $this->loginId = ($this->access == 'owner') ? $_SESSION['logindetails']['id'] : '';
 
-        $this->dao = new SubscribersPlugin_DAO_User($db);
-        $this->attributeDAO = new CommonPlugin_DAO_Attribute($db);
-        $this->listDAO = new CommonPlugin_DAO_List($db);
+        $this->dao = new User($db);
+        $this->attributeDAO = new DAOAttribute($db);
+        $this->listDAO = new DAOList($db);
         $this->attributes = $this->attributeDAO->attributesById();
         $this->lists = $this->listDAO->listsForOwner($this->loginId);
 

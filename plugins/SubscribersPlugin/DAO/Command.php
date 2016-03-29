@@ -1,4 +1,10 @@
 <?php
+
+namespace phpList\plugin\SubscribersPlugin\DAO;
+
+use phpList\plugin\Common\DAO\Lists as DAOList;
+use phpList\plugin\Common\DAO\User;
+
 /**
  * SubscribersPlugin for phplist.
  *
@@ -17,14 +23,14 @@
  * @copyright 2011-2013 Duncan Cameron
  * @license   http://www.gnu.org/licenses/gpl.html GNU General Public License, Version 3
  */
-class SubscribersPlugin_DAO_Command extends CommonPlugin_DAO_User
+class Command extends User
 {
     private $listDAO;
 
     public function __construct($db)
     {
         parent::__construct($db);
-        $this->listDAO = new CommonPlugin_DAO_List($db);
+        $this->listDAO = new DAOList($db);
     }
 
     public function listsForOwner($loginid)
