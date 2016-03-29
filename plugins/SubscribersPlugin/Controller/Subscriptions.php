@@ -2,14 +2,11 @@
 
 namespace phpList\plugin\SubscribersPlugin\Controller;
 
-use CHtml;
 use phpList\plugin\Common\Controller;
 use phpList\plugin\Common\DB;
 use phpList\plugin\Common\IExportable;
 use phpList\plugin\Common\IPopulator;
 use phpList\plugin\Common\Listing;
-use phpList\plugin\Common\PageLink;
-use phpList\plugin\Common\PageURL;
 use phpList\plugin\Common\Toolbar;
 use phpList\plugin\Common\WebblerListing;
 use phpList\plugin\SubscribersPlugin\Model\Subscriptions as Model;
@@ -31,7 +28,7 @@ use phpList\plugin\SubscribersPlugin\Model\Subscriptions as Model;
  * @category  phplist
  *
  * @author    Duncan Cameron
- * @copyright 2012-2013 Duncan Cameron
+ * @copyright 2012-2016 Duncan Cameron
  * @license   http://www.gnu.org/licenses/gpl.html GNU General Public License, Version 3
  */
 

@@ -2,7 +2,7 @@
 
 namespace phpList\plugin\SubscribersPlugin;
 
-/**
+/*
  * SubscribersPlugin for phplist.
  * 
  * This file is a part of SubscribersPlugin.
@@ -23,7 +23,7 @@ namespace phpList\plugin\SubscribersPlugin;
  * @license   http://www.gnu.org/licenses/gpl.html GNU General Public License, Version 3
  */
 
-/**
+/*
  * This is the entry code invoked by phplist.
  * 
  * @category  phplist

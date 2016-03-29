@@ -22,7 +22,7 @@ use phpList\plugin\SubscribersPlugin\DAO\Event as DAOEvent;
  * @category  phplist
  *
  * @author    Duncan Cameron
- * @copyright 2011 Duncan Cameron
+ * @copyright 2011-2016 Duncan Cameron
  * @license   http://www.gnu.org/licenses/gpl.html GNU General Public License, Version 3
  */
 

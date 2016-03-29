@@ -17,7 +17,7 @@ The plugin also provides a placeholder [LISTUNSUBSCRIBE] to remove a subscriber 
 
 This plugin is for phplist 3 and now requires php version 5.4 or later. Prior to version 2.6.0 of the plugin, it only required php version 5.3.
 
-It also requires the Common Plugin version 3.5.3 or later to be installed. You should install or upgrade to the latest version. See <https://github.com/bramley/phplist-plugin-common>
+It also requires the Common Plugin version 3 to be installed. You should install or upgrade to the latest version. See <https://github.com/bramley/phplist-plugin-common>
 
 ### Set the plugin directory ###
 You can use a directory outside of the web root by changing the definition of `PLUGIN_ROOTDIR` in config.php.
@@ -59,6 +59,7 @@ This plugin is free but if you install and find it useful then a donation to sup
 ## Version history ##
 
     version     Description
+    2.6.0+20160330  Added command to validate email addresses
     2.5.0+20160323  Added action to remove from blacklist
     2.4.0+20160317  Add page to apply action to set of subscribers
     2.3.0+20160110  Add placeholder to unsubscribe from a list

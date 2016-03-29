@@ -35,7 +35,6 @@ use phpList\plugin\SubscribersPlugin\Model\Command as Model;
 /**
  * This class is the controller for the plugin providing the action methods.
  */
-
 class Command extends Controller
 {
     const COMMAND_UNCONFIRM = 0;
@@ -103,9 +102,9 @@ class Command extends Controller
     /**
      * Applies the command to the set of subscribers.
      *
-     * @param array $users  email addresses
+     * @param array $users   email addresses
      * @param bool  $command The command to be applied
-     * @param bool  $listId List id
+     * @param bool  $listId  List id
      * 
      * @return string a message summarising the command and number of affected subscribers
      */

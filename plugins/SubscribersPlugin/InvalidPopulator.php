@@ -22,7 +22,6 @@ use phpList\plugin\Common\WebblerListing;
 
 /**
  * This class populates a listing with invalid email addresses.
- * 
  */
 class InvalidPopulator implements IPopulator
 {
@@ -34,7 +33,6 @@ class InvalidPopulator implements IPopulator
      *
      * @param I18n  $i18n    language selector
      * @param array $invalid invalid subscribers - id and email address
-     * 
      */
     public function __construct(I18n $i18n, array $invalid)
     {
@@ -48,13 +46,12 @@ class InvalidPopulator implements IPopulator
      * @param WebblerListing $w     listing to be populated
      * @param int            $start index of the first item
      * @param int            $limit maximum number of items to display
-     * 
      */
     public function populate(WebblerListing $w, $start, $limit)
     {
         $end = min($start + $limit, count($this->invalid));
 
-        for ($i = $start; $i < $end; $i++) {
+        for ($i = $start; $i < $end; ++$i) {
             $key = $i + 1;
             $w->addElement($key);
             $w->addColumnHtml(
@@ -73,7 +70,6 @@ class InvalidPopulator implements IPopulator
      * The number of available items.
      *
      * @return int the number of invalid emails
-     * 
      */
     public function total()
     {

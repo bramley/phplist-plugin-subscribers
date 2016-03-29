@@ -22,7 +22,7 @@ use phpList\plugin\SubscribersPlugin\DAO\Subscriptions as DAOSubscriptions;
  * @category  phplist
  *
  * @author    Duncan Cameron
- * @copyright 2012-2013 Duncan Cameron
+ * @copyright 2012-2016 Duncan Cameron
  * @license   http://www.gnu.org/licenses/gpl.html GNU General Public License, Version 3
  */
 

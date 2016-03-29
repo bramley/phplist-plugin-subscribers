@@ -4,7 +4,6 @@ namespace phpList\plugin\SubscribersPlugin\DAO;
 
 use phpList\plugin\Common\DAO;
 
-
 /**
  * SubscribersPlugin for phplist.
  * 
@@ -22,7 +21,7 @@ use phpList\plugin\Common\DAO;
  * @category  phplist
  *
  * @author    Duncan Cameron
- * @copyright 2012-2013 Duncan Cameron
+ * @copyright 2012-2016 Duncan Cameron
  * @license   http://www.gnu.org/licenses/gpl.html GNU General Public License, Version 3
  */
 

@@ -14,7 +14,7 @@
  * GNU General Public License for more details.
  *
  * @author    Duncan Cameron
- * @copyright 2011-2013 Duncan Cameron
+ * @copyright 2011-2016 Duncan Cameron
  * @license   http://www.gnu.org/licenses/gpl.html GNU General Public License, Version 3
  */
 ?>
