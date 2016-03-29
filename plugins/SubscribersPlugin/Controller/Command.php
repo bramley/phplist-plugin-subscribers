@@ -25,7 +25,7 @@ use phpList\plugin\Common\DB;
 use phpList\plugin\Common\PageURL;
 use phpList\plugin\Common\Toolbar;
 
-class SubscribersPlugin_Controller_Action extends CommonPlugin_Controller
+class SubscribersPlugin_Controller_Command extends CommonPlugin_Controller
 {
     const COMMAND_UNCONFIRM = 0;
     const COMMAND_BLACKLIST = 1;
@@ -37,10 +37,10 @@ class SubscribersPlugin_Controller_Action extends CommonPlugin_Controller
     const HTML_DISABLED = 1;
 
     const PLUGIN = 'SubscribersPlugin';
-    const TEMPLATE = '/../view/action.tpl.php';
-    const TEMPLATE_2 = '/../view/action_2.tpl.php';
-    const TEMPLATE_3 = '/../view/action_3.tpl.php';
-    const IDENTIFIER = 'Action Subscribers';
+    const TEMPLATE = '/../view/command.tpl.php';
+    const TEMPLATE_2 = '/../view/command_2.tpl.php';
+    const TEMPLATE_3 = '/../view/command_3.tpl.php';
+    const IDENTIFIER = 'Subscriber Commands';
     /*
      *  Private variables
      */
@@ -383,8 +383,8 @@ class SubscribersPlugin_Controller_Action extends CommonPlugin_Controller
     public function __construct()
     {
         parent::__construct();
-        $this->dao = new SubscribersPlugin_DAO_Action(new DB());
-        $this->model = new SubscribersPlugin_Model_Action(self::COMMAND_UNCONFIRM);
+        $this->dao = new SubscribersPlugin_DAO_Command(new DB());
+        $this->model = new SubscribersPlugin_Model_Command(self::COMMAND_UNCONFIRM);
         $this->model->setProperties($_REQUEST);
         $this->toolbar = new Toolbar($this);
     }

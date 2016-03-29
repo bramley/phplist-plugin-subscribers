@@ -17,7 +17,7 @@
  * @copyright 2011-2013 Duncan Cameron
  * @license   http://www.gnu.org/licenses/gpl.html GNU General Public License, Version 3
  */
-class SubscribersPlugin_Model_Action extends CommonPlugin_Model
+class SubscribersPlugin_Model_Command extends CommonPlugin_Model
 {
     /*
      *  Inherited protected variables

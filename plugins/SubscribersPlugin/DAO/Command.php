@@ -17,7 +17,7 @@
  * @copyright 2011-2013 Duncan Cameron
  * @license   http://www.gnu.org/licenses/gpl.html GNU General Public License, Version 3
  */
-class SubscribersPlugin_DAO_Action extends CommonPlugin_DAO_User
+class SubscribersPlugin_DAO_Command extends CommonPlugin_DAO_User
 {
     private $listDAO;
 
