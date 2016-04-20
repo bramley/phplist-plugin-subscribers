@@ -185,14 +185,13 @@ class Command extends Controller
     }
 
     /**
-     * Extracts email addresses from the uploaded file.
+     * Extracts email addresses from an array of lines.
      * Lines without @ are ignored.
      *
      * @return array email addresses
      */
-    private function loadUsersFromFile()
+    private function extractEmailAddresses(array $emails)
     {
-        $emails = file($this->model->file['tmp_name'], FILE_SKIP_EMPTY_LINES);
         $emails = array_map('trim', $emails);
 
         return array_filter(
@@ -201,6 +200,18 @@ class Command extends Controller
                 return (strpos($item, '@') !== false);
             }
         );
+    }
+
+    /**
+     * Loads user email addresses from the uploaded file.
+     *
+     * @return array email addresses
+     */
+    private function loadUsersFromFile()
+    {
+        $emails = file($this->model->file['tmp_name'], FILE_SKIP_EMPTY_LINES);
+
+        return $this->extractEmailAddresses($emails);
     }
 
     /**
@@ -313,7 +324,7 @@ class Command extends Controller
             'commandList' => $this->radioButtonList(self::HTML_DISABLED),
             'listSelect' => $this->dropDownList(self::HTML_DISABLED),
             'userArea' => CHtml::textArea('users', implode("\n", $this->model->users),
-                array('rows' => '20', 'cols' => '30', 'disabled' => self::HTML_DISABLED)
+                array('rows' => '10', 'cols' => '30', 'disabled' => self::HTML_DISABLED)
             ),
             'formURL' => new PageURL(null, array('action' => 'displayUsers')),
             'cancel' => $cancel,
@@ -340,6 +351,17 @@ class Command extends Controller
                         $users = $this->loadUsersFromFile();
                     }
                     break;
+                case 'Process':
+                    if ($this->model->emails == '') {
+                        $error = $this->i18n->get('emails not entered');
+                        break;
+                    }
+                    $users = $this->extractEmailAddresses(explode("\n", $this->model->emails));
+
+                    if (count($users) === 0) {
+                        $error = $this->i18n->get('no valid email addresses entered');
+                    }
+                    break;
                 case 'Match':
                     if ($this->model->pattern == '') {
                         $error = $this->i18n->get('error_match_not_entered');
@@ -361,7 +383,7 @@ class Command extends Controller
                     $error = 'unrecognised submit ' . $_POST['submit'];
             }
 
-            if (!$error) {
+            if ($error === '') {
                 $this->redirectExit(
                     new PageURL(null, array('action' => 'displayUsers')),
                     array(

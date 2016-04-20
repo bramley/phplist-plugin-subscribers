@@ -56,12 +56,17 @@ input[type="text"], select {
                     &nbsp;
 <?= $listSelect;?>
                     <div class="note">
-<?= $this->i18n->get('Select file to upload, then click the Upload button'); ?>
+<?= $this->i18n->get('Copy/paste a list of email addresses, then click the Process button'); ?>
+                    </div>
+                    <textarea name='emails' rows='5' cols='30' ></textarea>
+                    <input type="submit" name="submit" value="Process" />
+                    <div class="note">
+<?= $this->i18n->get('Or select a file of email addresses to upload, then click the Upload button'); ?>
                     </div>
                     <input type="file" name="file" value="upload" size='48'/>
                     <input type="submit" name="submit" value="Upload" />
                     <div class="note">
-<?= $this->i18n->get('Or enter a partial email address to be matched and click the Match button'); ?>
+<?= $this->i18n->get('Or enter a partial email address to be matched, then click the Match button'); ?>
                     </div>
                     <input type='text' name='pattern' size='16' value="" />
                     <input type="submit" name="submit" value="Match" />

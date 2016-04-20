@@ -31,6 +31,7 @@ class Command extends Model
         'file' => null,
         'command' => null,
         'listId' => null,
+        'emails' => null,
         'pattern' => null,
         'users' => null,
     );

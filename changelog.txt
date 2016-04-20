@@ -1,3 +1,6 @@
+version 2.6.1+20160421
+      Allow email addresses to be pasted into a text area
+
 version 2.6.0+20160330
       Add command to validate email addresses
       Use command instead of action
