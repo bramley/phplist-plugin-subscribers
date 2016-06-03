@@ -1,3 +1,6 @@
+version 2.7.0+20160706
+      Add list subscribe placeholder
+
 version 2.6.2+20160603
       Avoid Excel problem with ID in first column
 

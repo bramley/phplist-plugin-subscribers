@@ -1,7 +1,7 @@
 <?php
 /**
  * SubscribersPlugin for phplist.
- * 
+ *
  * This file is a part of SubscribersPlugin.
  *
  * SubscribersPlugin is free software: you can redistribute it and/or modify
@@ -12,7 +12,7 @@
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * @category  phplist
  *
  * @author    Duncan Cameron
@@ -22,19 +22,21 @@
 
 /**
  * Registers the plugin with phplist.
- * 
+ *
  * @category  phplist
  */
 class SubscribersPlugin extends phplistPlugin
 {
     const VERSION_FILE = 'version.txt';
     const PLUGIN = 'SubscribersPlugin';
+    const LISTSUBSCRIBE_PAGE = 'subscribe';
     const UNSUBSCRIBE_PAGE = 'unsubscribe';
 
     /*
      *  Private variables
      */
-    private $linkText;
+    private $subscribeLinkText;
+    private $unsubscribeLinkText;
     private $rootUrl;
     private $attributes;
 
@@ -51,7 +53,7 @@ class SubscribersPlugin extends phplistPlugin
         'subscriptions' => array('category' => 'subscribers'),
         'command' => array('category' => 'subscribers'),
     );
-    public $publicPages = array(self::UNSUBSCRIBE_PAGE);
+    public $publicPages = array(self::LISTSUBSCRIBE_PAGE, self::UNSUBSCRIBE_PAGE);
     public $documentationUrl = 'https://resources.phplist.com/plugin/subscribers';
 
     /*
@@ -60,6 +62,18 @@ class SubscribersPlugin extends phplistPlugin
     private function link($linkText, $url, $attributes)
     {
         return sprintf('<a href="%s" %s>%s</a>', htmlspecialchars($url), $attributes, htmlspecialchars($linkText));
+    }
+
+    private function listSubscribeUrl($listId, $uid)
+    {
+        $params = array(
+            'p' => self::LISTSUBSCRIBE_PAGE,
+            'pi' => self::PLUGIN,
+            'uid' => $uid,
+            'list' => $listId,
+        );
+
+        return $this->rootUrl . '?' . http_build_query($params, '', '&');
     }
 
     private function unsubscribeUrl($messageid, $uid)
@@ -78,6 +92,13 @@ class SubscribersPlugin extends phplistPlugin
     {
         $this->coderoot = dirname(__FILE__) . '/' . self::PLUGIN . '/';
         $this->settings = array(
+            'subscribers_subscribelinktext' => array(
+              'value' => s('Subscribe'),
+              'description' => s('The text of the list subscribe link'),
+              'type' => 'text',
+              'allowempty' => false,
+              'category' => 'Subscription',
+            ),
             'subscribers_linktext' => array(
               'value' => s('Unsubscribe from this list'),
               'description' => s('The text of the list unsubscribe link'),
@@ -87,7 +108,7 @@ class SubscribersPlugin extends phplistPlugin
             ),
             'subscribers_attributes' => array(
               'value' => s(''),
-              'description' => s('Additional attributes for the list unsubscribe html &lt;a> element'),
+              'description' => s('Additional attributes for the list subscribe and list unsubscribe html &lt;a> elements'),
               'type' => 'text',
               'allowempty' => true,
               'category' => 'Subscription',
@@ -119,7 +140,8 @@ class SubscribersPlugin extends phplistPlugin
             'subscriptions' => $i18n->get('Subscriptions'),
             'command' => $i18n->get('Subscriber commands'),
         );
-        $this->linkText = getConfig('subscribers_linktext');
+        $this->subscribeLinkText = getConfig('subscribers_subscribelinktext');
+        $this->unsubscribeLinkText = getConfig('subscribers_linktext');
         $this->attributes = stripslashes(getConfig('subscribers_attributes'));
         $this->rootUrl = sprintf('%s://%s%s/', $public_scheme, getConfig('website'), $pageroot);
 
@@ -157,13 +179,36 @@ class SubscribersPlugin extends phplistPlugin
      */
     public function parseOutgoingHTMLMessage($messageid, $content, $destination, $userdata = null)
     {
+        error_reporting(-1);
         $url = $this->unsubscribeUrl($messageid, $userdata['uniqid']);
 
-        return str_ireplace(
+        $result = str_ireplace(
             array('[LISTUNSUBSCRIBE]', '[LISTUNSUBSCRIBEURL]'),
-            array($this->link($this->linkText, $url, $this->attributes), htmlspecialchars($url)),
+            array($this->link($this->unsubscribeLinkText, $url, $this->attributes), htmlspecialchars($url)),
             $content
         );
+
+        $result = preg_replace_callback(
+            '/\[LISTSUBSCRIBE:(\d+)]/i',
+            function (array $matches) use ($userdata) {
+                return $this->link(
+                    $this->subscribeLinkText,
+                    $this->listSubscribeUrl($matches[1], $userdata['uniqid']),
+                    $this->attributes
+                );
+            },
+            $result
+        );
+
+        $result = preg_replace_callback(
+            '/\[LISTSUBSCRIBEURL:(\d+)]/i',
+            function (array $matches) use ($userdata) {
+                return htmlspecialchars($this->listSubscribeUrl($matches[1], $userdata['uniqid']));
+            },
+            $result
+        );
+
+        return $result;
     }
 
     /**
@@ -180,10 +225,30 @@ class SubscribersPlugin extends phplistPlugin
     {
         $url = $this->unsubscribeUrl($messageid, $userdata['uniqid']);
 
-        return str_ireplace(
+        $result = str_ireplace(
             array('[LISTUNSUBSCRIBE]', '[LISTUNSUBSCRIBEURL]'),
-            array("$this->linkText $url", $url),
+            array("$this->unsubscribeLinkText $url", $url),
             $content
         );
+
+        $result = preg_replace_callback(
+            '/\[LISTSUBSCRIBE:(\d+)]/i',
+            function (array $matches) use ($userdata) {
+                $url = $this->listSubscribeUrl($matches[1], $userdata['uniqid']);
+
+                return "$this->subscribeLinkText $url";
+            },
+            $result
+        );
+
+        $result = preg_replace_callback(
+            '/\[LISTSUBSCRIBEURL:(\d+)]/i',
+            function (array $matches) use ($userdata) {
+                return $this->listSubscribeUrl($matches[1], $userdata['uniqid']);
+            },
+            $result
+        );
+
+        return $result;
     }
 }

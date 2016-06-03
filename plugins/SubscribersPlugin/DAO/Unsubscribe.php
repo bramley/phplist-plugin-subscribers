@@ -51,4 +51,15 @@ END;
 
         return $this->dbCommand->queryAffectedRows($query);
     }
+
+    public function addSubscriberToList($userId, $listId)
+    {
+        $query = <<<END
+INSERT IGNORE INTO {$this->tables['listuser']}
+(userid, listid, entered, modified)
+VALUES($userId, $listId, now(), now())
+END;
+
+        return $this->dbCommand->queryAffectedRows($query);
+    }
 }

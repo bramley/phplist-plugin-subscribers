@@ -4,54 +4,83 @@ namespace phpList\plugin\SubscribersPlugin;
 
 use phpList\plugin\Common\DB;
 
-if (!(isset($_GET['m']) && ctype_digit($_GET['m']))) {
-    echo s('A numeric message id must be specified');
-    exit;
+function displayResultPage($result, $uid = '')
+{
+    global $pagedata, $PoweredBy, $strUnsubscribeTitle;
+
+    $title = htmlspecialchars($strUnsubscribeTitle);
+    $r = htmlspecialchars($result);
+    $preferencesUrl = htmlspecialchars(getConfig('preferencesurl') . "&uid=$uid");
+
+    echo <<<END
+<title>$title</title>
+{$pagedata['header']}
+<div class='note'>$r</div>
+<h3>To change your details and to choose which lists to be subscribed to, visit your <a href="$preferencesUrl">preferences</a> page.</h3>
+$PoweredBy
+{$pagedata['footer']}
+END;
 }
 
-if (!(isset($_GET['uid']))) {
-    echo s('A uid must be specified');
-    exit;
+function wrapInQuotes($array)
+{
+    return array_map(
+        function ($value) {
+            return '"' . $value . '"';
+        },
+        $array
+    );
 }
 
-$mid = $_GET['m'];
-$uid = sql_escape($_GET['uid']);
-$dao = new DAO\Unsubscribe(new DB());
+function listUnsubscribe()
+{
+    global $strUnsubscribeTitle;
 
-$row = $dao->userByUniqid($uid);
-
-if (!$row) {
-    echo "Unknown uid $uid";
-    exit;
-}
-$userId = $row['id'];
-$email = $row['email'];
-
-$removed = array();
-
-foreach ($dao->listsForSubscriberMessage($userId, $mid) as $row) {
-    $count = $dao->removeSubscriberFromList($userId, $row['listid']);
-
-    if ($count > 0) {
-        $removed[] = $row['name'];
-        addUserHistory(
-            $email,
-            'Removed from list',
-            "Removed from list {$row['listid']} '{$row['name']}' through campaign $mid"
-        );
+    if (!(isset($_GET['m']) && ctype_digit($_GET['m']))) {
+        displayResultPage(s('A numeric message id must be specified'));
+        exit;
     }
+
+    if (!(isset($_GET['uid']))) {
+        displayResultPage(s('A uid must be specified'));
+        exit;
+    }
+
+    $mid = $_GET['m'];
+    $uid = $_GET['uid'];
+    $dao = new DAO\Unsubscribe(new DB());
+
+    $row = $dao->userByUniqid($uid);
+
+    if (!$row) {
+        displayResultPage(s('Unknown uid %s', $uid));
+        exit;
+    }
+    $userId = $row['id'];
+    $email = $row['email'];
+
+    $removed = array();
+
+    foreach ($dao->listsForSubscriberMessage($userId, $mid) as $row) {
+        $count = $dao->removeSubscriberFromList($userId, $row['listid']);
+
+        if ($count > 0) {
+            $removed[] = $row['name'];
+            addUserHistory(
+                $email,
+                'Removed from list',
+                "Removed from list {$row['listid']} '{$row['name']}' through campaign $mid"
+            );
+        }
+    }
+
+    if (count($removed) > 0) {
+        $joined = implode(', ', wrapInQuotes($removed));
+        $result = "$email has been removed from $joined";
+    } else {
+        $result = "$email has not been removed from any lists";
+    }
+    echo displayResultPage($result, $uid);
 }
 
-$page = '<title>' . $strUnsubscribeTitle . '</title>' . "\n";
-$page .= $pagedata['header'];
-
-if (count($removed) > 0) {
-    $joined = implode('", "', $removed);
-    $joined = '"' . $joined . '"';
-    $page .= '<h3>' . $email . ' has been removed from ' . $joined . '</h3>';
-} else {
-    $page .= '<h3>' . $email . ' has not been removed from any lists' . '</h3>';
-}
-$page .= $PoweredBy . '</p>';
-$page .= $pagedata['footer'];
-echo $page;
+listUnsubscribe();
