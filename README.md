@@ -59,6 +59,7 @@ This plugin is free but if you install and find it useful then a donation to sup
 ## Version history ##
 
     version     Description
+    2.6.2+20160603  Avoid Excel problem with export file
     2.6.1+20160421  Allow email addresses to be pasted into a text area
     2.6.0+20160330  Added command to validate email addresses
     2.5.0+20160323  Added action to remove from blacklist

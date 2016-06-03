@@ -99,7 +99,7 @@ class Details
     public function exportFieldNames()
     {
         $result = array();
-        $result[] = $this->i18n->get('ID');
+        $result[] = $this->i18n->get('id');
         $result[] = $this->i18n->get('email');
         $result[] = $this->i18n->get('confirmed_heading');
         $result[] = $this->i18n->get('blacklisted_heading');

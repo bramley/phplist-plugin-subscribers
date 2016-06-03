@@ -1,3 +1,6 @@
+version 2.6.2+20160603
+      Avoid Excel problem with ID in first column
+
 version 2.6.1+20160421
       Allow email addresses to be pasted into a text area
 

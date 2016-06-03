@@ -37,7 +37,7 @@ $lan = array(
     'Subscriber History' => 'Abonnenten-Historie',
     'Subscriptions' => 'Abonnements',
 /*  Advanced Search page */
-    'ID' => 'ID',
+    'id' => 'id',
     'lists' => 'Listen',
     'email' => 'E-Mail',
     'Subscribers' => 'Abonnenten',

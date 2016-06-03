@@ -33,7 +33,7 @@ $lan = array(
     'Subscriptions' => 'Subscriptions',
     'Action subscribers' => 'Action subscribers',
 /*  Advanced Search page */
-    'ID' => 'ID',
+    'id' => 'id',
     'lists' => 'lists',
     'email' => 'email',
     'Subscribers' => 'Subscribers',
