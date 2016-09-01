@@ -1,3 +1,6 @@
+version 2.7.1+20160901
+      Include the English text as fallback for French and German translations
+
 version 2.7.0+20160706
       Add list subscribe placeholder
 

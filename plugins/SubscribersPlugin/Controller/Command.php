@@ -197,7 +197,7 @@ class Command extends Controller
         return array_filter(
             $emails,
             function ($item) {
-                return (strpos($item, '@') !== false);
+                return strpos($item, '@') !== false;
             }
         );
     }
