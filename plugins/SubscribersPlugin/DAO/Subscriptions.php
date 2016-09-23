@@ -75,7 +75,7 @@ class Subscriptions extends DAO
             : "AND PERIOD_DIFF(EXTRACT(YEAR_MONTH FROM now()), EXTRACT(YEAR_MONTH FROM entered)) BETWEEN $start AND $start + $limit - 1";
 
         $sql = "
-            SELECT YEAR(entered) AS year, LPAD(MONTH(entered), 2, '0') AS month,
+            SELECT ANY_VALUE(YEAR(entered)) AS year, ANY_VALUE(LPAD(MONTH(entered), 2, '0')) AS month,
             EXTRACT(YEAR_MONTH FROM entered) AS period,
             SUM(1) AS subscriptions,
             SUM(CASE WHEN confirmed = 1 THEN 1 ELSE 0 END) AS confirmed,

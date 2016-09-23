@@ -1,3 +1,6 @@
+version 2.7.2+20160923
+      Correct query to work with ONLY_FULL_GROUP_BY.
+
 version 2.7.1+20160901
       Include the English text as fallback for French and German translations
 
