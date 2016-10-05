@@ -1,3 +1,6 @@
+version 2.7.3+20161005
+      Avoid use of ANY_VALUE because it applies to mysql 5.7+
+
 version 2.7.2+20160923
       Correct query to work with ONLY_FULL_GROUP_BY.
 
