@@ -1,3 +1,30 @@
+version 2.7.3+20161005
+      Avoid use of ANY_VALUE because it applies to mysql 5.7+
+
+version 2.7.2+20160923
+      Correct query to work with ONLY_FULL_GROUP_BY.
+
+version 2.7.1+20160901
+      Include the English text as fallback for French and German translations
+
+version 2.7.0+20160706
+      Add list subscribe placeholder
+
+version 2.6.2+20160603
+      Avoid Excel problem with ID in first column
+
+version 2.6.1+20160421
+      Allow email addresses to be pasted into a text area
+
+version 2.6.0+20160330
+      Add command to validate email addresses
+      Use command instead of action
+      Use namespaced classes
+      code standard fixes
+
+version 2.5.0+20160323
+      Added action to remove from blacklist.
+
 version 2.4.0+20160317
       Add page for applying an action to set of subscribers
 

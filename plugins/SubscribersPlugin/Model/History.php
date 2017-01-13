@@ -1,4 +1,10 @@
 <?php
+
+namespace phpList\plugin\SubscribersPlugin\Model;
+
+use phpList\plugin\Common\Model;
+use phpList\plugin\SubscribersPlugin\DAO\Event as DAOEvent;
+
 /**
  * SubscribersPlugin for phplist.
  * 
@@ -16,7 +22,7 @@
  * @category  phplist
  *
  * @author    Duncan Cameron
- * @copyright 2011 Duncan Cameron
+ * @copyright 2011-2016 Duncan Cameron
  * @license   http://www.gnu.org/licenses/gpl.html GNU General Public License, Version 3
  */
 
@@ -25,7 +31,7 @@
  * 
  * @category  phplist
  */
-class SubscribersPlugin_Model_History extends CommonPlugin_Model
+class History extends Model
 {
     /*
      *    private variables
@@ -86,7 +92,7 @@ class SubscribersPlugin_Model_History extends CommonPlugin_Model
      */
     public function __construct($db)
     {
-        $this->dao = new SubscribersPlugin_DAO_Event($db);
+        $this->dao = new DAOEvent($db);
         parent::__construct('SubscribersPl_H');
         $this->init();
     }

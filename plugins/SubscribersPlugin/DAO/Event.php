@@ -1,4 +1,9 @@
 <?php
+
+namespace phpList\plugin\SubscribersPlugin\DAO;
+
+use phpList\plugin\Common\DAO;
+
 /**
  * SubscribersPlugin for phplist.
  * 
@@ -16,7 +21,7 @@
  * @category  phplist
  *
  * @author    Duncan Cameron
- * @copyright 2011 Duncan Cameron
+ * @copyright 2011-2016 Duncan Cameron
  * @license   http://www.gnu.org/licenses/gpl.html GNU General Public License, Version 3
  */
 
@@ -25,7 +30,7 @@
  * 
  * @category  phplist
  */
-class SubscribersPlugin_DAO_Event extends CommonPlugin_DAO
+class Event extends DAO
 {
     public function listEvents($type, $param = null, $start, $limit)
     {

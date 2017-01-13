@@ -1,5 +1,10 @@
 <?php
 
+namespace phpList\plugin\SubscribersPlugin\Model;
+
+use phpList\plugin\Common\Model;
+use phpList\plugin\SubscribersPlugin\DAO\Subscriptions as DAOSubscriptions;
+
 /**
  * SubscribersPlugin for phplist.
  * 
@@ -17,14 +22,14 @@
  * @category  phplist
  *
  * @author    Duncan Cameron
- * @copyright 2012-2013 Duncan Cameron
+ * @copyright 2012-2016 Duncan Cameron
  * @license   http://www.gnu.org/licenses/gpl.html GNU General Public License, Version 3
  */
 
 /**
  * This class.
  */
-class SubscribersPlugin_Model_Subscriptions extends CommonPlugin_Model
+class Subscriptions extends Model
 {
     /*
      *    private variables
@@ -97,7 +102,7 @@ class SubscribersPlugin_Model_Subscriptions extends CommonPlugin_Model
     public function __construct($db)
     {
         parent::__construct();
-        $this->dao = new SubscribersPlugin_DAO_Subscriptions($db);
+        $this->dao = new DAOSubscriptions($db);
     }
 
     public function subscriptions($ascendingOrder = true, $start = null, $limit = null)

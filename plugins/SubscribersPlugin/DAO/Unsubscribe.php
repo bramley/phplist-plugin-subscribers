@@ -1,4 +1,9 @@
 <?php
+
+namespace phpList\plugin\SubscribersPlugin\DAO;
+
+use phpList\plugin\Common\DAO\User;
+
 /**
  * SubscribersPlugin for phplist.
  * 
@@ -21,7 +26,7 @@
 /**
  * DAO class that provides database access for the unsubscribe function.
  */
-class SubscribersPlugin_DAO_Unsubscribe extends CommonPlugin_DAO_User
+class Unsubscribe extends User
 {
     public function listsForSubscriberMessage($userId, $mId)
     {
@@ -42,6 +47,17 @@ END;
         $query = <<<END
 DELETE FROM {$this->tables['listuser']}
 WHERE listid = $listId AND userid = $userId
+END;
+
+        return $this->dbCommand->queryAffectedRows($query);
+    }
+
+    public function addSubscriberToList($userId, $listId)
+    {
+        $query = <<<END
+INSERT IGNORE INTO {$this->tables['listuser']}
+(userid, listid, entered, modified)
+VALUES($userId, $listId, now(), now())
 END;
 
         return $this->dbCommand->queryAffectedRows($query);

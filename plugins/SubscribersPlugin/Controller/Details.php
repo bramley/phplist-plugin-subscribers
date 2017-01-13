@@ -1,4 +1,19 @@
 <?php
+
+namespace phpList\plugin\SubscribersPlugin\Controller;
+
+use phpList\plugin\Common\Controller;
+use phpList\plugin\Common\DB;
+use phpList\plugin\Common\IPopulator;
+use phpList\plugin\Common\IExportable;
+use phpList\plugin\Common\ImageTag;
+use phpList\plugin\Common\Listing;
+use phpList\plugin\Common\PageURL;
+use phpList\plugin\Common\Toolbar;
+use phpList\plugin\Common\WebblerListing;
+use phpList\plugin\Common\Widget;
+use phpList\plugin\SubscribersPlugin\Model\Details as Model;
+
 /**
  * SubscribersPlugin for phplist.
  * 
@@ -16,7 +31,7 @@
  * @category  phplist
  *
  * @author    Duncan Cameron
- * @copyright 2011-2013 Duncan Cameron
+ * @copyright 2011-2016 Duncan Cameron
  * @license   http://www.gnu.org/licenses/gpl.html GNU General Public License, Version 3
  */
 
@@ -26,9 +41,9 @@
  * 
  * @category  phplist
  */
-class SubscribersPlugin_Controller_Details
-    extends CommonPlugin_Controller
-    implements CommonPlugin_IPopulator, CommonPlugin_IExportable
+class Details
+    extends Controller
+    implements IPopulator, IExportable
 {
     const TEMPLATE = '/../view/details.tpl.php';
     /*
@@ -43,18 +58,18 @@ class SubscribersPlugin_Controller_Details
         if (isset($_POST['SearchForm'])) {
             $this->normalise($_POST['SearchForm']);
             $this->model->setProperties($_POST['SearchForm'], true);
-            $redirect = new CommonPlugin_PageURL();
+            $redirect = new PageURL();
             header("Location: $redirect");
             exit;
         }
 
-        $toolbar = new CommonPlugin_Toolbar($this);
+        $toolbar = new Toolbar($this);
         $toolbar->addExportButton();
         $toolbar->addHelpButton('details');
-        $listing = new CommonPlugin_Listing($this, $this);
+        $listing = new Listing($this, $this);
         $params = array(
             'toolbar' => $toolbar->display(),
-            'form' => CommonPlugin_Widget::attributeForm($this, $this->model),
+            'form' => Widget::attributeForm($this, $this->model),
             'listing' => $listing->display(),
         );
         echo $this->render(dirname(__FILE__) . self::TEMPLATE, $params);
@@ -65,11 +80,11 @@ class SubscribersPlugin_Controller_Details
     public function __construct()
     {
         parent::__construct();
-        $this->model = new SubscribersPlugin_Model_Details(new CommonPlugin_DB());
+        $this->model = new Model(new DB());
         $this->model->setProperties($_GET);
     }
     /*
-     * Implementation of CommonPlugin_IExportable
+     * Implementation of IExportable
      */
     public function exportFileName()
     {
@@ -84,7 +99,7 @@ class SubscribersPlugin_Controller_Details
     public function exportFieldNames()
     {
         $result = array();
-        $result[] = $this->i18n->get('ID');
+        $result[] = $this->i18n->get('id');
         $result[] = $this->i18n->get('email');
         $result[] = $this->i18n->get('confirmed_heading');
         $result[] = $this->i18n->get('blacklisted_heading');
@@ -121,7 +136,7 @@ class SubscribersPlugin_Controller_Details
         return $result;
     }
     /*
-     * Implementation of CommonPlugin_IPopulator
+     * Implementation of IPopulator
      */
     public function populate(WebblerListing $w, $start, $limit)
     {
@@ -134,15 +149,15 @@ class SubscribersPlugin_Controller_Details
 
         foreach ($this->model->users($start, $limit) as $row) {
             $key = $row['email'];
-            $w->addElement($key, new CommonPlugin_PageURL('user', array('id' => $row['id'])));
+            $w->addElement($key, new PageURL('user', array('id' => $row['id'])));
 
             $value = $row['confirmed']
                 ? ''
-                : new CommonPlugin_ImageTag('no.png', $this->i18n->get('not confirmed'));
+                : new ImageTag('no.png', $this->i18n->get('not confirmed'));
             $w->addColumnHtml($key, $this->i18n->get('confirmed_heading'), $value);
 
             $value = $row['blacklisted']
-                ? new CommonPlugin_ImageTag('user.png', $this->i18n->get('User is blacklisted'))
+                ? new ImageTag('user.png', $this->i18n->get('User is blacklisted'))
                 : '';
             $w->addColumnHtml($key, $this->i18n->get('blacklisted_heading'), $value);
 

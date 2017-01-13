@@ -1,4 +1,9 @@
 <?php
+
+namespace phpList\plugin\SubscribersPlugin\Model;
+
+use phpList\plugin\Common\Model;
+
 /**
  * SubscribersPlugin for phplist.
  *
@@ -14,22 +19,19 @@
  * GNU General Public License for more details.
  *
  * @author    Duncan Cameron
- * @copyright 2011-2013 Duncan Cameron
+ * @copyright 2011-2016 Duncan Cameron
  * @license   http://www.gnu.org/licenses/gpl.html GNU General Public License, Version 3
  */
-class SubscribersPlugin_Model_Action extends CommonPlugin_Model
+class Command extends Model
 {
-    const ACTION_UNCONFIRM = 0;
-    const ACTION_BLACKLIST = 1;
-    const ACTION_DELETE = 2;
-    const ACTION_REMOVE = 3;
     /*
      *  Inherited protected variables
      */
     protected $properties = array(
         'file' => null,
-        'update' => self::ACTION_UNCONFIRM,
+        'command' => null,
         'listId' => null,
+        'emails' => null,
         'pattern' => null,
         'users' => null,
     );
@@ -39,8 +41,9 @@ class SubscribersPlugin_Model_Action extends CommonPlugin_Model
     /*
      *  Public methods
      */
-    public function __construct()
+    public function __construct($defaultCommand)
     {
+        $this->properties['command'] = $defaultCommand;
         parent::__construct();
     }
 

@@ -1,5 +1,16 @@
 <?php
 
+namespace phpList\plugin\SubscribersPlugin\Controller;
+
+use phpList\plugin\Common\Controller;
+use phpList\plugin\Common\DB;
+use phpList\plugin\Common\IExportable;
+use phpList\plugin\Common\IPopulator;
+use phpList\plugin\Common\Listing;
+use phpList\plugin\Common\Toolbar;
+use phpList\plugin\Common\WebblerListing;
+use phpList\plugin\SubscribersPlugin\Model\Subscriptions as Model;
+
 /**
  * SubscribersPlugin for phplist.
  * 
@@ -17,7 +28,7 @@
  * @category  phplist
  *
  * @author    Duncan Cameron
- * @copyright 2012-2013 Duncan Cameron
+ * @copyright 2012-2016 Duncan Cameron
  * @license   http://www.gnu.org/licenses/gpl.html GNU General Public License, Version 3
  */
 
@@ -26,9 +37,9 @@
  * 
  * @category  phplist
  */
-class SubscribersPlugin_Controller_Subscriptions
-    extends CommonPlugin_Controller
-    implements CommonPlugin_IPopulator, CommonPlugin_IExportable
+class Subscriptions
+    extends Controller
+    implements IPopulator, IExportable
 {
     const TEMPLATE = '/../view/subscriptions.tpl.php';
     const IMAGE_HEIGHT = 300;
@@ -91,7 +102,7 @@ class SubscribersPlugin_Controller_Subscriptions
 
             $currentYear = $row['year'];
         }
-        $chart = new Chart('ComboChart');
+        $chart = new \Chart('ComboChart');
         $chart->load($data, 'array');
         $options = array(
             'chartArea' => array('left' => 50, 'width' => '90%'),
@@ -118,12 +129,12 @@ class SubscribersPlugin_Controller_Subscriptions
         global $google_chart_direct;
 
         $params = array();
-        $toolbar = new CommonPlugin_Toolbar($this);
+        $toolbar = new Toolbar($this);
         $toolbar->addExportButton();
         $toolbar->addHelpButton('subscriptions');
         $params['toolbar'] = $toolbar->display();
 
-        $listing = new CommonPlugin_Listing($this, $this);
+        $listing = new Listing($this, $this);
         $listing->sort = false;
         $listing->pager->setItemsPerPage(array(12, 24), 24);
         $params['listing'] = $listing->display();
@@ -139,11 +150,11 @@ class SubscribersPlugin_Controller_Subscriptions
     public function __construct()
     {
         parent::__construct();
-        $this->model = new SubscribersPlugin_Model_Subscriptions(new CommonPlugin_DB());
+        $this->model = new Model(new DB());
         $this->model->setProperties($_GET);
     }
     /*
-     * Implementation of CommonPlugin_IPopulator
+     * Implementation of IPopulator
      */
     public function populate(WebblerListing $w, $start, $limit)
     {
@@ -183,7 +194,7 @@ class SubscribersPlugin_Controller_Subscriptions
     }
 
     /*
-     * Implementation of CommonPlugin_IExportable
+     * Implementation of IExportable
      */
     public function exportFileName()
     {

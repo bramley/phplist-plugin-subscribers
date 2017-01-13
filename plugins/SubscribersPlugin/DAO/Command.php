@@ -1,4 +1,10 @@
 <?php
+
+namespace phpList\plugin\SubscribersPlugin\DAO;
+
+use phpList\plugin\Common\DAO\Lists as DAOList;
+use phpList\plugin\Common\DAO\User;
+
 /**
  * SubscribersPlugin for phplist.
  *
@@ -14,17 +20,17 @@
  * GNU General Public License for more details.
  *
  * @author    Duncan Cameron
- * @copyright 2011-2013 Duncan Cameron
+ * @copyright 2011-2016 Duncan Cameron
  * @license   http://www.gnu.org/licenses/gpl.html GNU General Public License, Version 3
  */
-class SubscribersPlugin_DAO_Action extends CommonPlugin_DAO_User
+class Command extends User
 {
     private $listDAO;
 
     public function __construct($db)
     {
         parent::__construct($db);
-        $this->listDAO = new CommonPlugin_DAO_List($db);
+        $this->listDAO = new DAOList($db);
     }
 
     public function listsForOwner($loginid)
@@ -52,6 +58,16 @@ class SubscribersPlugin_DAO_Action extends CommonPlugin_DAO_User
             ";
 
         return $this->dbCommand->queryColumn($sql, 'email');
+    }
+
+    public function allUsers()
+    {
+        $sql =
+            "SELECT email, id
+            FROM {$this->tables['user']} u
+            ";
+
+        return $this->dbCommand->queryAll($sql);
     }
 
     public function removeFromList($email, $listId)

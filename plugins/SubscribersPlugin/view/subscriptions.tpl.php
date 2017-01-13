@@ -1,4 +1,7 @@
-<?php 
+<?php
+
+namespace phpList\plugin\SubscribersPlugin;
+
 /**
  * SubscribersPlugin for phplist.
  * 
@@ -16,7 +19,7 @@
  * @category  phplist
  *
  * @author    Duncan Cameron
- * @copyright 2012-2013 Duncan Cameron
+ * @copyright 2012-2016 Duncan Cameron
  * @license   http://www.gnu.org/licenses/gpl.html GNU General Public License, Version 3
  */
 
@@ -27,7 +30,7 @@
 /**
  * Available fields
  * - chart: optional chart
- * - listing: optional HTML output of CommonPlugin_Listing.
+ * - listing: optional HTML output of Listing.
  */
 ?>
 <div >
@@ -36,7 +39,7 @@
     <div style='padding-top: 10px;'>
 <?php if (isset($chart)): ?>
     <?php echo $chart; ?>
-        <div id="<?php echo $chart_div; ?>" style="width: 100%; height: <?php echo SubscribersPlugin_Controller_Subscriptions::IMAGE_HEIGHT; ?>px;"></div>
+        <div id="<?php echo $chart_div; ?>" style="width: 100%; height: <?php echo Controller\Subscriptions::IMAGE_HEIGHT; ?>px;"></div>
 <?php endif; ?>
     <div style='padding-top: 10px;'>
 <?php if (isset($listing)) {

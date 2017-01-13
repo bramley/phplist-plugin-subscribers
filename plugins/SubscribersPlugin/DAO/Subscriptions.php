@@ -1,5 +1,9 @@
 <?php
 
+namespace phpList\plugin\SubscribersPlugin\DAO;
+
+use phpList\plugin\Common\DAO;
+
 /**
  * SubscribersPlugin for phplist.
  * 
@@ -17,14 +21,14 @@
  * @category  phplist
  *
  * @author    Duncan Cameron
- * @copyright 2012-2013 Duncan Cameron
+ * @copyright 2012-2016 Duncan Cameron
  * @license   http://www.gnu.org/licenses/gpl.html GNU General Public License, Version 3
  */
 
 /**
  * DAO class providing database queries.
  */
-class SubscribersPlugin_DAO_Subscriptions extends CommonPlugin_DAO
+class Subscriptions extends DAO
 {
     /**
      * The number of unsubscriptions for each month in the period range.
@@ -71,7 +75,8 @@ class SubscribersPlugin_DAO_Subscriptions extends CommonPlugin_DAO
             : "AND PERIOD_DIFF(EXTRACT(YEAR_MONTH FROM now()), EXTRACT(YEAR_MONTH FROM entered)) BETWEEN $start AND $start + $limit - 1";
 
         $sql = "
-            SELECT YEAR(entered) AS year, LPAD(MONTH(entered), 2, '0') AS month,
+            SELECT YEAR(entered) AS year,
+            LPAD(MONTH(entered), 2, '0') AS month,
             EXTRACT(YEAR_MONTH FROM entered) AS period,
             SUM(1) AS subscriptions,
             SUM(CASE WHEN confirmed = 1 THEN 1 ELSE 0 END) AS confirmed,
@@ -81,7 +86,7 @@ class SubscribersPlugin_DAO_Subscriptions extends CommonPlugin_DAO
             FROM {$this->tables['user']} u 
             WHERE YEAR(entered) > 0
             $periodRange
-            GROUP BY period
+            GROUP BY period, year, month
             ORDER BY period
             ";
 

@@ -16,7 +16,7 @@
  * @category  phplist
  *
  * @author    Duncan Cameron
- * @copyright 2011 Duncan Cameron
+ * @copyright 2011-2016 Duncan Cameron
  * @license   http://www.gnu.org/licenses/gpl.html GNU General Public License, Version 3
  */
 
@@ -28,10 +28,10 @@
 
 /**
  * Available fields
- * - toolbar: raw HTML output of CommonPlugin_Toolbar
+ * - toolbar: raw HTML output of Toolbar
  * - message: exception message
  * - panel: raw HTML output of UIPanel
- * - listing: raw HTML output of CommonPlugin_Listing.
+ * - listing: raw HTML output of Listing.
  */
 ?>
 <div >

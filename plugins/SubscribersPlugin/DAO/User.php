@@ -1,4 +1,9 @@
 <?php
+
+namespace phpList\plugin\SubscribersPlugin\DAO;
+
+use phpList\plugin\Common\DAO;
+
 /**
  * SubscribersPlugin for phplist.
  * 
@@ -16,7 +21,7 @@
  * @category  phplist
  *
  * @author    Duncan Cameron
- * @copyright 2011-2013 Duncan Cameron
+ * @copyright 2011-2016 Duncan Cameron
  * @license   http://www.gnu.org/licenses/gpl.html GNU General Public License, Version 3
  */
 
@@ -25,7 +30,7 @@
  * 
  * @category  phplist
  */
-class SubscribersPlugin_DAO_User extends CommonPlugin_DAO
+class User extends DAO
 {
     /**
      * Generates a WHERE expression for the user belonging to the specified list and 

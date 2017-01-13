@@ -16,7 +16,7 @@
  * @category  phplist
  *
  * @author    Duncan Cameron
- * @copyright 2011-2013 Duncan Cameron
+ * @copyright 2011-2016 Duncan Cameron
  * @license   http://www.gnu.org/licenses/gpl.html GNU General Public License, Version 3
  */
 
@@ -33,7 +33,7 @@ $lan = array(
     'Subscriptions' => 'Subscriptions',
     'Action subscribers' => 'Action subscribers',
 /*  Advanced Search page */
-    'ID' => 'ID',
+    'id' => 'id',
     'lists' => 'lists',
     'email' => 'email',
     'Subscribers' => 'Subscribers',
@@ -73,6 +73,7 @@ $lan = array(
 /*  Action page */
     'Unconfirm' => 'Unconfirm',
     'Blacklist' => 'Blacklist',
+    'Unblacklist' => 'Remove from blacklist',
     'Delete' => 'Delete',
     'Remove from list' => 'Remove from list',
     'Select action and subscribers' => 'Select action and subscribers',
@@ -89,8 +90,10 @@ $lan = array(
     'error_empty' => 'file "%s" appears to be empty',
     'history_unconfirmed' => 'Unconfirmed',
     'history_blacklisted' => 'Blacklisted by %s',
+    'history_unblacklisted' => 'Removed from blacklist',
     'history_removed' => 'Removed from list "%s"',
     'result_blacklisted' => 'Subscribers blacklisted: %d',
+    'result_unblacklisted' => 'Subscribers unblacklisted: %d',
     'result_unconfirmed' => 'Subscribers unconfirmed: %d',
     'result_deleted' => 'Subscribers deleted: %d',
     'result_removed' => 'Subscribers removed from list "%s": %d',
