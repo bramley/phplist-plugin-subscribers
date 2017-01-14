@@ -14,7 +14,7 @@
  * GNU General Public License for more details.
  *
  * @author    Duncan Cameron
- * @copyright 2011-2016 Duncan Cameron
+ * @copyright 2011-2017 Duncan Cameron
  * @license   http://www.gnu.org/licenses/gpl.html GNU General Public License, Version 3
  */
 ?>
@@ -59,17 +59,17 @@ input[type="text"], select {
 <?= $this->i18n->get('Copy/paste a list of email addresses, then click the Process button'); ?>
                     </div>
                     <textarea name='emails' rows='5' cols='30' ></textarea>
-                    <input type="submit" name="submit" value="Process" />
+                    <button type="submit" name="submit" value='Process'><?= $this->i18n->get('Process'); ?></button>
                     <div class="note">
 <?= $this->i18n->get('Or select a file of email addresses to upload, then click the Upload button'); ?>
                     </div>
                     <input type="file" name="file" value="upload" size='48'/>
-                    <input type="submit" name="submit" value="Upload" />
+                    <button type="submit" name="submit" value='Upload'><?= $this->i18n->get('Upload'); ?></button>
                     <div class="note">
 <?= $this->i18n->get('Or enter a partial email address to be matched, then click the Match button'); ?>
                     </div>
                     <input type='text' name='pattern' size='16' value="" />
-                    <input type="submit" name="submit" value="Match" />
+                    <button type="submit" name="submit" value='Match'><?= $this->i18n->get('Match'); ?></button>
                 </form>
             </div>
         </div>
@@ -79,7 +79,7 @@ input[type="text"], select {
             <div class="header"><h2><?= $this->i18n->get('Validate subscriber email addresses'); ?></h2></div>
             <div class="content">
                 <p><?= $this->i18n->get('Show subscribers who have an invalid email address'); ?>
-                <a class="button" href="<?= $validateURL; ?>">Validate</a></p>
+                <a class="button" href="<?= $validateURL; ?>"><?= $this->i18n->get('Validate'); ?></a></p>
             </div>
         </div>
     </div>

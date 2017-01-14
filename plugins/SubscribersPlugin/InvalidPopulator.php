@@ -16,7 +16,7 @@ use phpList\plugin\Common\WebblerListing;
  * @category  phplist
  *
  * @author    Duncan Cameron
- * @copyright 2011-2016 Duncan Cameron
+ * @copyright 2011-2017 Duncan Cameron
  * @license   http://www.gnu.org/licenses/gpl.html GNU General Public License, Version 3
  */
 
@@ -49,6 +49,8 @@ class InvalidPopulator implements IPopulator
      */
     public function populate(WebblerListing $w, $start, $limit)
     {
+        $w->setTitle($this->i18n->get('Subscribers with an invalid email address'));
+        $w->setElementHeading('#');
         $end = min($start + $limit, count($this->invalid));
 
         for ($i = $start; $i < $end; ++$i) {

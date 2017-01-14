@@ -14,7 +14,7 @@
  * GNU General Public License for more details.
  *
  * @author    Duncan Cameron
- * @copyright 2011-2016 Duncan Cameron
+ * @copyright 2011-2017 Duncan Cameron
  * @license   http://www.gnu.org/licenses/gpl.html GNU General Public License, Version 3
  */
 ?>
@@ -22,13 +22,8 @@
     <hr/>
 <?= $toolbar; ?>
     <div style='padding-top: 10px;' >
-        <div class="panel">
-            <div class="header"><h2><?= $this->i18n->get('Subscribers with an invalid email address'); ?></h2></div>
-            <div class="content">
 <?= $listing ?>
-                <br>
+        <br>
 <?= $cancel; ?>
-            </div>
-        </div>
     </div>
 </div>

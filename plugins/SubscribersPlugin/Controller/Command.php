@@ -28,7 +28,7 @@ use phpList\plugin\SubscribersPlugin\Model\Command as Model;
  * GNU General Public License for more details.
  *
  * @author    Duncan Cameron
- * @copyright 2011-2016 Duncan Cameron
+ * @copyright 2011-2017 Duncan Cameron
  * @license   http://www.gnu.org/licenses/gpl.html GNU General Public License, Version 3
  */
 
@@ -295,7 +295,7 @@ class Command extends Controller
         $listing = new Listing($this, $populator);
         $this->toolbar->addExportButton(array('action' => 'exportinvalid'));
         $this->toolbar->addHelpButton('help');
-        $cancel = new PageLink(new PageURL(null), 'Cancel', array('class' => 'button'));
+        $cancel = new PageLink(new PageURL(null), $this->i18n->get('Cancel'), array('class' => 'button'));
         $params = array(
             'toolbar' => $this->toolbar->display(),
             'listing' => $listing->display(),
@@ -318,7 +318,7 @@ class Command extends Controller
         }
 
         $this->toolbar->addHelpButton('help');
-        $cancel = new PageLink(new PageURL(null), 'Cancel', array('class' => 'button'));
+        $cancel = new PageLink(new PageURL(null), $this->i18n->get('Cancel'), array('class' => 'button'));
         $params = array(
             'toolbar' => $this->toolbar->display(),
             'commandList' => $this->radioButtonList(self::HTML_DISABLED),

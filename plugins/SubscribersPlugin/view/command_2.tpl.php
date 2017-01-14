@@ -14,7 +14,7 @@
  * GNU General Public License for more details.
  *
  * @author    Duncan Cameron
- * @copyright 2011-2016 Duncan Cameron
+ * @copyright 2011-2017 Duncan Cameron
  * @license   http://www.gnu.org/licenses/gpl.html GNU General Public License, Version 3
  */
 ?>
@@ -55,7 +55,7 @@ input[type="text"], select {
 <?= $userArea; ?>
                     <br>
 <?= $cancel; ?>
-                    <input type="submit" name="submit" value="Apply" />
+                    <button type="submit" name="submit" value='Apply'><?= $this->i18n->get('Apply'); ?></button>
                 </form>
             </div>
         </div>
