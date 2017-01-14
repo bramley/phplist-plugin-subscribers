@@ -295,7 +295,7 @@ class Command extends Controller
         $listing = new Listing($this, $populator);
         $this->toolbar->addExportButton(array('action' => 'exportinvalid'));
         $this->toolbar->addHelpButton('help');
-        $cancel = new PageLink(new PageURL(null), 'Cancel', array('class' => 'button'));
+        $cancel = new PageLink(new PageURL(null), $this->i18n->get('Cancel'), array('class' => 'button'));
         $params = array(
             'toolbar' => $this->toolbar->display(),
             'listing' => $listing->display(),
@@ -318,7 +318,7 @@ class Command extends Controller
         }
 
         $this->toolbar->addHelpButton('help');
-        $cancel = new PageLink(new PageURL(null), 'Cancel', array('class' => 'button'));
+        $cancel = new PageLink(new PageURL(null), $this->i18n->get('Cancel'), array('class' => 'button'));
         $params = array(
             'toolbar' => $this->toolbar->display(),
             'commandList' => $this->radioButtonList(self::HTML_DISABLED),
@@ -344,14 +344,14 @@ class Command extends Controller
             $error = '';
 
             switch ($_POST['submit']) {
-                case 'Upload':
+                case $this->i18n->get('Upload'):
                     $error = $this->validateFile();
 
                     if ($error == '') {
                         $users = $this->loadUsersFromFile();
                     }
                     break;
-                case 'Process':
+                case $this->i18n->get('Process'):
                     if ($this->model->emails == '') {
                         $error = $this->i18n->get('emails not entered');
                         break;
@@ -362,7 +362,7 @@ class Command extends Controller
                         $error = $this->i18n->get('no valid email addresses entered');
                     }
                     break;
-                case 'Match':
+                case $this->i18n->get('Match'):
                     if ($this->model->pattern == '') {
                         $error = $this->i18n->get('error_match_not_entered');
                         break;
