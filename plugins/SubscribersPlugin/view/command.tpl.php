@@ -59,17 +59,17 @@ input[type="text"], select {
 <?= $this->i18n->get('Copy/paste a list of email addresses, then click the Process button'); ?>
                     </div>
                     <textarea name='emails' rows='5' cols='30' ></textarea>
-                    <input type="submit" name="submit" value="Process" />
+                    <input type="submit" name="submit" value=<?= $this->i18n->get('Process'); ?> />
                     <div class="note">
 <?= $this->i18n->get('Or select a file of email addresses to upload, then click the Upload button'); ?>
                     </div>
                     <input type="file" name="file" value="upload" size='48'/>
-                    <input type="submit" name="submit" value="Upload" />
+                    <input type="submit" name="submit" value=<?= $this->i18n->get('Upload'); ?> />
                     <div class="note">
 <?= $this->i18n->get('Or enter a partial email address to be matched, then click the Match button'); ?>
                     </div>
                     <input type='text' name='pattern' size='16' value="" />
-                    <input type="submit" name="submit" value="Match" />
+                    <input type="submit" name="submit" value="<?= $this->i18n->get('Match'); ?>" />
                 </form>
             </div>
         </div>
@@ -79,7 +79,7 @@ input[type="text"], select {
             <div class="header"><h2><?= $this->i18n->get('Validate subscriber email addresses'); ?></h2></div>
             <div class="content">
                 <p><?= $this->i18n->get('Show subscribers who have an invalid email address'); ?>
-                <a class="button" href="<?= $validateURL; ?>">Validate</a></p>
+                <a class="button" href="<?= $validateURL; ?>"><?= $this->i18n->get('Validate'); ?></a></p>
             </div>
         </div>
     </div>

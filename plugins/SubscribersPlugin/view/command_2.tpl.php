@@ -55,7 +55,7 @@ input[type="text"], select {
 <?= $userArea; ?>
                     <br>
 <?= $cancel; ?>
-                    <input type="submit" name="submit" value="Apply" />
+                    <input type="submit" name="submit" value=<?= $this->i18n->get('Apply'); ?> />
                 </form>
             </div>
         </div>
