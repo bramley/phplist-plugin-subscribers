@@ -1,3 +1,10 @@
+version 2.7.4+20170114
+      Use exact match when searching on checkboxgroup attribute
+MarcelvC (1):
+      Updated German translation;
+      made buttons translatable
+      Fixes #11
+
 version 2.7.3+20161005
       Avoid use of ANY_VALUE because it applies to mysql 5.7+
 

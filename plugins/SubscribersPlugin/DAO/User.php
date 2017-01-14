@@ -71,12 +71,13 @@ class User extends DAO
     {
         $attr_fields = '';
         $attr_join = '';
+        $doSearch = $searchTerm !== '';
 
         foreach ($attributes as $attr) {
             $id = $attr['id'];
             $tableName = $this->table_prefix . 'listattr_' . $attr['tablename'];
 
-            $thisJoin = "\n" . (($searchTerm && $searchAttr == $id) ? '' : 'LEFT ');
+            $thisJoin = "\n" . (($doSearch && $searchAttr == $id) ? '' : 'LEFT ');
 
             switch ($attr['type']) {
             case 'radio':
@@ -84,16 +85,25 @@ class User extends DAO
                 $thisJoin .= "JOIN ({$this->tables['user_attribute']} ua{$id} JOIN {$tableName} la{$id} ON la{$id}.id = ua{$id}.value)
                     ON ua{$id}.userid = u.id AND ua{$id}.attributeid = {$id}";
 
-                if ($searchTerm && $searchAttr == $id) {
+                if ($doSearch && $searchAttr == $id) {
                     $thisJoin .= " AND la{$id}.name LIKE '%$searchTerm%'";
                 }
                 $attr_fields .= ", la{$id}.name as attr{$id}";
+                break;
+            case 'checkboxgroup':
+                $thisJoin .= "JOIN {$this->tables['user_attribute']} ua{$id} 
+                    ON ua{$id}.userid = u.id AND ua{$id}.attributeid = {$id}";
+
+                if ($doSearch && $searchAttr == $id) {
+                    $thisJoin .= " AND FIND_IN_SET('$searchTerm', COALESCE(ua{$id}.value, '')) > 0";
+                }
+                $attr_fields .= ", ua{$id}.value as attr{$id}";
                 break;
             default:
                 $thisJoin .= "JOIN {$this->tables['user_attribute']} ua{$id} 
                     ON ua{$id}.userid = u.id AND ua{$id}.attributeid = {$id}";
 
-                if ($searchTerm && $searchAttr == $id) {
+                if ($doSearch && $searchAttr == $id) {
                     $thisJoin .= " AND ua{$id}.value LIKE '%$searchTerm%' ";
                 }
                 $attr_fields .= ", ua{$id}.value as attr{$id}";
@@ -111,12 +121,13 @@ class User extends DAO
         /*
          * 
          */
+        $doSearch = $searchTerm !== '';
         $searchTerm = sql_escape($searchTerm);
         list($attr_join, $attr_fields) = $this->userAttributeJoin($attributes, $searchTerm, $searchAttr);
         $limitClause = is_null($start) ? '' : "LIMIT $start, $limit";
         $w = array();
 
-        if ($searchTerm) {
+        if ($doSearch) {
             if ($searchAttr == 'email') {
                 $w[] = "u.email LIKE '%$searchTerm%'";
             } elseif ($searchAttr == 'id') {
@@ -173,16 +184,17 @@ class User extends DAO
 
     public function totalUsers($listID, $owner, $attributes, $searchTerm, $searchAttr, $confirmed = 0, $blacklisted = 0)
     {
+        $doSearch = $searchTerm !== '';
         $searchTerm = sql_escape($searchTerm);
 
-        if ($searchTerm) {
+        if ($doSearch) {
             list($attr_join) = $this->userAttributeJoin($attributes, $searchTerm, $searchAttr);
         } else {
             $attr_join = '';
         }
         $w = array();
 
-        if ($searchTerm) {
+        if ($doSearch) {
             if ($searchAttr == 'email') {
                 $w[] = "u.email LIKE '%$searchTerm%'";
             } elseif ($searchAttr == 'id') {

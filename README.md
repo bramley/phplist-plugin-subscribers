@@ -7,7 +7,7 @@ The plugin adds pages to the Subscribers menu:
 * advanced search - search for subscribers and show subscriber attributes with confirmed and blacklisted status
 * subscriber history - shows history events: all, since a start date or those containing specific text
 * subscriptions - lists the number of subscriptions and unsubscriptions for each month with a chart showing the data graphically
-* action subscribers - apply an action to a file of subcriber email addresses
+* subscriber commands - apply a command to a file or group of subcriber email addresses
 
 The plugin also provides a placeholder [LISTUNSUBSCRIBE] to remove a subscriber from the list to which the campaign was sent.
 
@@ -15,7 +15,7 @@ The plugin also provides a placeholder [LISTUNSUBSCRIBE] to remove a subscriber 
 
 ### Dependencies ###
 
-This plugin is for phplist 3 and now requires php version 5.4 or later. Prior to version 2.6.0 of the plugin, it only required php version 5.3.
+This plugin is for phplist 3.2.5 or later and now requires php version 5.4 or later. Prior to version 2.6.0 of the plugin, it only required php version 5.3.
 
 It also requires the Common Plugin version 3 to be installed. You should install or upgrade to the latest version. See <https://github.com/bramley/phplist-plugin-common>
 
@@ -43,6 +43,10 @@ This should contain
 * the file SubscribersPlugin.php
 * the directory SubscribersPlugin
 
+## Usage ##
+
+For guidance on using the plugin see the plugin's page within the phplist documentation site <https://resources.phplist.com/plugin/subscribers>
+
 ## Known problems ##
 
 ### Export fails with "Error, incorrect session token" ###
@@ -59,6 +63,8 @@ This plugin is free but if you install and find it useful then a donation to sup
 ## Version history ##
 
     version     Description
+    2.7.4+20170114  Improve German translation
+                    Use exact match when searching on checkboxgroup attribute
     2.7.3+20161005  Avoid dependency on mysql 5.7
     2.7.2+20160923  Correct query when using GROUP BY
     2.7.1+20160901  Update translations

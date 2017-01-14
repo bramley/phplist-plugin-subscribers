@@ -158,6 +158,7 @@ class SubscribersPlugin extends phplistPlugin
         global $plugins;
 
         return array(
+            'phpList version 3.2.5 or later' => version_compare(VERSION, '3.2.5') >= 0,
             'Common plugin v3 installed' => (
                 phpListPlugin::isEnabled('CommonPlugin')
                 && preg_match('/\d+\.\d+\.\d+/', $plugins['CommonPlugin']->version, $matches)
