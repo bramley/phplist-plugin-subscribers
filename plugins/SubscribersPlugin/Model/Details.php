@@ -1,12 +1,4 @@
 <?php
-
-namespace phpList\plugin\SubscribersPlugin\Model;
-
-use phpList\plugin\Common\DAO\Attribute as DAOAttribute;
-use phpList\plugin\Common\DAO\Lists as DAOList;
-use phpList\plugin\Common\Model;
-use phpList\plugin\SubscribersPlugin\DAO\User;
-
 /**
  * SubscribersPlugin for phplist.
  * 
@@ -21,18 +13,22 @@ use phpList\plugin\SubscribersPlugin\DAO\User;
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
  * 
- * @category  phplist
- *
  * @author    Duncan Cameron
- * @copyright 2011-2016 Duncan Cameron
+ * @copyright 2011-2017 Duncan Cameron
  * @license   http://www.gnu.org/licenses/gpl.html GNU General Public License, Version 3
  */
 
 /**
  * This class holds the properties entered in the search form.
- * 
- * @category  phplist
  */
+namespace phpList\plugin\SubscribersPlugin\Model;
+
+use phpList\plugin\Common\DAO\Attribute as DAOAttribute;
+use phpList\plugin\Common\DAO\Lists as DAOList;
+use phpList\plugin\Common\Model;
+use phpList\plugin\SubscribersPlugin\CbgConverter;
+use phpList\plugin\SubscribersPlugin\DAO\User;
+
 class Details extends Model
 {
     /*
@@ -71,18 +67,19 @@ class Details extends Model
     /*
      *    Private methods
      */
-    private function filter($v)
-    {
-        return isset($this->attributes[$v]);
-    }
-
     private function verifySelectedAttributes()
     {
         /*         
          * remove selected attributes that no longer exist and re-index
          */
-        $this->properties['selectedAttrs']
-            = array_values(array_filter($this->properties['selectedAttrs'], array($this, 'filter')));
+        $this->properties['selectedAttrs'] = array_values(
+            array_filter(
+                $this->properties['selectedAttrs'],
+                function ($v) {
+                    return isset($this->attributes[$v]);
+                }
+            )
+        );
     }
     /*
      *    Public methods
@@ -102,13 +99,39 @@ class Details extends Model
         $this->verifySelectedAttributes();
     }
 
+    /**
+     * Runs the query for subscribers using form selection fields held in the model.
+     * The results for checkbox group attributes are post-processed by converting the set of attribute value ids to the
+     * attribute value names.
+     *
+     * @param int|null $start
+     * @param int|null $limit
+     *
+     * @return iterator
+     */
     public function users($start = null, $limit = null)
     {
-        return $this->dao->users($this->listID, $this->loginId, $this->attributes,
+        $users = $this->dao->users($this->listID, $this->loginId, $this->attributes,
             $this->searchTerm, $this->searchBy, $this->confirmed, $this->blacklisted, $start, $limit
         );
+
+        $cbgAttributes = array_filter(
+            $this->attributes,
+            function ($attr) {
+                return $attr['type'] == 'checkboxgroup';
+            }
+        );
+
+        return count($cbgAttributes) > 0
+            ? new CbgConverter($users, $cbgAttributes, $this->dao)
+            : $users;
     }
 
+    /**
+     * Runs the query for the total number of subscribers using form fields held in the model.
+     *
+     * @return int the number of subscribers matching the selection conditions
+     */
     public function totalUsers()
     {
         return $this->dao->totalUsers(

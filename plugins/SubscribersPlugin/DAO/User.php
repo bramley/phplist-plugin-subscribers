@@ -21,7 +21,7 @@ use phpList\plugin\Common\DAO;
  * @category  phplist
  *
  * @author    Duncan Cameron
- * @copyright 2011-2016 Duncan Cameron
+ * @copyright 2011-2017 Duncan Cameron
  * @license   http://www.gnu.org/licenses/gpl.html GNU General Public License, Version 3
  */
 
@@ -65,7 +65,8 @@ class User extends DAO
      * @param string $searchTerm optional attribute value to be matched
      * @param int    $searchAttr optional attribute id to be matched
      *
-     * @return string WHERE expression
+     * @return array [0] joins for the FROM table references
+     *               [1] attribute fields for the SELECT expression
      */
     private function userAttributeJoin($attributes, $searchTerm, $searchAttr)
     {
@@ -95,7 +96,35 @@ class User extends DAO
                     ON ua{$id}.userid = u.id AND ua{$id}.attributeid = {$id}";
 
                 if ($doSearch && $searchAttr == $id) {
-                    $thisJoin .= " AND FIND_IN_SET('$searchTerm', COALESCE(ua{$id}.value, '')) > 0";
+                    /*
+                     * search term can have multiple values
+                     * want to select subscribers whose attribute value matches any/all of the terms
+                     */
+                    if (strpos($searchTerm, '+') === false) {
+                        $separator = ',';
+                        $combineOp = ' OR ' ;
+                    } else {
+                        $separator = '+';
+                        $combineOp = ' AND ' ;
+                    }
+                    $terms = explode($separator, $searchTerm);
+                    $parts = array();
+
+                    foreach ($terms as $term) {
+                        $parts[] = <<<END
+                            FIND_IN_SET(
+                                IFNULL(
+                                    (SELECT id
+                                    FROM $tableName
+                                    WHERE name = '$term'),
+                                    0
+                                ),
+                                IFNULL(ua{$id}.value, '')
+                            ) > 0
+END;
+                    }
+                    $combined = implode($combineOp, $parts);
+                    $thisJoin .= " AND\n($combined)";
                 }
                 $attr_fields .= ", ua{$id}.value as attr{$id}";
                 break;
@@ -228,5 +257,26 @@ class User extends DAO
             $where";
 
         return $this->dbCommand->queryOne($sql, 't');
+    }
+
+    /**
+     * Look-up the names for a set of checkbox group attribute value ids
+     * e.g. 1,3,4 => ['red', 'blue', 'yellow'].
+     *
+     * @param array  $attr   attribute
+     * @param string $cbgIds comma-separated list of value ids
+     *
+     * @return array
+     */
+    public function cbgNames(array $attr, $cbgIds)
+    {
+        $tableName = $this->table_prefix . 'listattr_' . $attr['tablename'];
+        $sql = <<<END
+SELECT name
+FROM $tableName
+WHERE id IN ($cbgIds)
+END;
+
+        return $this->dbCommand->queryColumn($sql, 'name');
     }
 }
