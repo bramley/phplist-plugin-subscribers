@@ -161,7 +161,8 @@ class Subscriptions
         /*
          * Populates the webbler list with subscription details
          */
-        $w->setTitle($this->i18n->get('period'));
+        $w->setTitle($this->i18n->get('Subscriptions'));
+        $w->setElementHeading($this->i18n->get('period'));
 
         $sumSubscriptions = $sumConfirmed = $sumUnconfirmed = $sumBlacklisted = $sumActive = $sumUnsubscriptions = 0;
         $rows = $this->model->subscriptions(false, $start, $limit);

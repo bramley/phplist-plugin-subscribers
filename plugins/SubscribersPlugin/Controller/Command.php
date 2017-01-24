@@ -294,7 +294,6 @@ class Command extends Controller
         $populator = new InvalidPopulator($this->i18n, $invalid);
         $listing = new Listing($this, $populator);
         $this->toolbar->addExportButton(array('action' => 'exportinvalid'));
-        $this->toolbar->addHelpButton('help');
         $cancel = new PageLink(new PageURL(null), $this->i18n->get('Cancel'), array('class' => 'button'));
         $params = array(
             'toolbar' => $this->toolbar->display(),
@@ -317,7 +316,6 @@ class Command extends Controller
             $this->redirectExit(new PageURL(), array('result' => $result));
         }
 
-        $this->toolbar->addHelpButton('help');
         $cancel = new PageLink(new PageURL(null), $this->i18n->get('Cancel'), array('class' => 'button'));
         $params = array(
             'toolbar' => $this->toolbar->display(),
@@ -401,7 +399,6 @@ class Command extends Controller
         }
         unset($_SESSION[self::PLUGIN]);
 
-        $this->toolbar->addHelpButton('help');
         $params += array(
             'toolbar' => $this->toolbar->display(),
             'formURL' => new PageURL(),
@@ -419,5 +416,6 @@ class Command extends Controller
         $this->model = new Model(self::COMMAND_UNCONFIRM);
         $this->model->setProperties($_REQUEST);
         $this->toolbar = new Toolbar($this);
+        $this->toolbar->addHelpButton('command');
     }
 }

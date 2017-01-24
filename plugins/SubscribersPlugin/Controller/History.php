@@ -99,10 +99,11 @@ class History
          * Populates the webbler list with event details
          */
         $w->setTitle($this->i18n->get('Events'));
+        $w->setElementHeading($this->i18n->get('Event'));
 
         foreach ($this->model->listEvents($start, $limit) as $row) {
             $w->addElement($row['id']);
-            $w->addColumnEmail($row['id'], $this->i18n->get('email'), $row['email'],
+            $w->addColumnEmail($row['id'], $this->i18n->get('Subscriber'), $row['email'],
                 new PageURL('user', array('id' => $row['userid']))
             );
             $w->addColumn($row['id'], $this->i18n->get('date'), $row['date']);

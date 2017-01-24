@@ -146,6 +146,7 @@ class Details
         $selectedAttrs = $this->model->selectedAttrs;
         $attributes = $this->model->attributes;
         $w->setTitle($this->i18n->get('Subscribers'));
+        $w->setElementHeading($this->i18n->get('Subscriber'));
 
         foreach ($this->model->users($start, $limit) as $row) {
             $key = $row['email'];

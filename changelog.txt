@@ -1,3 +1,9 @@
+version 2.8.0+20170124
+      Display and search for the real values for checkbox group attributes.
+      Allow multiple search values for all attribute types and email address
+      Move help to plugin resource page.
+      Tidy-up headings for element columns.
+
 version 2.7.4+20170114
       Use exact match when searching on checkboxgroup attribute
 MarcelvC (1):
