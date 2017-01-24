@@ -27,11 +27,37 @@ use phpList\plugin\Common\DAO;
 
 /**
  * DAO class that provides access to the user, user_attribute and related tables.
- * 
- * @category  phplist
  */
 class User extends DAO
 {
+    /**
+     * The search term may have multiple values separated by , or +.
+     * This method builds an expression containing a sub-expression for each value in the search term.
+     *
+     * @param string $searchTerm   single or multiple value search target
+     * @param string $exprTemplate expression template for use by sprintf
+     *
+     * @return string
+     */
+    private function searchExpression($searchTerm, $exprTemplate)
+    {
+        if (strpos($searchTerm, '+') === false) {
+            $separator = '|';
+            $combineOp = ' OR ';
+        } else {
+            $separator = '+';
+            $combineOp = ' AND ';
+        }
+        $terms = explode($separator, $searchTerm);
+        $expressions = [];
+
+        foreach ($terms as $term) {
+            $expressions[] = sprintf($exprTemplate, $term);
+        }
+        $combined = implode($combineOp, $expressions);
+
+        return "($combined)";
+    }
     /**
      * Generates a WHERE expression for the user belonging to the specified list and 
      * optionally the list owned by the specified owner.
@@ -87,7 +113,9 @@ class User extends DAO
                     ON ua{$id}.userid = u.id AND ua{$id}.attributeid = {$id}";
 
                 if ($doSearch && $searchAttr == $id) {
-                    $thisJoin .= " AND la{$id}.name LIKE '%$searchTerm%'";
+                    $template = "la{$id}.name LIKE '%%%s%%'";
+                    $expr = $this->searchExpression($searchTerm, $template);
+                    $thisJoin .= " AND\n$expr";
                 }
                 $attr_fields .= ", la{$id}.name as attr{$id}";
                 break;
@@ -100,31 +128,19 @@ class User extends DAO
                      * search term can have multiple values
                      * want to select subscribers whose attribute value matches any/all of the terms
                      */
-                    if (strpos($searchTerm, '+') === false) {
-                        $separator = ',';
-                        $combineOp = ' OR ' ;
-                    } else {
-                        $separator = '+';
-                        $combineOp = ' AND ' ;
-                    }
-                    $terms = explode($separator, $searchTerm);
-                    $parts = array();
-
-                    foreach ($terms as $term) {
-                        $parts[] = <<<END
-                            FIND_IN_SET(
-                                IFNULL(
-                                    (SELECT id
-                                    FROM $tableName
-                                    WHERE name = '$term'),
-                                    0
-                                ),
-                                IFNULL(ua{$id}.value, '')
-                            ) > 0
+                    $template = <<<END
+                        FIND_IN_SET(
+                            IFNULL(
+                                (SELECT id
+                                FROM $tableName
+                                WHERE name = '%s'),
+                                0
+                            ),
+                            IFNULL(ua{$id}.value, '')
+                        ) > 0
 END;
-                    }
-                    $combined = implode($combineOp, $parts);
-                    $thisJoin .= " AND\n($combined)";
+                    $expr = $this->searchExpression($searchTerm, $template);
+                    $thisJoin .= " AND\n$expr";
                 }
                 $attr_fields .= ", ua{$id}.value as attr{$id}";
                 break;
@@ -133,7 +149,9 @@ END;
                     ON ua{$id}.userid = u.id AND ua{$id}.attributeid = {$id}";
 
                 if ($doSearch && $searchAttr == $id) {
-                    $thisJoin .= " AND ua{$id}.value LIKE '%$searchTerm%' ";
+                    $template = "ua{$id}.value LIKE '%%%s%%'";
+                    $expr = $this->searchExpression($searchTerm, $template);
+                    $thisJoin .= " AND\n$expr";
                 }
                 $attr_fields .= ", ua{$id}.value as attr{$id}";
                 break;
@@ -158,7 +176,9 @@ END;
 
         if ($doSearch) {
             if ($searchAttr == 'email') {
-                $w[] = "u.email LIKE '%$searchTerm%'";
+                $template = "u.email LIKE '%%%s%%'";
+                $expr = $this->searchExpression($searchTerm, $template);
+                $w[] = $expr;
             } elseif ($searchAttr == 'id') {
                 $w[] = "u.id = '$searchTerm'";
             } elseif ($searchAttr == 'uniqid') {
@@ -225,7 +245,9 @@ END;
 
         if ($doSearch) {
             if ($searchAttr == 'email') {
-                $w[] = "u.email LIKE '%$searchTerm%'";
+                $template = "u.email LIKE '%%%s%%'";
+                $expr = $this->searchExpression($searchTerm, $template);
+                $w[] = $expr;
             } elseif ($searchAttr == 'id') {
                 $w[] = "u.id = '$searchTerm'";
             } elseif ($searchAttr == 'uniqid') {
