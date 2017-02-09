@@ -8,7 +8,6 @@ use phpList\plugin\Common\IExportable;
 use phpList\plugin\Common\IPopulator;
 use phpList\plugin\Common\Listing;
 use phpList\plugin\Common\Toolbar;
-use phpList\plugin\Common\WebblerListing;
 use phpList\plugin\SubscribersPlugin\Model\Subscriptions as Model;
 
 /**
@@ -51,7 +50,7 @@ class Subscriptions
     /*
      *    Private methods
      */
-    private function addRow(WebblerListing $w, array $row)
+    private function addRow(\WebblerListing $w, array $row)
     {
         $key = "{$row['year']} {$row['month']}";
         $w->addElement($key);
@@ -156,7 +155,7 @@ class Subscriptions
     /*
      * Implementation of IPopulator
      */
-    public function populate(WebblerListing $w, $start, $limit)
+    public function populate(\WebblerListing $w, $start, $limit)
     {
         /*
          * Populates the webbler list with subscription details

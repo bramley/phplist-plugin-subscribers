@@ -9,7 +9,6 @@ use phpList\plugin\Common\IPopulator;
 use phpList\plugin\Common\Listing;
 use phpList\plugin\Common\PageURL;
 use phpList\plugin\Common\Toolbar;
-use phpList\plugin\Common\WebblerListing;
 use phpList\plugin\SubscribersPlugin\Model\History as Model;
 
 /**
@@ -93,7 +92,7 @@ class History
     /*
      * Implementation of IPopulator
      */
-    public function populate(WebblerListing $w, $start, $limit)
+    public function populate(\WebblerListing $w, $start, $limit)
     {
         /*
          * Populates the webbler list with event details

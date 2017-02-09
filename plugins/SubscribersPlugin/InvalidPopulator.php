@@ -6,7 +6,6 @@ use phpList\plugin\Common\I18n;
 use phpList\plugin\Common\IPopulator;
 use phpList\plugin\Common\PageLink;
 use phpList\plugin\Common\PageURL;
-use phpList\plugin\Common\WebblerListing;
 
 /**
  * SubscribersPlugin for phplist.
@@ -47,7 +46,7 @@ class InvalidPopulator implements IPopulator
      * @param int            $start index of the first item
      * @param int            $limit maximum number of items to display
      */
-    public function populate(WebblerListing $w, $start, $limit)
+    public function populate(\WebblerListing $w, $start, $limit)
     {
         $w->setTitle($this->i18n->get('Subscribers with an invalid email address'));
         $w->setElementHeading('#');

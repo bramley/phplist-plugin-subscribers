@@ -10,7 +10,6 @@ use phpList\plugin\Common\ImageTag;
 use phpList\plugin\Common\Listing;
 use phpList\plugin\Common\PageURL;
 use phpList\plugin\Common\Toolbar;
-use phpList\plugin\Common\WebblerListing;
 use phpList\plugin\Common\Widget;
 use phpList\plugin\SubscribersPlugin\Model\Details as Model;
 
@@ -138,7 +137,7 @@ class Details
     /*
      * Implementation of IPopulator
      */
-    public function populate(WebblerListing $w, $start, $limit)
+    public function populate(\WebblerListing $w, $start, $limit)
     {
         /*
          * Populates the webbler list with users details
