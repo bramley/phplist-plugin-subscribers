@@ -53,6 +53,7 @@ class SubscribersPlugin extends phplistPlugin
         'history' => array('category' => 'subscribers'),
         'subscriptions' => array('category' => 'subscribers'),
         'command' => array('category' => 'subscribers'),
+        'reports' => array('category' => 'subscribers'),
     );
     public $publicPages = array(self::LISTSUBSCRIBE_PAGE, self::UNSUBSCRIBE_PAGE);
     public $commandlinePluginPages = array(self::UUID_PAGE);
@@ -141,6 +142,9 @@ class SubscribersPlugin extends phplistPlugin
             'history' => $i18n->get('Subscriber History'),
             'subscriptions' => $i18n->get('Subscriptions'),
             'command' => $i18n->get('Subscriber commands'),
+            'reports' => $i18n->get('Subscriber reports'),
+            'invalid' => $i18n->get('Invalid emails'),
+            'inactive' => $i18n->get('Inactive subscribers'),
         );
         $this->subscribeLinkText = getConfig('subscribers_subscribelinktext');
         $this->unsubscribeLinkText = getConfig('subscribers_linktext');

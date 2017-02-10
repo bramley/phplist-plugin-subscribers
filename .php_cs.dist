@@ -1,0 +1,17 @@
+<?php
+
+$finder = PhpCsFixer\Finder::create()
+    ->exclude('plugins/SubscribersPlugin/view')
+    ->in(__DIR__)
+;
+
+return PhpCsFixer\Config::create()
+    ->setRules(array(
+        '@PSR1' => true,
+        '@PSR2' => true,
+        '@Symfony' => true,
+        'concat_space' => false,
+        'phpdoc_no_alias_tag' => false,
+    ))
+    ->setFinder($finder)
+;

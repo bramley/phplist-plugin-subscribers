@@ -1,7 +1,10 @@
 <?php
-/**
+
+namespace phpList\plugin\SubscribersPlugin;
+
+/*
  * SubscribersPlugin for phplist.
- * 
+ *
  * This file is a part of SubscribersPlugin.
  *
  * SubscribersPlugin is free software: you can redistribute it and/or modify
@@ -12,16 +15,18 @@
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * @category  phplist
  *
  * @author    Duncan Cameron
- * @copyright 2011-2017 Duncan Cameron
+ * @copyright 2011-2016 Duncan Cameron
  * @license   http://www.gnu.org/licenses/gpl.html GNU General Public License, Version 3
  */
 
-/**
- * Help text.
+/*
+ * This is the entry code invoked by phplist.
+ *
+ * @category  phplist
  */
-?>
-<a href="https://resources.phplist.com/plugin/subscribers#advanced_search" target="_blank">Online help</a>
+
+\phpList\plugin\Common\Main::run(new ControllerFactory());

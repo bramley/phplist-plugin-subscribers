@@ -70,6 +70,78 @@ class Command extends User
         return $this->dbCommand->queryAll($sql);
     }
 
+    public function countInactiveSubscribersByInterval($interval)
+    {
+        $sql =
+            "SELECT COUNT(*)
+            FROM (
+                SELECT 1
+                FROM {$this->tables['user']} u
+                JOIN {$this->tables['usermessage']} um ON um.userid = u.id
+                WHERE um.status = 'sent' AND um.entered > DATE_SUB(CURDATE(), INTERVAL $interval)
+                GROUP BY u.id
+                HAVING MAX(um.viewed) IS NULL
+            ) AS t1";
+
+        return $this->dbCommand->queryOne($sql);
+    }
+
+    public function inactiveSubscribersByInterval($interval, $start = null, $limit = null)
+    {
+        $limit = is_null($start) ? '' : "LIMIT $start, $limit";
+        $sql =
+            "SELECT u.id, email, COUNT(u.id) AS recent_campaigns,
+                (SELECT COUNT(*)
+                FROM {$this->tables['usermessage']} um
+                WHERE um.userid = u.id and status = 'sent'
+                ) AS total_campaigns,
+                (SELECT MAX(viewed)
+                FROM {$this->tables['usermessage']} um
+                WHERE um.userid = u.id
+                ) AS lastview,
+                (SELECT GROUP_CONCAT(name)
+                FROM {$this->tables['listuser']} lu 
+                JOIN {$this->tables['list']} l ON lu.listid = l.id
+                WHERE lu.userid = u.id
+                ) AS listname
+            FROM {$this->tables['user']} u
+            JOIN {$this->tables['usermessage']} um ON um.userid = u.id
+            WHERE um.status = 'sent' AND um.entered > DATE_SUB(CURDATE(), INTERVAL $interval)
+            GROUP BY u.id
+            HAVING MAX(um.viewed) IS NULL
+            ORDER BY lastview, email
+            $limit
+            ";
+
+        return $this->dbCommand->queryAll($sql);
+    }
+
+    public function inactiveSubscribersByCampaigns($threshold)
+    {
+        $sql = <<<END
+            select u.id, u.email,
+            (
+                select count(um.userid)
+                from {$this->tables['usermessage']} um 
+                where u.id = um.userid
+                and um.status = 'sent'
+                -- handle no rows being viewed, max then returns null
+                and ifnull(
+                    um.entered > 
+                        (select max(entered) from {$this->tables['usermessage']}
+                        where userid = u.id and status = 'sent' and viewed is not null
+                        ),
+                    true
+                )
+            ) AS total
+            from {$this->tables['user']} u
+            WHERE total >= $threshold
+            ORDER BY email
+END;
+
+        return $this->dbCommand->queryAll($sql);
+    }
+
     public function removeFromList($email, $listId)
     {
         $email = sql_escape($email);

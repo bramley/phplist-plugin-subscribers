@@ -19,11 +19,11 @@
  */
 ?>
 <div>
-    <hr/>
+<?php if (isset($warning)) : ?>
+    <div class="note alert alert-warning"><?= $warning; ?></div>
+<?php endif; ?>
 <?= $toolbar; ?>
     <div style='padding-top: 10px;' >
 <?= $listing ?>
-        <br>
-<?= $cancel; ?>
     </div>
 </div>

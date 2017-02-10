@@ -1,7 +1,7 @@
 <?php
 /**
  * SubscribersPlugin for phplist.
- * 
+ *
  * This file is a part of SubscribersPlugin.
  *
  * @author    Duncan Cameron
@@ -11,10 +11,11 @@
 
 /**
  * Class to convert checkbox group attribute values from id to name.
- * 
+ *
  * It wraps a DBResultIterator overriding the current() method to convert the
  * user attribute value to a list of names.
  */
+
 namespace phpList\plugin\SubscribersPlugin;
 
 class CbgConverter extends \IteratorIterator implements \Countable

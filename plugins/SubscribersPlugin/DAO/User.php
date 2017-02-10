@@ -6,7 +6,7 @@ use phpList\plugin\Common\DAO;
 
 /**
  * SubscribersPlugin for phplist.
- * 
+ *
  * This file is a part of SubscribersPlugin.
  *
  * SubscribersPlugin is free software: you can redistribute it and/or modify
@@ -17,7 +17,7 @@ use phpList\plugin\Common\DAO;
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * @category  phplist
  *
  * @author    Duncan Cameron
@@ -58,8 +58,9 @@ class User extends DAO
 
         return "($combined)";
     }
+
     /**
-     * Generates a WHERE expression for the user belonging to the specified list and 
+     * Generates a WHERE expression for the user belonging to the specified list and
      * optionally the list owned by the specified owner.
      *
      * @param int    $listID
@@ -120,7 +121,7 @@ class User extends DAO
                 $attr_fields .= ", la{$id}.name as attr{$id}";
                 break;
             case 'checkboxgroup':
-                $thisJoin .= "JOIN {$this->tables['user_attribute']} ua{$id} 
+                $thisJoin .= "JOIN {$this->tables['user_attribute']} ua{$id}
                     ON ua{$id}.userid = u.id AND ua{$id}.attributeid = {$id}";
 
                 if ($doSearch && $searchAttr == $id) {
@@ -145,7 +146,7 @@ END;
                 $attr_fields .= ", ua{$id}.value as attr{$id}";
                 break;
             default:
-                $thisJoin .= "JOIN {$this->tables['user_attribute']} ua{$id} 
+                $thisJoin .= "JOIN {$this->tables['user_attribute']} ua{$id}
                     ON ua{$id}.userid = u.id AND ua{$id}.attributeid = {$id}";
 
                 if ($doSearch && $searchAttr == $id) {
@@ -166,7 +167,7 @@ END;
         $confirmed = 0, $blacklisted = 0, $start = null, $limit = null)
     {
         /*
-         * 
+         *
          */
         $doSearch = $searchTerm !== '';
         $searchTerm = sql_escape($searchTerm);
@@ -273,7 +274,7 @@ END;
 
         $where = $w ? 'WHERE ' . implode(' AND ', $w) : '';
 
-        $sql = "SELECT count(*) as t 
+        $sql = "SELECT count(*) as t
             FROM {$this->tables['user']} u
             $attr_join
             $where";

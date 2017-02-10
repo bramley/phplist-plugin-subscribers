@@ -12,7 +12,7 @@ use phpList\plugin\SubscribersPlugin\Model\Subscriptions as Model;
 
 /**
  * SubscribersPlugin for phplist.
- * 
+ *
  * This file is a part of SubscribersPlugin.
  *
  * This plugin is free software: you can redistribute it and/or modify
@@ -23,7 +23,7 @@ use phpList\plugin\SubscribersPlugin\Model\Subscriptions as Model;
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * @category  phplist
  *
  * @author    Duncan Cameron
@@ -33,15 +33,14 @@ use phpList\plugin\SubscribersPlugin\Model\Subscriptions as Model;
 
 /**
  * This class is the controller for the plugin providing the action methods.
- * 
+ *
  * @category  phplist
  */
-class Subscriptions
-    extends Controller
-    implements IPopulator, IExportable
+class Subscriptions extends Controller implements IPopulator, IExportable
 {
     const TEMPLATE = '/../view/subscriptions.tpl.php';
     const IMAGE_HEIGHT = 300;
+    const HELP = 'https://resources.phplist.com/plugin/subscribers#subscriptions';
 
     private $subscriptions;
 
@@ -130,7 +129,7 @@ class Subscriptions
         $params = array();
         $toolbar = new Toolbar($this);
         $toolbar->addExportButton();
-        $toolbar->addHelpButton('subscriptions');
+        $toolbar->addExternalHelpButton(self::HELP);
         $params['toolbar'] = $toolbar->display();
 
         $listing = new Listing($this, $this);
@@ -152,6 +151,7 @@ class Subscriptions
         $this->model = new Model(new DB());
         $this->model->setProperties($_GET);
     }
+
     /*
      * Implementation of IPopulator
      */

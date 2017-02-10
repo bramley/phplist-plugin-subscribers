@@ -6,7 +6,7 @@ use phpList\plugin\Common\DAO;
 
 /**
  * SubscribersPlugin for phplist.
- * 
+ *
  * This file is a part of SubscribersPlugin.
  *
  * This plugin is free software: you can redistribute it and/or modify
@@ -17,7 +17,7 @@ use phpList\plugin\Common\DAO;
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * @category  phplist
  *
  * @author    Duncan Cameron
@@ -46,7 +46,7 @@ class Subscriptions extends DAO
 
         $sql = "
             SELECT EXTRACT(YEAR_MONTH FROM uh.date) AS period, COUNT(uh.date) as unsubscriptions
-            FROM {$this->tables['user_history']} uh 
+            FROM {$this->tables['user_history']} uh
             WHERE summary = 'Unsubscription'
             $periodRange
             GROUP BY period
@@ -83,7 +83,7 @@ class Subscriptions extends DAO
             SUM(CASE WHEN confirmed = 0 THEN 1 ELSE 0 END) AS unconfirmed,
             SUM(CASE WHEN blacklisted = 1 AND confirmed = 1 THEN 1 ELSE 0 END) AS blacklisted,
             SUM(CASE WHEN blacklisted = 0 AND confirmed = 1 THEN 1 ELSE 0 END) AS active
-            FROM {$this->tables['user']} u 
+            FROM {$this->tables['user']} u
             WHERE YEAR(entered) > 0
             $periodRange
             GROUP BY period, year, month
@@ -137,7 +137,7 @@ class Subscriptions extends DAO
             }
         }
         $earliest = (0 - $earliest) + 1;
-        $sql = "SELECT 
+        $sql = "SELECT
                 PERIOD_ADD(EXTRACT(YEAR_MONTH FROM now()), $latest) AS end,
                 PERIOD_ADD(EXTRACT(YEAR_MONTH FROM now()), $earliest) AS start";
 

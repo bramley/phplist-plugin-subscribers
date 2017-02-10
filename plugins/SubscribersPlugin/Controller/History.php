@@ -13,7 +13,7 @@ use phpList\plugin\SubscribersPlugin\Model\History as Model;
 
 /**
  * SubscribersPlugin for phplist.
- * 
+ *
  * This file is a part of SubscribersPlugin.
  *
  * This plugin is free software: you can redistribute it and/or modify
@@ -24,7 +24,7 @@ use phpList\plugin\SubscribersPlugin\Model\History as Model;
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * @category  phplist
  *
  * @author    Duncan Cameron
@@ -35,17 +35,17 @@ use phpList\plugin\SubscribersPlugin\Model\History as Model;
 /**
  * This class is the controller for the plugin providing the action methods
  * Implements the IPopulator interface.
- * 
+ *
  * @category  phplist
  */
-class History
-    extends Controller
-    implements IPopulator, IExportable
+class History extends Controller implements IPopulator, IExportable
 {
     const TEMPLATE = '/../view/history.tpl.php';
     const FORMTEMPLATE = '/../view/history_form.tpl.php';
+    const HELP = 'https://resources.phplist.com/plugin/subscribers#subscriber_history';
 
     protected $model;
+
     /*
      *    Protected methods
      */
@@ -70,7 +70,7 @@ class History
         } catch (Exception $e) {
             $params['message'] = $e->getMessage();
         }
-        $toolbar->addHelpButton('history');
+        $toolbar->addExternalHelpButton(self::HELP);
         $params['toolbar'] = $toolbar->display();
         $panel = new \UIPanel(
             $this->i18n->get('Filter'),
@@ -89,6 +89,7 @@ class History
         $this->model = new Model(new DB());
         $this->model->setProperties($_GET);
     }
+
     /*
      * Implementation of IPopulator
      */
@@ -127,6 +128,7 @@ class History
     {
         return $this->model->totalEvents();
     }
+
     /*
      * Implementation of IExportable
      */

@@ -6,7 +6,7 @@ use phpList\plugin\Common\ControllerFactoryBase;
 
 /**
  * SubscribersPlugin for phplist.
- * 
+ *
  * This file is a part of SubscribersPlugin.
  *
  * @category  phplist
@@ -18,7 +18,7 @@ use phpList\plugin\Common\ControllerFactoryBase;
 
 /**
  * This class is a concrete implementation of ControllerFactoryBase.
- * 
+ *
  * @category  phplist
  */
 class ControllerFactory extends ControllerFactoryBase

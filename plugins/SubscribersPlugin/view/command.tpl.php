@@ -74,13 +74,4 @@ input[type="text"], select {
             </div>
         </div>
     </div>
-    <div style='padding-top: 10px;' >
-        <div class="panel">
-            <div class="header"><h2><?= $this->i18n->get('Validate subscriber email addresses'); ?></h2></div>
-            <div class="content">
-                <p><?= $this->i18n->get('Show subscribers who have an invalid email address'); ?>
-                <a class="button" href="<?= $validateURL; ?>"><?= $this->i18n->get('Validate'); ?></a></p>
-            </div>
-        </div>
-    </div>
 </div>

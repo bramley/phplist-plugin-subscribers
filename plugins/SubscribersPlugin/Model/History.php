@@ -7,7 +7,7 @@ use phpList\plugin\SubscribersPlugin\DAO\Event as DAOEvent;
 
 /**
  * SubscribersPlugin for phplist.
- * 
+ *
  * This file is a part of SubscribersPlugin.
  *
  * This plugin is free software: you can redistribute it and/or modify
@@ -18,7 +18,7 @@ use phpList\plugin\SubscribersPlugin\DAO\Event as DAOEvent;
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * @category  phplist
  *
  * @author    Duncan Cameron
@@ -28,7 +28,7 @@ use phpList\plugin\SubscribersPlugin\DAO\Event as DAOEvent;
 
 /**
  * This class holds the properties entered in the search form.
- * 
+ *
  * @category  phplist
  */
 class History extends Model
@@ -54,6 +54,7 @@ class History extends Model
         'pattern' => '',
         'from' => '',
     );
+
     /*
      *    Private methods
      */
@@ -87,6 +88,7 @@ class History extends Model
                 throw new Exception("Unrecognised option: $this->option");
         }
     }
+
     /*
      *    Public methods
      */

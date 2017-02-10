@@ -6,7 +6,7 @@ use phpList\plugin\Common\DAO\User;
 
 /**
  * SubscribersPlugin for phplist.
- * 
+ *
  * This file is a part of SubscribersPlugin.
  *
  * SubscribersPlugin is free software: you can redistribute it and/or modify
@@ -17,7 +17,7 @@ use phpList\plugin\Common\DAO\User;
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * @author    Duncan Cameron
  * @copyright 2016 Duncan Cameron
  * @license   http://www.gnu.org/licenses/gpl.html GNU General Public License, Version 3

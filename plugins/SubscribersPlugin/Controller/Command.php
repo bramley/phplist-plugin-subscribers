@@ -5,11 +5,9 @@ namespace phpList\plugin\SubscribersPlugin\Controller;
 use CHtml;
 use phpList\plugin\Common\Controller;
 use phpList\plugin\Common\DB;
-use phpList\plugin\Common\Listing;
 use phpList\plugin\Common\PageLink;
 use phpList\plugin\Common\PageURL;
 use phpList\plugin\Common\Toolbar;
-use phpList\plugin\SubscribersPlugin\InvalidPopulator;
 use phpList\plugin\SubscribersPlugin\DAO\Command as DAO;
 use phpList\plugin\SubscribersPlugin\Model\Command as Model;
 
@@ -49,8 +47,8 @@ class Command extends Controller
     const PLUGIN = 'SubscribersPlugin';
     const TEMPLATE = '/../view/command.tpl.php';
     const TEMPLATE_2 = '/../view/command_2.tpl.php';
-    const TEMPLATE_3 = '/../view/command_3.tpl.php';
     const IDENTIFIER = 'Subscriber Commands';
+    const HELP = 'https://resources.phplist.com/plugin/subscribers?&#subscriber_commands';
     /*
      *  Private variables
      */
@@ -105,7 +103,7 @@ class Command extends Controller
      * @param array $users   email addresses
      * @param bool  $command The command to be applied
      * @param bool  $listId  List id
-     * 
+     *
      * @return string a message summarising the command and number of affected subscribers
      */
     private function processUsers(array $users, $command, $listId)
@@ -254,56 +252,6 @@ class Command extends Controller
     }
 
     /**
-     * Exports the set of invalid email addresses.
-     */
-    protected function actionExportinvalid()
-    {
-        $fileName = 'invalid_email.txt';
-        ob_end_clean();
-        Header('Content-type: text/plain');
-        Header("Content-disposition:  attachment; filename=$fileName");
-
-        foreach ($_SESSION[self::PLUGIN]['invalid'] as $invalid) {
-            echo $invalid['email'], "\n";
-        }
-        exit;
-    }
-
-    /**
-     * Validates the email address of each subscriber and displays those that are invalid.
-     * If there are none invalid then redirects to the first page.
-     */
-    protected function actionValidate()
-    {
-        $invalid = array();
-
-        foreach ($this->dao->allUsers() as $row) {
-            if (!is_email($row['email'])) {
-                $invalid[] = $row;
-            }
-        }
-
-        if (count($invalid) == 0) {
-            $this->redirectExit(
-                new PageURL(),
-                array('result' => $this->i18n->get('All subscribers have a valid email address'))
-            );
-        }
-        $_SESSION[self::PLUGIN]['invalid'] = $invalid;
-
-        $populator = new InvalidPopulator($this->i18n, $invalid);
-        $listing = new Listing($this, $populator);
-        $this->toolbar->addExportButton(array('action' => 'exportinvalid'));
-        $cancel = new PageLink(new PageURL(null), $this->i18n->get('Cancel'), array('class' => 'button'));
-        $params = array(
-            'toolbar' => $this->toolbar->display(),
-            'listing' => $listing->display(),
-            'cancel' => $cancel,
-        );
-        echo $this->render(dirname(__FILE__) . self::TEMPLATE_3, $params);
-    }
-
-    /**
      * Displays the second page.
      * For a POST processes the subscribers.
      */
@@ -402,7 +350,6 @@ class Command extends Controller
         $params += array(
             'toolbar' => $this->toolbar->display(),
             'formURL' => new PageURL(),
-            'validateURL' => new PageURL(null, array('action' => 'validate')),
             'commandList' => $this->radioButtonList(self::HTML_ENABLED),
             'listSelect' => $this->dropDownList(self::HTML_ENABLED),
         );
@@ -416,6 +363,6 @@ class Command extends Controller
         $this->model = new Model(self::COMMAND_UNCONFIRM);
         $this->model->setProperties($_REQUEST);
         $this->toolbar = new Toolbar($this);
-        $this->toolbar->addHelpButton('command');
+        $this->toolbar->addExternalHelpButton(self::HELP);
     }
 }

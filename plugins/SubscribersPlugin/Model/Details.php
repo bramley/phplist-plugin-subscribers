@@ -1,7 +1,7 @@
 <?php
 /**
  * SubscribersPlugin for phplist.
- * 
+ *
  * This file is a part of SubscribersPlugin.
  *
  * SubscribersPlugin is free software: you can redistribute it and/or modify
@@ -12,7 +12,7 @@
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * @author    Duncan Cameron
  * @copyright 2011-2017 Duncan Cameron
  * @license   http://www.gnu.org/licenses/gpl.html GNU General Public License, Version 3
@@ -21,6 +21,7 @@
 /**
  * This class holds the properties entered in the search form.
  */
+
 namespace phpList\plugin\SubscribersPlugin\Model;
 
 use phpList\plugin\Common\DAO\Attribute as DAOAttribute;
@@ -64,12 +65,13 @@ class Details extends Model
      */
     public $attributes;
     public $lists;
+
     /*
      *    Private methods
      */
     private function verifySelectedAttributes()
     {
-        /*         
+        /*
          * remove selected attributes that no longer exist and re-index
          */
         $this->properties['selectedAttrs'] = array_values(
@@ -81,6 +83,7 @@ class Details extends Model
             )
         );
     }
+
     /*
      *    Public methods
      */

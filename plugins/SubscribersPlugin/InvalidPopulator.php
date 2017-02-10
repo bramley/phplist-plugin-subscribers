@@ -3,13 +3,13 @@
 namespace phpList\plugin\SubscribersPlugin;
 
 use phpList\plugin\Common\I18n;
+use phpList\plugin\Common\IExportable;
 use phpList\plugin\Common\IPopulator;
-use phpList\plugin\Common\PageLink;
 use phpList\plugin\Common\PageURL;
 
 /**
  * SubscribersPlugin for phplist.
- * 
+ *
  * This file is a part of SubscribersPlugin.
  *
  * @category  phplist
@@ -22,7 +22,7 @@ use phpList\plugin\Common\PageURL;
 /**
  * This class populates a listing with invalid email addresses.
  */
-class InvalidPopulator implements IPopulator
+class InvalidPopulator implements IPopulator, IExportable
 {
     private $i18n;
     private $invalid;
@@ -49,21 +49,12 @@ class InvalidPopulator implements IPopulator
     public function populate(\WebblerListing $w, $start, $limit)
     {
         $w->setTitle($this->i18n->get('Subscribers with an invalid email address'));
-        $w->setElementHeading('#');
+        $w->setElementHeading($this->i18n->get('Subscriber'));
         $end = min($start + $limit, count($this->invalid));
 
         for ($i = $start; $i < $end; ++$i) {
-            $key = $i + 1;
-            $w->addElement($key);
-            $w->addColumnHtml(
-                $key,
-                $this->i18n->get('Subscriber'),
-                new PageLink(
-                    new PageURL('user', array('id' => $this->invalid[$i]['id'])),
-                    $this->invalid[$i]['email'],
-                    array('target' => '_blank')
-                )
-            );
+            $key = $this->invalid[$i]['email'];
+            $w->addElement($key, new PageURL('user', array('id' => $this->invalid[$i]['id'])));
         }
     }
 
@@ -75,5 +66,28 @@ class InvalidPopulator implements IPopulator
     public function total()
     {
         return count($this->invalid);
+    }
+
+    /*
+     * Implementation of IExportable
+     */
+    public function exportFileName()
+    {
+        return 'invalid_email';
+    }
+
+    public function exportRows()
+    {
+        return $this->invalid;
+    }
+
+    public function exportFieldNames()
+    {
+        return [$this->i18n->get('email')];
+    }
+
+    public function exportValues(array $row)
+    {
+        return [$row['email']];
     }
 }

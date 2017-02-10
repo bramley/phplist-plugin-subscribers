@@ -15,7 +15,7 @@ use phpList\plugin\SubscribersPlugin\Model\Details as Model;
 
 /**
  * SubscribersPlugin for phplist.
- * 
+ *
  * This file is a part of SubscribersPlugin.
  *
  * SubscribersPlugin is free software: you can redistribute it and/or modify
@@ -26,7 +26,7 @@ use phpList\plugin\SubscribersPlugin\Model\Details as Model;
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * @category  phplist
  *
  * @author    Duncan Cameron
@@ -37,18 +37,18 @@ use phpList\plugin\SubscribersPlugin\Model\Details as Model;
 /**
  * This class is the controller for the plugin providing the action methods
  * Implements the IPopulator and IExportable interfaces.
- * 
+ *
  * @category  phplist
  */
-class Details
-    extends Controller
-    implements IPopulator, IExportable
+class Details extends Controller implements IPopulator, IExportable
 {
     const TEMPLATE = '/../view/details.tpl.php';
+    const HELP = 'https://resources.phplist.com/plugin/subscribers#advanced_search';
     /*
      *    Protected attributes
      */
     protected $model;
+
     /*
      *    Protected methods
      */
@@ -64,7 +64,7 @@ class Details
 
         $toolbar = new Toolbar($this);
         $toolbar->addExportButton();
-        $toolbar->addHelpButton('details');
+        $toolbar->addExternalHelpButton(self::HELP);
         $listing = new Listing($this, $this);
         $params = array(
             'toolbar' => $toolbar->display(),
@@ -73,6 +73,7 @@ class Details
         );
         echo $this->render(dirname(__FILE__) . self::TEMPLATE, $params);
     }
+
     /*
      *    Public methods
      */
@@ -82,6 +83,7 @@ class Details
         $this->model = new Model(new DB());
         $this->model->setProperties($_GET);
     }
+
     /*
      * Implementation of IExportable
      */
@@ -134,6 +136,7 @@ class Details
 
         return $result;
     }
+
     /*
      * Implementation of IPopulator
      */

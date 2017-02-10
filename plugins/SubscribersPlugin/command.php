@@ -4,7 +4,7 @@ namespace phpList\plugin\SubscribersPlugin;
 
 /*
  * SubscribersPlugin for phplist.
- * 
+ *
  * This file is a part of SubscribersPlugin.
  *
  * SubscribersPlugin is free software: you can redistribute it and/or modify
@@ -15,7 +15,7 @@ namespace phpList\plugin\SubscribersPlugin;
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * @category  phplist
  *
  * @author    Duncan Cameron
@@ -25,7 +25,7 @@ namespace phpList\plugin\SubscribersPlugin;
 
 /*
  * This is the entry code invoked by phplist.
- * 
+ *
  * @category  phplist
  */
 \phpList\plugin\Common\Main::run(new ControllerFactory());
