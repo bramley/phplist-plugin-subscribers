@@ -31,6 +31,7 @@ class SubscribersPlugin extends phplistPlugin
     const PLUGIN = 'SubscribersPlugin';
     const LISTSUBSCRIBE_PAGE = 'subscribe';
     const UNSUBSCRIBE_PAGE = 'unsubscribe';
+    const UUID_PAGE = 'generateuuids';
 
     /*
      *  Private variables
@@ -54,6 +55,7 @@ class SubscribersPlugin extends phplistPlugin
         'command' => array('category' => 'subscribers'),
     );
     public $publicPages = array(self::LISTSUBSCRIBE_PAGE, self::UNSUBSCRIBE_PAGE);
+    public $commandlinePluginPages = array(self::UUID_PAGE);
     public $documentationUrl = 'https://resources.phplist.com/plugin/subscribers';
 
     /*
