@@ -1,3 +1,11 @@
+version 2.9.0+20170302
+      New page for reports
+      Move invalid email to separate page
+      New page for inactive subscribers
+      Change help button to link directly to phplist.com
+      Make all language files consistent
+      Update copyright year
+
 version 2.8.1+20170214
       Correct typehints
       Add page to generate UUIDs for subscribers
