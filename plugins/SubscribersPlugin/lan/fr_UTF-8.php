@@ -21,15 +21,23 @@
  */
 
 /**
- * This file contains the French translations of the English text
- * Important - this file must be saved in UTF-8 encoding.
+ * This file contains the French text.
+ *
+ * @category  phplist
+ */
+
+/*
+ *    Important - this file must be saved in UTF-8 encoding
+ *
  */
 $lan = array(
-    'plugin_title' => 'Greffon utilisateur',
     'Advanced search' => 'Détails',
     'Subscriber History' => 'Historique',
     'Subscriptions' => 'Souscriptions',
-/*  User Details */
+    'Subscriptions' => 'Subscriptions',
+    'Subscriber commands' => 'Subscriber commands',
+    'Subscriber reports' => 'Subscriber reports',
+/*  Advanced Search page */
     'ID' => 'N°',
     'lists' => 'Listes',
     'email' => 'Courriel',
@@ -38,8 +46,11 @@ $lan = array(
     'not confirmed' => 'non confirmé',
     'blacklisted_heading' => 'Liste noire',
     'User is blacklisted' => 'Utilisateur en liste noire',
-    'email is blacklisted' => 'Adresse en liste noire',
-/* User History */
+    'Campaigns' => 'Campaigns',
+    'Campaigns sent' => 'Campaigns sent',
+    'Campaigns opened' => 'Campaigns opened',
+    'Campaigns clicked' => 'Campaigns clicked',
+/* Subscriber History page */
     'Show events' => 'Voir les événements',
     'All' => 'Tout',
     'Since' => 'Depuis',
@@ -50,25 +61,36 @@ $lan = array(
     'Events' => 'Evénements',
     'event' => 'Événement',
     'date' => 'Date',
-    'email' => 'Courriel',
     'summary' => 'Résumé',
     'detail' => 'détails',
+    'IP address' => 'IP address',
 /* Subscriptions */
     'period' => 'Periode',
     'subscriptions' => 'Souscriptions',
-    'confirmed' => 'Confirmés',
     'unconfirmed' => 'Non-confirmés',
     'blacklisted' => 'En liste noire',
     'active' => 'Actif',
     'unsubscriptions' => 'Désinscriptions',
 /*  Action page */
+    'Apply command to a group of subscribers' => 'Apply command to a group of subscribers',
+    'Action for each subscriber' => 'Action for each subscriber',
     'Unconfirm' => 'Unconfirm',
     'Blacklist' => 'Blacklist',
     'Unblacklist' => 'Remove from blacklist',
     'Delete' => 'Delete',
     'Remove from list' => 'Remove from list',
-    'Select action and subscribers' => 'Select action and subscribers',
+    'Copy/paste a list of email addresses, then click the Process button' => 'Copy/paste a list of email addresses, then click the Process button',
+    'Process' => 'Process',
+    'Or select a file of email addresses to upload, then click the Upload button' => 'Or select a file of email addresses to upload, then click the Upload button',
+    'Upload' => 'Upload',
+    'Or enter a partial email address to be matched, then click the Match button' => 'Or enter a partial email address to be matched, then click the Match button',
+    'Match' => 'Match',
     'Confirm action and subscribers' => 'Confirm action and subscribers',
+    'Review the action and the email addresses, then click Apply or Cancel.' => 'Review the action and the email addresses, then click Apply or Cancel.',
+    'Apply' => 'Apply',
+    'Cancel' => 'Cancel',
+    'emails not entered' => 'emails not entered',
+    'no valid email addresses entered' => 'no valid email addresses entered',
     'error_match_not_entered' => 'A partial email address must be entered',
     'error_no_match' => 'No subscribers matching "%s" found',
     'upload_error_0' => 'There is no error, the file uploaded with success',
@@ -81,11 +103,27 @@ $lan = array(
     'error_empty' => 'file "%s" appears to be empty',
     'history_unconfirmed' => 'Unconfirmed',
     'history_blacklisted' => 'Blacklisted by %s',
-    'history_unblacklisted' => 'Removed from blacklist',
     'history_removed' => 'Removed from list "%s"',
     'result_blacklisted' => 'Subscribers blacklisted: %d',
     'result_unblacklisted' => 'Subscribers unblacklisted: %d',
     'result_unconfirmed' => 'Subscribers unconfirmed: %d',
     'result_deleted' => 'Subscribers deleted: %d',
     'result_removed' => 'Subscribers removed from list "%s": %d',
+    'Subscriber' => 'Subscriber',
+/* Reports */
+    'Available reports' => 'Available reports',
+    'Subscribers with an invalid email address' => 'Subscribers with an invalid email address',
+    'Inactive subscribers' => 'Inactive subscribers',
+    'Run' => 'Run',
+/* Invalid subscribers */
+    'Invalid emails' => 'Invalid emails',
+    'All subscribers have a valid email address' => 'All subscribers have a valid email address',
+/* Inactive subscribers */
+    'Display inactive subscribers' => 'Display inactive subscribers',
+    'Inactivity period' => 'Inactivity period',
+    'Number of campaigns' => 'Number of campaigns',
+    'Last view' => 'Last view',
+    'Recent campaigns' => 'Recent campaigns',
+    'Total campaigns' => 'Total campaigns',
+    "Invalid interval value '%s'" => "Invalid interval value '%s'",
 );

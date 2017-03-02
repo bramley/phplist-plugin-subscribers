@@ -31,12 +31,12 @@
  *
  */
 $lan = array(
-    'plugin_title' => 'Subscribers Plugin',
 /*  Menu items */
     'Advanced search' => 'Erweiterte Suche',
     'Subscriber History' => 'Abonnenten-Historie',
     'Subscriptions' => 'Abonnements',
     'Subscriber commands' => 'Abonnenten-Befehle',
+    'Subscriber reports' => 'Subscriber reports',
 /*  Advanced Search page */
     'id' => 'id',
     'lists' => 'Listen',
@@ -46,7 +46,6 @@ $lan = array(
     'not confirmed' => 'Unbestätigt',
     'blacklisted_heading' => 'Gesp.',
     'User is blacklisted' => 'Benutzer ist gesperrt (Blacklist)',
-    'email is blacklisted' => 'E-Mail ist gesperrt (Blacklist)',
     'Campaigns' => 'Nachrichten',
     'Campaigns sent' => 'Versendete Nachrichten',
     'Campaigns opened' => 'Geöffnete Nachrichten',
@@ -67,10 +66,7 @@ $lan = array(
     'IP address' => 'IP-Adresse',
 /*  Subscriptions page */
     'period' => 'Zeitraum',
-    'year' => 'Jahr',
-    'month' => 'Monat',
     'subscriptions' => 'Abonnements',
-    'confirmed' => 'Bestätigt',
     'unconfirmed' => 'Unbestätigt',
     'blacklisted' => 'Gesperrt (Blacklist)',
     'active' => 'Aktiv',
@@ -89,7 +85,6 @@ $lan = array(
     'Upload' => 'Hochladen',
     'Or enter a partial email address to be matched, then click the Match button' => 'Oder geben Sie eine Zeichenfolge ein, mit der die E-Mail-Adressen der Abonnenten abgeglichen werden sollen, und klicken Sie dann auf "Abgleichen"',
     'Match' => 'Abgleichen',
-    'Select action and subscribers' => 'Aktion und Abonnenten auswählen',
     'Confirm action and subscribers' => 'Bestätigen Sie die Aktion und die Abonnenten',
     'Review the action and the email addresses, then click Apply or Cancel.' => 'Überprüfen Sie die Aktion und die E-Mail-Adressen und klicken Sie dann "Anwenden" oder "Abbrechen"',
     'Apply' => 'Anwenden',
@@ -108,17 +103,27 @@ $lan = array(
     'error_empty' => 'Die Datei "%s" scheint leer zu sein',
     'history_unconfirmed' => 'Als unbestätigt markiert',
     'history_blacklisted' => 'Gesperrt von %s',
-    'history_unblacklisted' => 'Sperrung aufgehoben',
     'history_removed' => 'Abgemeldet von der Liste "%s"',
     'result_blacklisted' => 'Gesperrte Abonnenten: %d',
     'result_unblacklisted' => 'Abonnenten mit aufgehobener Sperrung: %d',
     'result_unconfirmed' => 'Als unbestätigt markierte Abonnenten: %d',
     'result_deleted' => 'Gelöschte Abonnenten: %d',
     'result_removed' => 'Von der Liste "%s" abgemeldete Abonnenten: %d',
-    'Validate subscriber email addresses' => 'E-Mail-Adressen von Abonnenten validieren',
-    'Show subscribers who have an invalid email address' => 'Abonnenten mit ungültiger E-Mail-Adresse anzeigen',
-    'Validate' => 'Validieren',
-    'Subscribers with an invalid email address' => 'Abonnenten mit ungültiger E-Mail-Adresse',
-    'All subscribers have a valid email address' => 'Alle Abonnenten haben eine gültige E-Mail-Adresse',
     'Subscriber' => 'Abonnent',
+/* Reports */
+    'Available reports' => 'Available reports',
+    'Subscribers with an invalid email address' => 'Abonnenten mit ungültiger E-Mail-Adresse',
+    'Inactive subscribers' => 'Inactive subscribers',
+    'Run' => 'Run',
+/* Invalid subscribers */
+    'Invalid emails' => 'Invalid emails',
+    'All subscribers have a valid email address' => 'Alle Abonnenten haben eine gültige E-Mail-Adresse',
+/* Inactive subscribers */
+    'Display inactive subscribers' => 'Display inactive subscribers',
+    'Inactivity period' => 'Inactivity period',
+    'Number of campaigns' => 'Number of campaigns',
+    'Last view' => 'Last view',
+    'Recent campaigns' => 'Recent campaigns',
+    'Total campaigns' => 'Total campaigns',
+    "Invalid interval value '%s'" => "Invalid interval value '%s'",
 );
