@@ -63,6 +63,7 @@ This plugin is free but if you install and find it useful then a donation to sup
 ## Version history ##
 
     version     Description
+    2.9.1+20170304  Use core phplist help dialog
     2.9.0+20170302  Add report pages
     2.8.1+20170214  Add page to generate UUIDs for subscribers
     2.8.0+20170124  Display and search for real values of checkbox group attributes

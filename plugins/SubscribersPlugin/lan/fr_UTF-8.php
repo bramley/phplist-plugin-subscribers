@@ -31,10 +31,11 @@
  *
  */
 $lan = array(
+    'plugin_title' => 'Greffon utilisateur',
+/*  Menu items */
     'Advanced search' => 'Détails',
     'Subscriber History' => 'Historique',
     'Subscriptions' => 'Souscriptions',
-    'Subscriptions' => 'Subscriptions',
     'Subscriber commands' => 'Subscriber commands',
     'Subscriber reports' => 'Subscriber reports',
 /*  Advanced Search page */

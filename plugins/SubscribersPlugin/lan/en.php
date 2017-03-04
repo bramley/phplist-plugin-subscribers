@@ -31,6 +31,7 @@
  *
  */
 $lan = array(
+    'plugin_title' => 'Subscribers Plugin',
 /*  Menu items */
     'Advanced search' => 'Advanced search',
     'Subscriber History' => 'Subscriber history',
