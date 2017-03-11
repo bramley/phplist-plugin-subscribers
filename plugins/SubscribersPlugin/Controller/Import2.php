@@ -25,7 +25,7 @@ use phpList\plugin\Common\Controller;
 
 class Import2 extends Controller
 {
-    private $dao;
+    private $attributes;
     private $context;
 
     /**
@@ -36,8 +36,9 @@ class Import2 extends Controller
         global $tmpdir, $tables, $table_prefix, $admin_auth, $systemroot, $envelope, $DBstruct;
 
         if (!is_readable($file) || ($handle = fopen($file, 'r')) === false) {
-            echo "unable to open $file\n";
-            exit(2);
+            $this->context->output("unable to open $file\n");
+
+            return;
         }
         $columnNames = fgetcsv($handle, 0, ',');
         $attributesByName = array_column($this->attributes, 'id', 'name');
@@ -68,14 +69,16 @@ class Import2 extends Controller
         }
 
         if ($emailPosition === null) {
-            echo "no email column\n";
-            exit(3);
+            $this->context->output("no email column\n");
+
+            return;
         }
         $tempName = $tmpdir . '/' . uniqid('phplist_import', true);
 
         if (!copy($file, $tempName)) {
-            echo "unable to create temporary file\n";
-            exit;
+            $this->context->output("unable to create temporary file\n");
+
+            return;
         }
 
         $_SESSION['import_file'] = $tempName;
@@ -90,26 +93,35 @@ class Import2 extends Controller
         $_SESSION['logindetails']['id'] = 1;
         $unused_systemattr = array();
 
-        include $systemroot . '/actions/import2.php';
+        require $systemroot . '/actions/import2.php';
     }
 
     protected function actionDefault()
     {
-        global $commandline;
+        global $commandline, $inRemoteCall, $installation_name;
 
         $this->context->start();
 
-        if (!$commandline) {
-            $this->context->output("This page can be run only from the command line\n");
-            exit;
-        }
-        $options = getopt('f:l:p:c:m:');
+        if ($commandline) {
+            $options = getopt('f:l:p:c:m:');
 
-        if (!(isset($options['f']) && isset($options['l']))) {
-            $this->context->output("the file to import and list id are required\n");
-            exit(1);
+            if (isset($options['f']) && isset($options['l'])) {
+                $this->importFile($options['f'], $options['l']);
+            } else {
+                $this->context->output("the file to import and list id are required\n");
+            }
+        } elseif ($inRemoteCall) {
+            if (isset($_FILES['import_file']) && isset($_POST['list_id'])) {
+                $file = $_FILES['import_file'];
+                // Add token because it is checked by the import page
+                $_GET['tk'] = $_SESSION[$installation_name . '_csrf_token'];
+                $this->importFile($file['tmp_name'], $_POST['list_id']);
+            } else {
+                $this->context->output("the file to import and list id are required\n");
+            }
+        } else {
+            $this->context->output("This page can be run only from the command line or a as a remote page\n");
         }
-        $this->importFile($options['f'], $options['l']);
         $this->context->finish();
 
         exit;

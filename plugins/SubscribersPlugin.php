@@ -56,6 +56,7 @@ class SubscribersPlugin extends phplistPlugin
         'reports' => array('category' => 'subscribers'),
     );
     public $publicPages = array(self::LISTSUBSCRIBE_PAGE, self::UNSUBSCRIBE_PAGE);
+    public $remotePages = [self::IMPORT2_PAGE];
     public $commandlinePluginPages = array(self::UUID_PAGE, self::IMPORT2_PAGE, self::INACTIVE_REPORT_PAGE);
     public $documentationUrl = 'https://resources.phplist.com/plugin/subscribers';
 
