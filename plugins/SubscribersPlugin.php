@@ -91,6 +91,21 @@ class SubscribersPlugin extends phplistPlugin
         return $this->rootUrl . '?' . http_build_query($params, '', '&');
     }
 
+    private function removePlaceholders($content)
+    {
+        $result = str_ireplace(
+            array('[LISTUNSUBSCRIBE]', '[LISTUNSUBSCRIBEURL]'),
+            array('', ''),
+            $content
+        );
+
+        return $result = preg_replace(
+            array('/\[LISTSUBSCRIBE:(\d+)]/i', '/\[LISTSUBSCRIBEURL:(\d+)]/i'),
+            array('', ''),
+            $result
+        );
+    }
+
     public function __construct()
     {
         $this->coderoot = dirname(__FILE__) . '/' . self::PLUGIN . '/';
@@ -176,6 +191,7 @@ class SubscribersPlugin extends phplistPlugin
 
     /**
      * Replace placeholders in HTML format message.
+     * When a message is being forwarded then remove the placeholders.
      *
      * @param int    $messageid   the message id
      * @param string $content     the message content
@@ -186,7 +202,9 @@ class SubscribersPlugin extends phplistPlugin
      */
     public function parseOutgoingHTMLMessage($messageid, $content, $destination, $userdata = null)
     {
-        error_reporting(-1);
+        if (empty($userdata['uniqid'])) {
+            return $this->removePlaceholders($content);
+        }
         $url = $this->unsubscribeUrl($messageid, $userdata['uniqid']);
 
         $result = str_ireplace(
@@ -220,6 +238,7 @@ class SubscribersPlugin extends phplistPlugin
 
     /**
      * Replace placeholders in text format message.
+     * When a message is being forwarded then remove the placeholders.
      *
      * @param int    $messageid   the message id
      * @param string $content     the message content
@@ -230,6 +249,9 @@ class SubscribersPlugin extends phplistPlugin
      */
     public function parseOutgoingTextMessage($messageid, $content, $destination, $userdata = null)
     {
+        if (empty($userdata['uniqid'])) {
+            return $this->removePlaceholders($content);
+        }
         $url = $this->unsubscribeUrl($messageid, $userdata['uniqid']);
 
         $result = str_ireplace(
