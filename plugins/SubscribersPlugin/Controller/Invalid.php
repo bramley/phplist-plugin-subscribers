@@ -4,6 +4,7 @@ namespace phpList\plugin\SubscribersPlugin\Controller;
 
 use phpList\plugin\Common\Controller;
 use phpList\plugin\Common\DB;
+use phpList\plugin\Common\IExportable;
 use phpList\plugin\Common\Listing;
 use phpList\plugin\Common\Toolbar;
 use phpList\plugin\SubscribersPlugin\InvalidPopulator;
@@ -67,12 +68,9 @@ class Invalid extends Controller
         echo $this->render(dirname(__FILE__) . self::TEMPLATE, $params);
     }
 
-    protected function actionExportCSV()
+    protected function actionExportCSV(IExportable $exportable = null)
     {
         $populator = new InvalidPopulator($this->i18n, $_SESSION[self::PLUGIN]['invalid']);
-        $exporter = new \phpList\plugin\Common\ExportCSV();
-        $exporter->export($populator);
-
-        exit;
+        parent::actionExportCSV($populator);
     }
 }

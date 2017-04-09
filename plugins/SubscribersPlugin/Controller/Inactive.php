@@ -5,6 +5,7 @@ namespace phpList\plugin\SubscribersPlugin\Controller;
 use CHtml;
 use phpList\plugin\Common\Controller;
 use phpList\plugin\Common\DB;
+use phpList\plugin\Common\IExportable;
 use phpList\plugin\Common\Listing;
 use phpList\plugin\Common\PageURL;
 use phpList\plugin\Common\Toolbar;
@@ -93,13 +94,10 @@ class Inactive extends Controller
         echo $this->render(dirname(__FILE__) . self::TEMPLATE, $params);
     }
 
-    protected function actionExportCSV()
+    protected function actionExportCSV(IExportable $exportable = null)
     {
         $populator = new InactivePopulator($this->dao, $this->i18n, $_GET['interval']);
-        $exporter = new \phpList\plugin\Common\ExportCSV();
-        $exporter->export($populator);
-
-        exit;
+        parent::actionExportCSV($populator);
     }
 
     public function __construct()

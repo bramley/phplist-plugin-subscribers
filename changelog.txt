@@ -1,3 +1,6 @@
+version 2.9.3+20170409
+      Make export of inactive and invalid subscribers compatible with new asynch approach.
+
 version 2.9.2+20170331
       Remove list subscribe/unsubscribe placeholders when email is forwarded
 

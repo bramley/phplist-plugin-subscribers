@@ -17,7 +17,7 @@ The plugin also provides a placeholder [LISTUNSUBSCRIBE] to remove a subscriber 
 
 This plugin is for phplist 3.2.5 or later and now requires php version 5.4 or later. Prior to version 2.6.0 of the plugin, it only required php version 5.3.
 
-It also requires the Common Plugin version 3 to be installed. You should install or upgrade to the latest version. See <https://github.com/bramley/phplist-plugin-common>
+It also requires the Common Plugin version 3.6.0 or later to be installed. You should install or upgrade to the latest version. See <https://github.com/bramley/phplist-plugin-common>
 
 ### Set the plugin directory ###
 You can use a directory outside of the web root by changing the definition of `PLUGIN_ROOTDIR` in config.php.
@@ -25,14 +25,6 @@ The benefit of this is that plugins will not be affected when you upgrade phplis
 
 ### Install through phplist ###
 Install on the Plugins page (menu Config > Manage Plugins) using the package URL `https://github.com/bramley/phplist-plugin-subscribers/archive/master.zip`.
-
-In phplist releases 3.0.5 and earlier there is a bug that can cause a plugin to be incompletely installed on some configurations (<https://mantis.phplist.com/view.php?id=16865>). 
-Check that these files are in the plugin directory. If not then you will need to install manually. The bug has been fixed in release 3.0.6.
-
-* the file SubscribersPlugin.php
-* the directory SubscribersPlugin
-
-Then click the small orange icon to enable the plugin.
 
 ### Install manually ###
 Download the plugin zip file from <https://github.com/bramley/phplist-plugin-subscribers/archive/master.zip>
@@ -63,6 +55,7 @@ This plugin is free but if you install and find it useful then a donation to sup
 ## Version history ##
 
     version     Description
+    2.9.3+20170409  Use new approach for exporting
     2.9.2+20170331  Remove list subscribe/unsubscribe placeholders when email is forwarded
     2.9.1+20170304  Use core phplist help dialog
     2.9.0+20170302  Add report pages
