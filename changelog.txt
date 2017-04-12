@@ -1,3 +1,7 @@
+version 2.9.4+20170414
+      Correct use of iterator
+      Improve display of Subscriptions page with bootlist theme
+
 version 2.9.3+20170409
       Make export of inactive and invalid subscribers compatible with new asynch approach.
 

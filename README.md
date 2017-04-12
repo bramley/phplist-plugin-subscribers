@@ -55,6 +55,7 @@ This plugin is free but if you install and find it useful then a donation to sup
 ## Version history ##
 
     version     Description
+    2.9.4+20170414  Improve display of Subscriptions page with bootlist theme
     2.9.3+20170409  Use new approach for exporting
     2.9.2+20170331  Remove list subscribe/unsubscribe placeholders when email is forwarded
     2.9.1+20170304  Use core phplist help dialog
