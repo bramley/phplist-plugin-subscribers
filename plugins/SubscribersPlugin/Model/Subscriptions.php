@@ -48,7 +48,9 @@ class Subscriptions extends Model
     private function buildSubscriptions($start, $limit)
     {
         $subsIterator = $this->dao->subscriptions($start, $limit);
+        $subsIterator->rewind();
         $unsubsIterator = $this->dao->unsubscriptions($start, $limit);
+        $unsubsIterator->rewind();
         $subsRow = $subsIterator->valid() ? $subsIterator->current() : array('period' => '999999');
         $unsubsRow = $unsubsIterator->valid() ? $unsubsIterator->current() : array('period' => '999999');
         list($period, $endPeriod) = $this->dao->periodRange($start, $limit);
