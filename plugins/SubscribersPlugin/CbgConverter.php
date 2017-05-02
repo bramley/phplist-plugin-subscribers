@@ -45,7 +45,11 @@ class CbgConverter extends \IteratorIterator implements \Countable
         foreach ($this->cbgAttributes as $attrId => $attr) {
             $column = 'attr' . $attrId;
 
-            if (!isset($current[$column]) || $current[$column] === '') {
+            if (!isset($current[$column])) {
+                continue;
+            }
+
+            if (!preg_match('/^\d+(,\d+)*$/', $current[$column])) {
                 continue;
             }
             $names = $this->dao->cbgNames($attr, $current[$column]);
