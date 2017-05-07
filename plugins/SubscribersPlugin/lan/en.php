@@ -75,6 +75,7 @@ $lan = array(
 /*  Action page */
     'Apply command to a group of subscribers' => 'Apply command to a group of subscribers',
     'Action for each subscriber' => 'Action for each subscriber',
+    'Resend confirmation request' => 'Resend confirmation request',
     'Unconfirm' => 'Unconfirm',
     'Blacklist' => 'Blacklist',
     'Unblacklist' => 'Remove from blacklist',
@@ -110,6 +111,7 @@ $lan = array(
     'result_unconfirmed' => 'Subscribers unconfirmed: %d',
     'result_deleted' => 'Subscribers deleted: %d',
     'result_removed' => 'Subscribers removed from list "%s": %d',
+    'result_resent' => 'Confirmation requests resent: %d',
     'Subscriber' => 'Subscriber',
 /* Reports */
     'Available reports' => 'Available reports',

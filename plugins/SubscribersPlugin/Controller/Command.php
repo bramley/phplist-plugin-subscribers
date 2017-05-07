@@ -35,11 +35,12 @@ use phpList\plugin\SubscribersPlugin\Model\Command as Model;
  */
 class Command extends Controller
 {
-    const COMMAND_UNCONFIRM = 0;
-    const COMMAND_BLACKLIST = 1;
-    const COMMAND_DELETE = 2;
-    const COMMAND_REMOVE = 3;
-    const COMMAND_UNBLACKLIST = 4;
+    const COMMAND_UNCONFIRM = 1;
+    const COMMAND_BLACKLIST = 2;
+    const COMMAND_DELETE = 3;
+    const COMMAND_REMOVE = 4;
+    const COMMAND_UNBLACKLIST = 5;
+    const COMMAND_RESEND_CONFIRMATION_REQUEST = 6;
 
     const HTML_ENABLED = 0;
     const HTML_DISABLED = 1;
@@ -55,6 +56,52 @@ class Command extends Controller
     private $dao;
     private $model;
     private $toolbar;
+
+    /**
+     * Constructs and sends a confirmation request email.
+     *
+     * @param array $userdata user data
+     *
+     * @return bool whether email was sent successfully
+     */
+    private function resendConfirm(array $userdata)
+    {
+        global $tables, $envelope;
+
+        $id = $userdata['id'];
+        $lists_req = Sql_Query(
+            "SELECT l.name
+            FROM {$tables['list']} l
+            JOIN {$tables['listuser']} lu ON l.id = lu.listid
+            WHERE lu.userid = $id"
+        );
+        $lists = '';
+
+        while ($row = Sql_Fetch_Row($lists_req)) {
+            $lists .= '  * '.$row[0]."\n";
+        }
+
+        if ($userdata['subscribepage']) {
+            $subscribemessage = str_replace(
+                '[LISTS]',
+                $lists,
+                getUserConfig('subscribemessage:' . $userdata['subscribepage'], $id)
+            );
+            $subject = getConfig('subscribesubject:' . $userdata['subscribepage']);
+        } else {
+            $subscribemessage = str_replace('[LISTS]', $lists, getUserConfig('subscribemessage', $id));
+            $subject = getConfig('subscribesubject');
+        }
+        logEvent($GLOBALS['I18N']->get('Resending confirmation request to') . ' ' . $userdata['email']);
+
+        return sendMail(
+            $userdata['email'],
+            $subject,
+            $subscribemessage,
+            system_messageheaders($userdata['email']),
+            $envelope
+        );
+    }
 
     /**
      * Saves variables into the session then redirects and exits.
@@ -175,6 +222,18 @@ class Command extends Controller
                 }
                 $result = $this->i18n->get('result_removed', $listName, $count);
                 break;
+            case self::COMMAND_RESEND_CONFIRMATION_REQUEST:
+                $count = 0;
+
+                foreach ($users as $email) {
+                    if ($row = $this->dao->userByEmail($email)) {
+                        if ($this->resendConfirm($row)) {
+                            ++$count;
+                        }
+                    }
+                }
+                $result = $this->i18n->get('result_resent', $count);
+                break;
         }
 
         $this->logEvent(sprintf('%s - %s', self::IDENTIFIER, $result));
@@ -245,7 +304,8 @@ class Command extends Controller
                 self::COMMAND_BLACKLIST => $this->i18n->get('Blacklist'),
                 self::COMMAND_UNBLACKLIST => $this->i18n->get('Unblacklist'),
                 self::COMMAND_DELETE => $this->i18n->get('Delete'),
-                self::COMMAND_REMOVE => $this->i18n->get('Remove from list'),
+                self::COMMAND_RESEND_CONFIRMATION_REQUEST => $this->i18n->get('Resend confirmation request'),
+                self::COMMAND_REMOVE => $this->i18n->get('Remove from list') . '&nbsp;' . $this->dropDownList(self::HTML_ENABLED),
             ),
             array('separator' => '<br />', 'disabled' => $disabled)
         );
@@ -351,7 +411,6 @@ class Command extends Controller
             'toolbar' => $this->toolbar->display(),
             'formURL' => new PageURL(),
             'commandList' => $this->radioButtonList(self::HTML_ENABLED),
-            'listSelect' => $this->dropDownList(self::HTML_ENABLED),
         );
         echo $this->render(dirname(__FILE__) . self::TEMPLATE, $params);
     }

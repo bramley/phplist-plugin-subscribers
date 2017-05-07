@@ -53,8 +53,6 @@ input[type="text"], select {
 <?= $this->i18n->get('Action for each subscriber'); ?>
                     : <br />
 <?= $commandList; ?>
-                    &nbsp;
-<?= $listSelect;?>
                     <div class="note">
 <?= $this->i18n->get('Copy/paste a list of email addresses, then click the Process button'); ?>
                     </div>

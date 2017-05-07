@@ -75,6 +75,7 @@ $lan = array(
 /*  Action page */
     'Apply command to a group of subscribers' => 'Befehl auf eine Gruppe von Abonnenten anwenden',
     'Action for each subscriber' => 'Befehl für jeden Abonnenten',
+    'Resend confirmation request' => 'Resend confirmation request',
     'Unconfirm' => 'Als unbestätigt markieren',
     'Blacklist' => 'Sperren (auf die Blacklist setzen)',
     'Unblacklist' => 'Sperrung aufheben (von der Blacklist entfernen)',
@@ -110,6 +111,7 @@ $lan = array(
     'result_unconfirmed' => 'Als unbestätigt markierte Abonnenten: %d',
     'result_deleted' => 'Gelöschte Abonnenten: %d',
     'result_removed' => 'Von der Liste "%s" abgemeldete Abonnenten: %d',
+    'result_resent' => 'Confirmation requests resent: %d',
     'Subscriber' => 'Abonnent',
 /* Reports */
     'Available reports' => 'Available reports',
