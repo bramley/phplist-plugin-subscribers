@@ -50,8 +50,6 @@ input[type="text"], select {
 <?= $this->i18n->get('Action for each subscriber'); ?>
                     : <br />
 <?= $commandList; ?>
-                    &nbsp;
-<?= $listSelect;?>
 <?= $userArea; ?>
                     <br>
 <?= $cancel; ?>

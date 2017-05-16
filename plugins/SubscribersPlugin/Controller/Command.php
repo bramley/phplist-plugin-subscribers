@@ -8,6 +8,7 @@ use phpList\plugin\Common\DB;
 use phpList\plugin\Common\PageLink;
 use phpList\plugin\Common\PageURL;
 use phpList\plugin\Common\Toolbar;
+use phpList\plugin\SubscribersPlugin\Command\Factory;
 use phpList\plugin\SubscribersPlugin\DAO\Command as DAO;
 use phpList\plugin\SubscribersPlugin\Model\Command as Model;
 
@@ -35,13 +36,6 @@ use phpList\plugin\SubscribersPlugin\Model\Command as Model;
  */
 class Command extends Controller
 {
-    const COMMAND_UNCONFIRM = 1;
-    const COMMAND_BLACKLIST = 2;
-    const COMMAND_DELETE = 3;
-    const COMMAND_REMOVE = 4;
-    const COMMAND_UNBLACKLIST = 5;
-    const COMMAND_RESEND_CONFIRMATION_REQUEST = 6;
-
     const HTML_ENABLED = 0;
     const HTML_DISABLED = 1;
 
@@ -56,52 +50,6 @@ class Command extends Controller
     private $dao;
     private $model;
     private $toolbar;
-
-    /**
-     * Constructs and sends a confirmation request email.
-     *
-     * @param array $userdata user data
-     *
-     * @return bool whether email was sent successfully
-     */
-    private function resendConfirm(array $userdata)
-    {
-        global $tables, $envelope;
-
-        $id = $userdata['id'];
-        $lists_req = Sql_Query(
-            "SELECT l.name
-            FROM {$tables['list']} l
-            JOIN {$tables['listuser']} lu ON l.id = lu.listid
-            WHERE lu.userid = $id"
-        );
-        $lists = '';
-
-        while ($row = Sql_Fetch_Row($lists_req)) {
-            $lists .= '  * '.$row[0]."\n";
-        }
-
-        if ($userdata['subscribepage']) {
-            $subscribemessage = str_replace(
-                '[LISTS]',
-                $lists,
-                getUserConfig('subscribemessage:' . $userdata['subscribepage'], $id)
-            );
-            $subject = getConfig('subscribesubject:' . $userdata['subscribepage']);
-        } else {
-            $subscribemessage = str_replace('[LISTS]', $lists, getUserConfig('subscribemessage', $id));
-            $subject = getConfig('subscribesubject');
-        }
-        logEvent($GLOBALS['I18N']->get('Resending confirmation request to') . ' ' . $userdata['email']);
-
-        return sendMail(
-            $userdata['email'],
-            $subject,
-            $subscribemessage,
-            system_messageheaders($userdata['email']),
-            $envelope
-        );
-    }
 
     /**
      * Saves variables into the session then redirects and exits.
@@ -147,95 +95,23 @@ class Command extends Controller
     /**
      * Applies the command to the set of subscribers.
      *
-     * @param array $users   email addresses
-     * @param bool  $command The command to be applied
-     * @param bool  $listId  List id
+     * @param array $users     email addresses
+     * @param bool  $commandId The command to be applied
+     * @param bool  $listId    List id
      *
      * @return string a message summarising the command and number of affected subscribers
      */
-    private function processUsers(array $users, $command, $listId)
+    private function processUsers(array $users, $commandId, $listId)
     {
-        switch ($command) {
-            case self::COMMAND_UNCONFIRM:
-                $count = 0;
+        $command = Factory::createCommand($commandId, $listId, $this->dao, $this->i18n);
+        $count = 0;
 
-                foreach ($users as $email) {
-                    if ($this->dao->unconfirmUser($email)) {
-                        ++$count;
-                        addUserHistory(
-                            $email,
-                            self::IDENTIFIER,
-                            $this->i18n->get('history_unconfirmed')
-                        );
-                    }
-                }
-                $result = $this->i18n->get('result_unconfirmed', $count);
-                break;
-            case self::COMMAND_BLACKLIST:
-                $count = 0;
-
-                foreach ($users as $email) {
-                    addUserToBlackList($email, $this->i18n->get('history_blacklisted', self::IDENTIFIER));
-                    ++$count;
-                }
-                $result = $this->i18n->get('result_blacklisted', $count);
-                break;
-            case self::COMMAND_UNBLACKLIST:
-                $count = 0;
-
-                foreach ($users as $email) {
-                    $user = $this->dao->userByEmail($email);
-
-                    if ($user['blacklisted']) {
-                        unBlackList($user['id']);
-                        ++$count;
-                    }
-                }
-                $result = $this->i18n->get('result_unblacklisted', $count);
-                break;
-            case self::COMMAND_DELETE:
-                $dao = $this->dao;
-                $deletedCount = 0;
-                array_walk(
-                    $users,
-                    function ($email, $index) use ($dao, &$deletedCount) {
-                        if ($row = $dao->userByEmail($email)) {
-                            deleteUser($row['id']);
-                            ++$deletedCount;
-                        }
-                    }
-                );
-                $result = $this->i18n->get('result_deleted', $deletedCount);
-                break;
-            case self::COMMAND_REMOVE:
-                $listName = $this->dao->listName($listId);
-                $count = 0;
-
-                foreach ($users as $email) {
-                    $this->dao->removeFromList($email, $listId);
-                    ++$count;
-                    addUserHistory(
-                        $email,
-                        self::IDENTIFIER,
-                        $this->i18n->get('history_removed', $listName)
-                    );
-                }
-                $result = $this->i18n->get('result_removed', $listName, $count);
-                break;
-            case self::COMMAND_RESEND_CONFIRMATION_REQUEST:
-                $count = 0;
-
-                foreach ($users as $email) {
-                    if ($row = $this->dao->userByEmail($email)) {
-                        if ($this->resendConfirm($row)) {
-                            ++$count;
-                        }
-                    }
-                }
-                $result = $this->i18n->get('result_resent', $count);
-                break;
+        foreach ($users as $email) {
+            if ($command->process($email)) {
+                ++$count;
+            }
         }
-
+        $result = $command->result($count);
         $this->logEvent(sprintf('%s - %s', self::IDENTIFIER, $result));
 
         return $result;
@@ -274,39 +150,37 @@ class Command extends Controller
     /**
      * Generates the html for a dropdown list of lists owned by the current admin.
      *
-     * @param bool $enabled Whether the list should be enabled
+     * @param bool $disabled Whether the list should be disabled
      *
      * @return string the html
      */
-    private function dropDownList($disabled)
+    private function ownedListsDropDown($disabled)
     {
         $lists = iterator_to_array($this->dao->listsForOwner(null));
 
         return CHtml::dropDownList(
-            'listId', $this->model->listId, array_column($lists, 'name', 'id'), array('disabled' => $disabled)
+            'listId',
+            $this->model->listId,
+            array_column($lists, 'name', 'id'),
+            array('disabled' => $disabled)
         );
     }
 
     /**
      * Generates the html for a group of radio buttons.
      *
-     * @param bool $enabled Whether the buttons should be enabled
+     * @param bool $disabled Whether the buttons should be disabled
      *
      * @return string the html
      */
-    private function radioButtonList($disabled)
+    private function commandRadioButtons($disabled)
     {
+        $commandList = Factory::commandList($this->i18n, $this->ownedListsDropDown($disabled));
+
         return CHtml::radioButtonList(
             'command',
             $this->model->command,
-            array(
-                self::COMMAND_UNCONFIRM => $this->i18n->get('Unconfirm'),
-                self::COMMAND_BLACKLIST => $this->i18n->get('Blacklist'),
-                self::COMMAND_UNBLACKLIST => $this->i18n->get('Unblacklist'),
-                self::COMMAND_DELETE => $this->i18n->get('Delete'),
-                self::COMMAND_RESEND_CONFIRMATION_REQUEST => $this->i18n->get('Resend confirmation request'),
-                self::COMMAND_REMOVE => $this->i18n->get('Remove from list') . '&nbsp;' . $this->dropDownList(self::HTML_ENABLED),
-            ),
+            $commandList,
             array('separator' => '<br />', 'disabled' => $disabled)
         );
     }
@@ -327,8 +201,7 @@ class Command extends Controller
         $cancel = new PageLink(new PageURL(null), $this->i18n->get('Cancel'), array('class' => 'button'));
         $params = array(
             'toolbar' => $this->toolbar->display(),
-            'commandList' => $this->radioButtonList(self::HTML_DISABLED),
-            'listSelect' => $this->dropDownList(self::HTML_DISABLED),
+            'commandList' => $this->commandRadioButtons(self::HTML_DISABLED),
             'userArea' => CHtml::textArea('users', implode("\n", $this->model->users),
                 array('rows' => '10', 'cols' => '30', 'disabled' => self::HTML_DISABLED)
             ),
@@ -375,7 +248,7 @@ class Command extends Controller
                     }
                     $users = $this->dao->matchUsers(
                         $this->model->pattern,
-                        $this->model->command == self::COMMAND_REMOVE
+                        $this->model->command == Factory::COMMAND_REMOVE
                             ? $this->model->listId
                             : null
                     );
@@ -407,11 +280,9 @@ class Command extends Controller
         }
         unset($_SESSION[self::PLUGIN]);
 
-        $params += array(
-            'toolbar' => $this->toolbar->display(),
-            'formURL' => new PageURL(),
-            'commandList' => $this->radioButtonList(self::HTML_ENABLED),
-        );
+        $params['toolbar'] = $this->toolbar->display();
+        $params['formURL'] = new PageURL();
+        $params['commandList'] = $this->commandRadioButtons(self::HTML_ENABLED);
         echo $this->render(dirname(__FILE__) . self::TEMPLATE, $params);
     }
 
@@ -419,7 +290,7 @@ class Command extends Controller
     {
         parent::__construct();
         $this->dao = new DAO(new DB());
-        $this->model = new Model(self::COMMAND_UNCONFIRM);
+        $this->model = new Model(Factory::COMMAND_UNCONFIRM);
         $this->model->setProperties($_REQUEST);
         $this->toolbar = new Toolbar($this);
         $this->toolbar->addExternalHelpButton(self::HELP);
