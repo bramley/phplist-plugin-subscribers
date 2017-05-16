@@ -95,6 +95,7 @@ $lan = array(
     'no valid email addresses entered' => 'Keine gültigen E-Mail-Adressen eingegeben',
     'error_match_not_entered' => 'Geben Sie eine Zeichenfolge ein, mit der die E-Mail-Adressen der Abonnenten abgeglichen werden sollen',
     'error_no_match' => 'Keine Abonnenten mit "%s" gefunden',
+    'error_no_acceptable' => 'No acceptable subscribers found for the selected command',
     'upload_error_0' => 'Kein Fehler, Datei erfolgreich hochgeladen',
     'upload_error_1' => 'Die hochgeladene Datei überschreitet die upload_max_filesize Direktive in php.ini',
     'upload_error_2' => 'Die hochgeladene Datei überschreitet die im HTML-Formular angegebene MAX_FILE_SIZE Direktive',

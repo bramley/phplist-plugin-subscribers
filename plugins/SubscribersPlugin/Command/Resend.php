@@ -72,15 +72,14 @@ class Resend extends Base
         );
     }
 
-    public function process($email)
+    public function accept(array $user)
     {
-        if ($row = $this->dao->userByEmail($email)) {
-            if ($this->resendConfirm($row)) {
-                return true;
-            }
-        }
+        return $user['confirmed'] == 0;
+    }
 
-        return false;
+    public function process(array $user)
+    {
+        return $this->resendConfirm($user);
     }
 
     public function result($count)

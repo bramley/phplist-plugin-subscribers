@@ -1,17 +1,4 @@
 <?php
-
-namespace phpList\plugin\SubscribersPlugin\Controller;
-
-use CHtml;
-use phpList\plugin\Common\Controller;
-use phpList\plugin\Common\DB;
-use phpList\plugin\Common\PageLink;
-use phpList\plugin\Common\PageURL;
-use phpList\plugin\Common\Toolbar;
-use phpList\plugin\SubscribersPlugin\Command\Factory;
-use phpList\plugin\SubscribersPlugin\DAO\Command as DAO;
-use phpList\plugin\SubscribersPlugin\Model\Command as Model;
-
 /**
  * SubscribersPlugin for phplist.
  *
@@ -30,6 +17,18 @@ use phpList\plugin\SubscribersPlugin\Model\Command as Model;
  * @copyright 2011-2017 Duncan Cameron
  * @license   http://www.gnu.org/licenses/gpl.html GNU General Public License, Version 3
  */
+
+namespace phpList\plugin\SubscribersPlugin\Controller;
+
+use CHtml;
+use phpList\plugin\Common\Controller;
+use phpList\plugin\Common\DB;
+use phpList\plugin\Common\PageLink;
+use phpList\plugin\Common\PageURL;
+use phpList\plugin\Common\Toolbar;
+use phpList\plugin\SubscribersPlugin\Command\Factory;
+use phpList\plugin\SubscribersPlugin\DAO\Command as DAO;
+use phpList\plugin\SubscribersPlugin\Model\Command as Model;
 
 /**
  * This class is the controller for the plugin providing the action methods.
@@ -93,21 +92,52 @@ class Command extends Controller
     }
 
     /**
+     * Allows the command to decide whether to accept for processing each of the
+     * entered subscriber email addresses.
+     *
+     * @param array $emails    email addresses
+     * @param int   $commandId The command to be applied
+     * @param int   $listId    List id
+     *
+     * @return array the subscribers who have been accepted
+     */
+    private function acceptUsers(array $emails, $commandId, $listId)
+    {
+        $command = Factory::createCommand($commandId, $listId, $this->dao, $this->i18n);
+        $accepted = array_filter(
+            $emails,
+            function ($email) use ($command) {
+                $user = $this->dao->userByEmail($email);
+
+                if (!$user) {
+                    return false;
+                }
+
+                return $command->accept($user);
+            }
+        );
+
+        return $accepted;
+    }
+
+    /**
      * Applies the command to the set of subscribers.
      *
      * @param array $users     email addresses
-     * @param bool  $commandId The command to be applied
-     * @param bool  $listId    List id
+     * @param int   $commandId The command to be applied
+     * @param int   $listId    List id
      *
      * @return string a message summarising the command and number of affected subscribers
      */
-    private function processUsers(array $users, $commandId, $listId)
+    private function processUsers(array $emails, $commandId, $listId)
     {
         $command = Factory::createCommand($commandId, $listId, $this->dao, $this->i18n);
         $count = 0;
 
-        foreach ($users as $email) {
-            if ($command->process($email)) {
+        foreach ($emails as $email) {
+            $user = $this->dao->userByEmail($email);
+
+            if ($command->process($user)) {
                 ++$count;
             }
         }
@@ -246,12 +276,7 @@ class Command extends Controller
                         $error = $this->i18n->get('error_match_not_entered');
                         break;
                     }
-                    $users = $this->dao->matchUsers(
-                        $this->model->pattern,
-                        $this->model->command == Factory::COMMAND_REMOVE
-                            ? $this->model->listId
-                            : null
-                    );
+                    $users = $this->dao->matchUserPattern($this->model->pattern);
 
                     if (count($users) == 0) {
                         $error = $this->i18n->get('error_no_match', $this->model->pattern);
@@ -263,14 +288,19 @@ class Command extends Controller
             }
 
             if ($error === '') {
-                $this->redirectExit(
-                    new PageURL(null, array('action' => 'displayUsers')),
-                    array(
-                        'users' => $users,
-                        'command' => $this->model->command,
-                        'listId' => $this->model->listId,
-                    )
-                );
+                $users = $this->acceptUsers($users, $this->model->command, $this->model->listId);
+
+                if (count($users) > 0) {
+                    $this->redirectExit(
+                        new PageURL(null, array('action' => 'displayUsers')),
+                        array(
+                            'users' => $users,
+                            'command' => $this->model->command,
+                            'listId' => $this->model->listId,
+                        )
+                    );
+                }
+                $error = $this->i18n->get('error_no_acceptable');
             }
             $params['error'] = $error;
         }

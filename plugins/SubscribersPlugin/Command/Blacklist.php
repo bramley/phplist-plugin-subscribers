@@ -27,15 +27,15 @@ use phpList\plugin\SubscribersPlugin\Controller\Command as Controller;
  */
 class Blacklist extends Base
 {
-    public function process($email)
+    public function accept(array $user)
     {
-        $user = $this->dao->userByEmail($email);
+        return $user['blacklisted'] == 0;
+    }
 
-        if ($user['blacklisted']) {
-            return false;
-        }
+    public function process(array $user)
+    {
         addUserToBlackList(
-            $email,
+            $user['email'],
             $this->i18n->get('history_blacklisted', Controller::IDENTIFIER)
         );
 

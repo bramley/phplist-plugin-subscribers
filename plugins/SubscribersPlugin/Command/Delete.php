@@ -25,14 +25,9 @@ namespace phpList\plugin\SubscribersPlugin\Command;
  */
 class Delete extends Base
 {
-    public function process($email)
+    public function process(array $user)
     {
-        $row = $this->dao->userByEmail($email);
-
-        if (!$row) {
-            return false;
-        }
-        deleteUser($row['id']);
+        deleteUser($user['id']);
 
         return true;
     }

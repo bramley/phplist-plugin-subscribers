@@ -33,11 +33,16 @@ class Remove extends Base
         $this->listName = $this->dao->listName($this->listId);
     }
 
-    public function process($email)
+    public function accept(array $user)
     {
-        $this->dao->removeFromList($email, $this->listId);
+        return (bool) $this->dao->isUserOnList($user['id'], $this->listId);
+    }
+
+    public function process(array $user)
+    {
+        $this->dao->removeFromList($user['id'], $this->listId);
         addUserHistory(
-            $email,
+            $user['email'],
             Controller::IDENTIFIER,
             $this->i18n->get('history_removed', $this->listName)
         );

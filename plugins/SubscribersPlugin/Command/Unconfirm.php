@@ -27,8 +27,15 @@ use phpList\plugin\SubscribersPlugin\Controller\Command as Controller;
  */
 class Unconfirm extends Base
 {
-    public function process($email)
+    public function accept(array $user)
     {
+        return $user['confirmed'] == 1;
+    }
+
+    public function process(array $user)
+    {
+        $email = $user['email'];
+
         if (!$this->dao->unconfirmUser($email)) {
             return false;
         }

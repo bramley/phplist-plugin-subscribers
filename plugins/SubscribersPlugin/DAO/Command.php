@@ -45,15 +45,12 @@ class Command extends User
         return $list['name'];
     }
 
-    public function matchUsers($pattern, $listId = null)
+    public function matchUserPattern($pattern)
     {
-        $luJoin = is_null($listId) ? '' : "JOIN {$this->tables['listuser']} lu ON u.id = lu.userid AND lu.listid = $listId";
-
         $pattern = sql_escape($pattern);
         $sql =
-            "SELECT u.email as email, u.id
+            "SELECT u.email as email
             FROM {$this->tables['user']} u
-            $luJoin
             WHERE u.email LIKE '%$pattern%'
             ";
 
@@ -142,15 +139,23 @@ END;
         return $this->dbCommand->queryAll($sql);
     }
 
-    public function removeFromList($email, $listId)
+    public function isUserOnList($userId, $listId)
     {
-        $email = sql_escape($email);
         $sql =
-            "DELETE lu
-            FROM {$this->tables['listuser']} lu
-            JOIN {$this->tables['user']} u ON u.id = lu.userid
-            WHERE u.email = '$email'
-            AND lu.listid = $listId
+            "SELECT 1
+            FROM {$this->tables['listuser']}
+            WHERE userid = $userId AND listid = $listId
+            ";
+
+        return $this->dbCommand->queryOne($sql);
+    }
+
+    public function removeFromList($userId, $listId)
+    {
+        $sql =
+            "DELETE
+            FROM {$this->tables['listuser']}
+            WHERE userid = $userId AND listid = $listId
             ";
 
         return $this->dbCommand->queryAffectedRows($sql);

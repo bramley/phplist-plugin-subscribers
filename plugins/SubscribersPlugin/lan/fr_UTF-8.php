@@ -95,6 +95,7 @@ $lan = array(
     'no valid email addresses entered' => 'no valid email addresses entered',
     'error_match_not_entered' => 'A partial email address must be entered',
     'error_no_match' => 'No subscribers matching "%s" found',
+    'error_no_acceptable' => 'No acceptable subscribers found for the selected command',
     'upload_error_0' => 'There is no error, the file uploaded with success',
     'upload_error_1' => 'The uploaded file exceeds the upload_max_filesize directive in php.ini',
     'upload_error_2' => 'The uploaded file exceeds the MAX_FILE_SIZE directive that was specified in the HTML form',

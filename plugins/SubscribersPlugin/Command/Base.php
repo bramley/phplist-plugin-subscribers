@@ -35,4 +35,9 @@ abstract class Base
         $this->i18n = $i18n;
         $this->listId = $listId;
     }
+
+    public function accept(array $user)
+    {
+        return true;
+    }
 }

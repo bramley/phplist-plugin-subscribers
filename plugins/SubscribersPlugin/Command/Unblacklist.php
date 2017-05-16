@@ -25,13 +25,13 @@ namespace phpList\plugin\SubscribersPlugin\Command;
  */
 class Unblacklist extends Base
 {
-    public function process($email)
+    public function accept(array $user)
     {
-        $user = $this->dao->userByEmail($email);
+        return $user['blacklisted'] == 1;
+    }
 
-        if (!$user['blacklisted']) {
-            return false;
-        }
+    public function process(array $user)
+    {
         unBlackList($user['id']);
 
         return true;
