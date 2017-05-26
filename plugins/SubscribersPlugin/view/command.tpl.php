@@ -50,7 +50,7 @@ input[type="text"], select {
             <div class="header"><h2><?= $this->i18n->get('Apply command to a group of subscribers'); ?></h2></div>
             <div class="content">
                 <form class="inline" enctype="multipart/form-data" method='post' action="<?= $formURL; ?>">
-<?= $this->i18n->get('Action for each subscriber'); ?>
+<label><?= $this->i18n->get('Action for each subscriber'); ?></label>
                     : <br />
 <?= $commandList; ?>
                     <div class="note">

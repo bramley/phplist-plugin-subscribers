@@ -123,15 +123,16 @@ class Command extends Controller
     /**
      * Applies the command to the set of subscribers.
      *
-     * @param array $users     email addresses
-     * @param int   $commandId The command to be applied
-     * @param int   $listId    List id
+     * @param array $users            email addresses
+     * @param int   $commandId        The command to be applied
+     * @param int   $listId           List id
+     * @param array $additionalFields Additional form fields
      *
      * @return string a message summarising the command and number of affected subscribers
      */
-    private function processUsers(array $emails, $commandId, $listId)
+    private function processUsers(array $emails, $commandId, $listId, $additionalFields)
     {
-        $command = Factory::createCommand($commandId, $listId, $this->dao, $this->i18n);
+        $command = Factory::createCommand($commandId, $listId, $this->dao, $this->i18n, $additionalFields);
         $count = 0;
 
         foreach ($emails as $email) {
@@ -216,6 +217,68 @@ class Command extends Controller
     }
 
     /**
+     * Validates the submission of the first page.
+     * On success redirects to the second page. On error redirects to the same page.
+     */
+    private function handlePost()
+    {
+        $error = '';
+
+        switch ($_POST['submit']) {
+            case 'Upload':
+                $error = $this->validateFile();
+
+                if ($error == '') {
+                    $users = $this->loadUsersFromFile();
+                }
+                break;
+            case 'Process':
+                if ($this->model->emails == '') {
+                    $error = $this->i18n->get('emails not entered');
+                    break;
+                }
+                $users = $this->extractEmailAddresses(explode("\n", $this->model->emails));
+
+                if (count($users) === 0) {
+                    $error = $this->i18n->get('no valid email addresses entered');
+                }
+                break;
+            case 'Match':
+                if ($this->model->pattern == '') {
+                    $error = $this->i18n->get('error_match_not_entered');
+                    break;
+                }
+                $users = $this->dao->matchUserPattern($this->model->pattern);
+
+                if (count($users) == 0) {
+                    $error = $this->i18n->get('error_no_match', $this->model->pattern);
+                    break;
+                }
+                break;
+            default:
+                $error = 'unrecognised submit ' . $_POST['submit'];
+        }
+
+        if ($error === '') {
+            $users = $this->acceptUsers($users, $this->model->command, $this->model->listId);
+
+            if (count($users) > 0) {
+                return [
+                    new PageURL(null, array('action' => 'displayUsers')),
+                    [
+                        'users' => $users,
+                        'command' => $this->model->command,
+                        'listId' => $this->model->listId,
+                    ],
+                ];
+            }
+            $error = $this->i18n->get('error_no_acceptable');
+        }
+
+        return [new PageURL(), array('error' => $error)];
+    }
+
+    /**
      * Displays the second page.
      * For a POST processes the subscribers.
      */
@@ -224,17 +287,24 @@ class Command extends Controller
         $this->model->setProperties($_SESSION[self::PLUGIN]);
 
         if (isset($_POST['submit'])) {
-            $result = $this->processUsers($this->model->users, $this->model->command, $this->model->listId);
+            $additionalFields = isset($_POST['additional']) ? $_POST['additional'] : [];
+            $result = $this->processUsers($this->model->users, $this->model->command, $this->model->listId, $additionalFields);
             $this->redirectExit(new PageURL(), array('result' => $result));
         }
 
-        $cancel = new PageLink(new PageURL(null), $this->i18n->get('Cancel'), array('class' => 'button'));
+        $command = Factory::createCommand($this->model->command, $this->model->listId, $this->dao, $this->i18n);
+        $additionalHtml = $command->additionalHtml();
+
+        $cancel = new PageLink(new PageURL(), $this->i18n->get('Cancel'), array('class' => 'button'));
         $params = array(
             'toolbar' => $this->toolbar->display(),
             'commandList' => $this->commandRadioButtons(self::HTML_DISABLED),
-            'userArea' => CHtml::textArea('users', implode("\n", $this->model->users),
+            'userArea' => CHtml::textArea(
+                'users',
+                implode("\n", $this->model->users),
                 array('rows' => '10', 'cols' => '30', 'disabled' => self::HTML_DISABLED)
             ),
+            'additionalHtml' => $additionalHtml,
             'formURL' => new PageURL(null, array('action' => 'displayUsers')),
             'cancel' => $cancel,
         );
@@ -243,70 +313,21 @@ class Command extends Controller
 
     /**
      * Displays the first page including any error or result message.
-     * For a POST validates the submission. On success redirects to the second page.
      */
     protected function actionDefault()
     {
-        $params = array();
-
         if (isset($_POST['submit'])) {
-            $error = '';
-
-            switch ($_POST['submit']) {
-                case 'Upload':
-                    $error = $this->validateFile();
-
-                    if ($error == '') {
-                        $users = $this->loadUsersFromFile();
-                    }
-                    break;
-                case 'Process':
-                    if ($this->model->emails == '') {
-                        $error = $this->i18n->get('emails not entered');
-                        break;
-                    }
-                    $users = $this->extractEmailAddresses(explode("\n", $this->model->emails));
-
-                    if (count($users) === 0) {
-                        $error = $this->i18n->get('no valid email addresses entered');
-                    }
-                    break;
-                case 'Match':
-                    if ($this->model->pattern == '') {
-                        $error = $this->i18n->get('error_match_not_entered');
-                        break;
-                    }
-                    $users = $this->dao->matchUserPattern($this->model->pattern);
-
-                    if (count($users) == 0) {
-                        $error = $this->i18n->get('error_no_match', $this->model->pattern);
-                        break;
-                    }
-                    break;
-                default:
-                    $error = 'unrecognised submit ' . $_POST['submit'];
-            }
-
-            if ($error === '') {
-                $users = $this->acceptUsers($users, $this->model->command, $this->model->listId);
-
-                if (count($users) > 0) {
-                    $this->redirectExit(
-                        new PageURL(null, array('action' => 'displayUsers')),
-                        array(
-                            'users' => $users,
-                            'command' => $this->model->command,
-                            'listId' => $this->model->listId,
-                        )
-                    );
-                }
-                $error = $this->i18n->get('error_no_acceptable');
-            }
-            $params['error'] = $error;
+            list($redirect, $session) = $this->handlePost();
+            $this->redirectExit($redirect, $session);
         }
+        $params = [];
 
         if (isset($_SESSION[self::PLUGIN]['result'])) {
             $params['result'] = $_SESSION[self::PLUGIN]['result'];
+        }
+
+        if (isset($_SESSION[self::PLUGIN]['error'])) {
+            $params['error'] = $_SESSION[self::PLUGIN]['error'];
         }
         unset($_SESSION[self::PLUGIN]);
 

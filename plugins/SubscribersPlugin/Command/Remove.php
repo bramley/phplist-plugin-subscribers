@@ -27,9 +27,9 @@ use phpList\plugin\SubscribersPlugin\Controller\Command as Controller;
  */
 class Remove extends Base
 {
-    public function __construct($dao, $i18n, $listId)
+    public function __construct($context)
     {
-        parent::__construct($dao, $i18n, $listId);
+        parent::__construct($context);
         $this->listName = $this->dao->listName($this->listId);
     }
 

@@ -28,16 +28,53 @@ abstract class Base
     protected $listId;
     protected $dao;
     protected $i18n;
+    protected $additionalFields;
 
-    public function __construct($dao, $i18n, $listId = null)
+    public function __construct($context)
     {
-        $this->dao = $dao;
-        $this->i18n = $i18n;
-        $this->listId = $listId;
+        $this->dao = $context->dao;
+        $this->i18n = $context->i18n;
+        $this->listId = $context->listId;
+        $this->additionalFields = $context->additionalFields;
     }
 
+    /**
+     * Decide whether to accept a subscriber for processing by the command.
+     *
+     * @param array $user user details
+     *
+     * @return bool whether to accept
+     */
     public function accept(array $user)
     {
         return true;
+    }
+
+    /**
+     * Process a subscriber.
+     *
+     * @param array $user user details
+     *
+     * @return bool whether the subscriber was processed successfully
+     */
+    abstract public function process(array $user);
+
+    /**
+     * Create the result message specific to this command.
+     *
+     * @param int $count the number of subscribers processed successfully
+     *
+     * @return string the result message
+     */
+    abstract public function result($count);
+
+    /**
+     * Generate additonal html to be added to the display users page.
+     *
+     * @return string the html
+     */
+    public function additionalHtml()
+    {
+        return '';
     }
 }

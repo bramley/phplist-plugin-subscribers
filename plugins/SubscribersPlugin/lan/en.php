@@ -114,6 +114,13 @@ $lan = array(
     'result_removed' => 'Subscribers removed from list "%s": %d',
     'result_resent' => 'Confirmation requests resent: %d',
     'Subscriber' => 'Subscriber',
+    'Text to prepend to the confirmation request email' => 'Text to prepend to the confirmation request email',
+    'resend_prepend' => <<<'END'
+Sorry to bother you.
+We are cleaning up our database and it appears that you have previously signed up to our mailing list and not confirmed your subscription.
+We would like to give you the opportunity to re-confirm your subscription. The instructions on how to confirm are below.
+END
+    ,
 /* Reports */
     'Available reports' => 'Available reports',
     'Subscribers with an invalid email address' => 'Subscribers with an invalid email address',

@@ -20,11 +20,15 @@
 
 namespace phpList\plugin\SubscribersPlugin\Command;
 
+use CHtml;
+
 /**
  *  This class implements the command to resend a confirmation request email.
  */
 class Resend extends Base
 {
+    private $prepend;
+
     /**
      * Constructs and sends a confirmation request email.
      * Copied from phplist file reconcileusers.php.
@@ -61,20 +65,38 @@ class Resend extends Base
             $subscribemessage = str_replace('[LISTS]', $lists, getUserConfig('subscribemessage', $id));
             $subject = getConfig('subscribesubject');
         }
-        logEvent($GLOBALS['I18N']->get('Resending confirmation request to') . ' ' . $userdata['email']);
+        logEvent(s('Resending confirmation request to') . ' ' . $userdata['email']);
 
         return sendMail(
             $userdata['email'],
             $subject,
-            $subscribemessage,
+            $this->prepend . $subscribemessage,
             system_messageheaders($userdata['email']),
             $envelope
         );
     }
 
+    public function __construct($context)
+    {
+        parent::__construct($context);
+        $this->prepend = isset($this->additionalFields['prepend']) ? $this->additionalFields['prepend'] : '';
+    }
+
     public function accept(array $user)
     {
         return $user['confirmed'] == 0;
+    }
+
+    public function additionalHtml()
+    {
+        $label = CHtml::label($this->i18n->get('Text to prepend to the confirmation request email'), false);
+        $textArea = CHtml::textArea(
+            'additional[prepend]',
+            $this->i18n->get('resend_prepend'),
+            array('rows' => '6', 'cols' => '60')
+        );
+
+        return $label . $textArea;
     }
 
     public function process(array $user)

@@ -39,29 +39,36 @@ class Factory
      * @param int                                           $listId
      * @param \phpList\plugin\SubscribersPlugin\DAO\Command $dao
      * @param \phpList\plugin\Common\I18N                   $i18n
+     * @param array                                         $additionalFields
      *
      * @return Base instance of command
      */
-    public static function createCommand($commandId, $listId, $dao, $i18n)
+    public static function createCommand($commandId, $listId, $dao, $i18n, $additionalFields = [])
     {
+        $context = new \stdClass();
+        $context->listId = $listId;
+        $context->dao = $dao;
+        $context->i18n = $i18n;
+        $context->additionalFields = $additionalFields;
+
         switch ($commandId) {
             case self::COMMAND_UNCONFIRM:
-                $command = new Unconfirm($dao, $i18n);
+                $command = new Unconfirm($context);
                 break;
             case self::COMMAND_BLACKLIST:
-                $command = new Blacklist($dao, $i18n);
+                $command = new Blacklist($context);
                 break;
             case self::COMMAND_DELETE:
-                $command = new Delete($dao, $i18n);
+                $command = new Delete($context);
                 break;
             case self::COMMAND_REMOVE:
-                $command = new Remove($dao, $i18n, $listId);
+                $command = new Remove($context);
                 break;
             case self::COMMAND_UNBLACKLIST:
-                $command = new Unblacklist($dao, $i18n);
+                $command = new Unblacklist($context);
                 break;
             case self::COMMAND_RESEND_CONFIRMATION_REQUEST:
-                $command = new Resend($dao, $i18n);
+                $command = new Resend($context);
                 break;
             default:
                 throw new Exception("Unrecognised command id - $commandId");
