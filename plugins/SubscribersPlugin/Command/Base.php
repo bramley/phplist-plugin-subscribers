@@ -25,17 +25,25 @@ namespace phpList\plugin\SubscribersPlugin\Command;
  */
 abstract class Base
 {
-    protected $listId;
+    protected $commandId;
     protected $dao;
     protected $i18n;
     protected $additionalFields;
 
-    public function __construct($context)
+    /**
+     * Overridden when a class has processing to be run on construction.
+     */
+    protected function initialise()
     {
-        $this->dao = $context->dao;
-        $this->i18n = $context->i18n;
-        $this->listId = $context->listId;
-        $this->additionalFields = $context->additionalFields;
+    }
+
+    public function __construct($commandId, $additionalFields, $dao, $i18n)
+    {
+        $this->commandId = $commandId;
+        $this->additionalFields = $additionalFields;
+        $this->dao = $dao;
+        $this->i18n = $i18n;
+        $this->initialise();
     }
 
     /**
@@ -69,7 +77,19 @@ abstract class Base
     abstract public function result($count);
 
     /**
-     * Generate additonal html to be added to the display users page.
+     * Generate additional html to be added to the command page.
+     *
+     * @param bool $disabled whether html input fields should be disabled
+     *
+     * @return string the html
+     */
+    public function additionalCommandHtml($disabled)
+    {
+        return '';
+    }
+
+    /**
+     * Generate additional html to be added to the display users page.
      *
      * @return string the html
      */

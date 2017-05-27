@@ -56,7 +56,7 @@ class Command extends Controller
      * @param string $redirect the redirect location
      * @param array  $session  variables to be stored in the session
      */
-    private function redirectExit($redirect, array $session = array())
+    private function redirectExit($redirect, array $session = [])
     {
         $_SESSION[self::PLUGIN] = $session;
         header('Location: ' . $redirect);
@@ -74,13 +74,13 @@ class Command extends Controller
         $f = $this->model->file;
 
         if ($f['error'] != 0) {
-            $errorText = array(
+            $errorText = [
                 1 => $this->i18n->get('upload_error_1'),
                 2 => $this->i18n->get('upload_error_2'),
                 3 => $this->i18n->get('upload_error_3'),
                 4 => $this->i18n->get('upload_error_4'),
                 6 => $this->i18n->get('upload_error_6'),
-            );
+            ];
             $error = $errorText[$f['error']];
         } elseif (!preg_match('/csv|text/', $f['type'])) {
             $error = $this->i18n->get('error_extension');
@@ -95,15 +95,13 @@ class Command extends Controller
      * Allows the command to decide whether to accept for processing each of the
      * entered subscriber email addresses.
      *
-     * @param array $emails    email addresses
-     * @param int   $commandId The command to be applied
-     * @param int   $listId    List id
+     * @param array $emails email addresses
      *
      * @return array the subscribers who have been accepted
      */
-    private function acceptUsers(array $emails, $commandId, $listId)
+    private function acceptEmails(array $emails)
     {
-        $command = Factory::createCommand($commandId, $listId, $this->dao, $this->i18n);
+        $command = $this->factory->createCommand($this->model->commandid, $this->model->additional);
         $accepted = array_filter(
             $emails,
             function ($email) use ($command) {
@@ -123,19 +121,15 @@ class Command extends Controller
     /**
      * Applies the command to the set of subscribers.
      *
-     * @param array $users            email addresses
-     * @param int   $commandId        The command to be applied
-     * @param int   $listId           List id
-     * @param array $additionalFields Additional form fields
+     * @param phpList\plugin\SubscribersPlugin\Command\Base $command instance of command
      *
      * @return string a message summarising the command and number of affected subscribers
      */
-    private function processUsers(array $emails, $commandId, $listId, $additionalFields)
+    private function processAcceptedEmails($command)
     {
-        $command = Factory::createCommand($commandId, $listId, $this->dao, $this->i18n, $additionalFields);
         $count = 0;
 
-        foreach ($emails as $email) {
+        foreach ($this->model->acceptedEmails as $email) {
             $user = $this->dao->userByEmail($email);
 
             if ($command->process($user)) {
@@ -179,25 +173,6 @@ class Command extends Controller
     }
 
     /**
-     * Generates the html for a dropdown list of lists owned by the current admin.
-     *
-     * @param bool $disabled Whether the list should be disabled
-     *
-     * @return string the html
-     */
-    private function ownedListsDropDown($disabled)
-    {
-        $lists = iterator_to_array($this->dao->listsForOwner(null));
-
-        return CHtml::dropDownList(
-            'listId',
-            $this->model->listId,
-            array_column($lists, 'name', 'id'),
-            array('disabled' => $disabled)
-        );
-    }
-
-    /**
      * Generates the html for a group of radio buttons.
      *
      * @param bool $disabled Whether the buttons should be disabled
@@ -206,13 +181,13 @@ class Command extends Controller
      */
     private function commandRadioButtons($disabled)
     {
-        $commandList = Factory::commandList($this->i18n, $this->ownedListsDropDown($disabled));
+        $commandList = $this->factory->availableCommands($this->model->additional, $disabled);
 
         return CHtml::radioButtonList(
-            'command',
-            $this->model->command,
+            'commandid',
+            $this->model->commandid,
             $commandList,
-            array('separator' => '<br />', 'disabled' => $disabled)
+            ['separator' => '<br />', 'disabled' => $disabled]
         );
     }
 
@@ -229,7 +204,7 @@ class Command extends Controller
                 $error = $this->validateFile();
 
                 if ($error == '') {
-                    $users = $this->loadUsersFromFile();
+                    $emails = $this->loadUsersFromFile();
                 }
                 break;
             case 'Process':
@@ -237,9 +212,9 @@ class Command extends Controller
                     $error = $this->i18n->get('emails not entered');
                     break;
                 }
-                $users = $this->extractEmailAddresses(explode("\n", $this->model->emails));
+                $emails = $this->extractEmailAddresses(explode("\n", $this->model->emails));
 
-                if (count($users) === 0) {
+                if (count($emails) === 0) {
                     $error = $this->i18n->get('no valid email addresses entered');
                 }
                 break;
@@ -248,9 +223,9 @@ class Command extends Controller
                     $error = $this->i18n->get('error_match_not_entered');
                     break;
                 }
-                $users = $this->dao->matchUserPattern($this->model->pattern);
+                $emails = $this->dao->matchUserPattern($this->model->pattern);
 
-                if (count($users) == 0) {
+                if (count($emails) == 0) {
                     $error = $this->i18n->get('error_no_match', $this->model->pattern);
                     break;
                 }
@@ -260,22 +235,22 @@ class Command extends Controller
         }
 
         if ($error === '') {
-            $users = $this->acceptUsers($users, $this->model->command, $this->model->listId);
+            $acceptedEmails = $this->acceptEmails($emails);
 
-            if (count($users) > 0) {
+            if (count($acceptedEmails) > 0) {
                 return [
-                    new PageURL(null, array('action' => 'displayUsers')),
+                    new PageURL(null, ['action' => 'displayUsers']),
                     [
-                        'users' => $users,
-                        'command' => $this->model->command,
-                        'listId' => $this->model->listId,
+                        'acceptedEmails' => $acceptedEmails,
+                        'commandid' => $this->model->commandid,
+                        'additional' => $this->model->additional,
                     ],
                 ];
             }
             $error = $this->i18n->get('error_no_acceptable');
         }
 
-        return [new PageURL(), array('error' => $error)];
+        return [new PageURL(), ['error' => $error]];
     }
 
     /**
@@ -284,31 +259,28 @@ class Command extends Controller
      */
     protected function actionDisplayUsers()
     {
-        $this->model->setProperties($_SESSION[self::PLUGIN]);
+        $this->model->setProperties(array_merge_recursive($_POST, $_SESSION[self::PLUGIN]));
+        $command = $this->factory->createCommand($this->model->commandid, $this->model->additional);
 
         if (isset($_POST['submit'])) {
-            $additionalFields = isset($_POST['additional']) ? $_POST['additional'] : [];
-            $result = $this->processUsers($this->model->users, $this->model->command, $this->model->listId, $additionalFields);
-            $this->redirectExit(new PageURL(), array('result' => $result));
+            $result = $this->processAcceptedEmails($command);
+            $this->redirectExit(new PageURL(), ['result' => $result]);
         }
-
-        $command = Factory::createCommand($this->model->command, $this->model->listId, $this->dao, $this->i18n);
         $additionalHtml = $command->additionalHtml();
-
-        $cancel = new PageLink(new PageURL(), $this->i18n->get('Cancel'), array('class' => 'button'));
-        $params = array(
+        $cancel = new PageLink(new PageURL(), $this->i18n->get('Cancel'), ['class' => 'button']);
+        $params = [
             'toolbar' => $this->toolbar->display(),
             'commandList' => $this->commandRadioButtons(self::HTML_DISABLED),
             'userArea' => CHtml::textArea(
                 'users',
-                implode("\n", $this->model->users),
-                array('rows' => '10', 'cols' => '30', 'disabled' => self::HTML_DISABLED)
+                implode("\n", $this->model->acceptedEmails),
+                ['rows' => '10', 'cols' => '30', 'disabled' => self::HTML_DISABLED]
             ),
             'additionalHtml' => $additionalHtml,
-            'formURL' => new PageURL(null, array('action' => 'displayUsers')),
+            'formURL' => new PageURL(null, ['action' => 'displayUsers']),
             'cancel' => $cancel,
-        );
-        echo $this->render(dirname(__FILE__) . self::TEMPLATE_2, $params);
+        ];
+        echo $this->render(__DIR__ . self::TEMPLATE_2, $params);
     }
 
     /**
@@ -334,7 +306,7 @@ class Command extends Controller
         $params['toolbar'] = $this->toolbar->display();
         $params['formURL'] = new PageURL();
         $params['commandList'] = $this->commandRadioButtons(self::HTML_ENABLED);
-        echo $this->render(dirname(__FILE__) . self::TEMPLATE, $params);
+        echo $this->render(__DIR__ . self::TEMPLATE, $params);
     }
 
     public function __construct()
@@ -342,8 +314,9 @@ class Command extends Controller
         parent::__construct();
         $this->dao = new DAO(new DB());
         $this->model = new Model(Factory::COMMAND_UNCONFIRM);
-        $this->model->setProperties($_REQUEST);
+        $this->model->setProperties($_POST);
         $this->toolbar = new Toolbar($this);
         $this->toolbar->addExternalHelpButton(self::HELP);
+        $this->factory = new Factory($this->dao, $this->i18n);
     }
 }

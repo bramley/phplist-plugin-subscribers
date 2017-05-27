@@ -47,9 +47,8 @@ input[type="text"], select {
                     <div class="note">
 <?= $this->i18n->get('Review the action and the email addresses, then click Apply or Cancel.'); ?>
                     </div>
-<label><?= $this->i18n->get('Action for each subscriber'); ?></label>
-                    : <br />
-<?= $commandList; ?>
+<label><?= $this->i18n->get('Action for each subscriber'); ?> :</label>
+                    <div style='margin-bottom: 10px;'><?= $commandList; ?></div>
 <?= $userArea; ?>
                     <br>
 <?= $additionalHtml; ?>

@@ -20,6 +20,7 @@
 
 namespace phpList\plugin\SubscribersPlugin\Command;
 
+use CHtml;
 use phpList\plugin\SubscribersPlugin\Controller\Command as Controller;
 
 /**
@@ -27,10 +28,14 @@ use phpList\plugin\SubscribersPlugin\Controller\Command as Controller;
  */
 class Remove extends Base
 {
-    public function __construct($context)
+    public function initialise()
     {
-        parent::__construct($context);
-        $this->listName = $this->dao->listName($this->listId);
+        if (isset($this->additionalFields['command'][$this->commandId]['listId'])) {
+            $this->listId = $this->additionalFields['command'][$this->commandId]['listId'];
+            $this->listName = $this->dao->listName($this->listId);
+        } else {
+            $this->listId = 0;
+        }
     }
 
     public function accept(array $user)
@@ -53,5 +58,17 @@ class Remove extends Base
     public function result($count)
     {
         return $this->i18n->get('result_removed', $this->listName, $count);
+    }
+
+    public function additionalCommandHtml($disabled)
+    {
+        $lists = iterator_to_array($this->dao->listsForOwner(null));
+
+        return CHtml::dropDownList(
+            sprintf('additional[command][%d][listId]', $this->commandId),
+            $this->listId,
+            array_column($lists, 'name', 'id'),
+            array('disabled' => $disabled)
+        );
     }
 }

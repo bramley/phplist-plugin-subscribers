@@ -76,15 +76,14 @@ class Resend extends Base
         );
     }
 
-    public function __construct($context)
+    public function initialise()
     {
-        parent::__construct($context);
         $this->prepend = isset($this->additionalFields['prepend']) ? $this->additionalFields['prepend'] : '';
     }
 
     public function accept(array $user)
     {
-        return $user['confirmed'] == 0;
+        return $user['confirmed'] == 0 && $user['blacklisted'] == 0;
     }
 
     public function additionalHtml()

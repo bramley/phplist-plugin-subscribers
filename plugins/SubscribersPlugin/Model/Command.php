@@ -28,12 +28,12 @@ class Command extends Model
      *  Inherited protected variables
      */
     protected $properties = array(
+        'commandid' => null,
         'file' => null,
-        'command' => null,
-        'listId' => null,
         'emails' => null,
         'pattern' => null,
-        'users' => null,
+        'acceptedEmails' => null,
+        'additional' => [],
     );
     protected $persist = array(
     );
@@ -43,7 +43,7 @@ class Command extends Model
      */
     public function __construct($defaultCommand)
     {
-        $this->properties['command'] = $defaultCommand;
+        $this->properties['commandid'] = $defaultCommand;
         parent::__construct();
     }
 

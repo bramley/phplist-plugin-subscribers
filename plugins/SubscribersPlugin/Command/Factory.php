@@ -33,67 +33,80 @@ class Factory
     const COMMAND_RESEND_CONFIRMATION_REQUEST = 6;
 
     /**
-     * Applies the command to the set of subscribers.
+     * Constructor.
      *
-     * @param int                                           $commandId
-     * @param int                                           $listId
      * @param \phpList\plugin\SubscribersPlugin\DAO\Command $dao
      * @param \phpList\plugin\Common\I18N                   $i18n
-     * @param array                                         $additionalFields
+     */
+    public function __construct($dao = null, $i18n = null)
+    {
+        $this->dao = $dao;
+        $this->i18n = $i18n;
+    }
+
+    /**
+     * Creates a command.
+     *
+     * @param int   $commandId
+     * @param array $additionalFields
      *
      * @return Base instance of command
      */
-    public static function createCommand($commandId, $listId, $dao, $i18n, $additionalFields = [])
+    public function createCommand($commandId, $additionalFields = [])
     {
-        $context = new \stdClass();
-        $context->listId = $listId;
-        $context->dao = $dao;
-        $context->i18n = $i18n;
-        $context->additionalFields = $additionalFields;
-
         switch ($commandId) {
             case self::COMMAND_UNCONFIRM:
-                $command = new Unconfirm($context);
+                $command = new Unconfirm($commandId, $additionalFields, $this->dao, $this->i18n);
                 break;
             case self::COMMAND_BLACKLIST:
-                $command = new Blacklist($context);
+                $command = new Blacklist($commandId, $additionalFields, $this->dao, $this->i18n);
                 break;
             case self::COMMAND_DELETE:
-                $command = new Delete($context);
+                $command = new Delete($commandId, $additionalFields, $this->dao, $this->i18n);
                 break;
             case self::COMMAND_REMOVE:
-                $command = new Remove($context);
+                $command = new Remove($commandId, $additionalFields, $this->dao, $this->i18n);
                 break;
             case self::COMMAND_UNBLACKLIST:
-                $command = new Unblacklist($context);
+                $command = new Unblacklist($commandId, $additionalFields, $this->dao, $this->i18n);
                 break;
             case self::COMMAND_RESEND_CONFIRMATION_REQUEST:
-                $command = new Resend($context);
+                $command = new Resend($commandId, $additionalFields, $this->dao, $this->i18n);
                 break;
             default:
-                throw new Exception("Unrecognised command id - $commandId");
+                throw new \Exception("Unrecognised command id - $commandId");
         }
 
         return $command;
     }
 
     /**
-     * Returns a list of available commands..
+     * Returns a list of available commands.
      *
-     * @param \phpList\plugin\Common\I18N $i18n
-     * @param string                      $dropDownList
+     * @param array $additionalFields
+     * @param bool  $disabled
      *
      * @return array command id => command caption
      */
-    public static function commandList($i18n, $dropDownList)
+    public function availableCommands($additionalFields, $disabled)
     {
-        return [
-            self::COMMAND_UNCONFIRM => $i18n->get('Unconfirm'),
-            self::COMMAND_BLACKLIST => $i18n->get('Blacklist'),
-            self::COMMAND_UNBLACKLIST => $i18n->get('Unblacklist'),
-            self::COMMAND_DELETE => $i18n->get('Delete'),
-            self::COMMAND_RESEND_CONFIRMATION_REQUEST => $i18n->get('Resend confirmation request'),
-            self::COMMAND_REMOVE => $i18n->get('Remove from list') . '&nbsp;' . $dropDownList,
+        $commandList = [
+            self::COMMAND_UNCONFIRM => $this->i18n->get('Unconfirm'),
+            self::COMMAND_BLACKLIST => $this->i18n->get('Blacklist'),
+            self::COMMAND_UNBLACKLIST => $this->i18n->get('Unblacklist'),
+            self::COMMAND_DELETE => $this->i18n->get('Delete'),
+            self::COMMAND_REMOVE => $this->i18n->get('Remove from list'),
+            self::COMMAND_RESEND_CONFIRMATION_REQUEST => $this->i18n->get('Resend confirmation request'),
         ];
+
+        foreach ($commandList as $commandId => &$caption) {
+            $command = $this->createCommand($commandId, $additionalFields);
+
+            if ($additionalHtml = $command->additionalCommandHtml($disabled)) {
+                $caption .= ' ' . $additionalHtml;
+            }
+        }
+
+        return $commandList;
     }
 }
