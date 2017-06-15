@@ -3,7 +3,6 @@
 namespace phpList\plugin\SubscribersPlugin\Controller;
 
 use phpList\plugin\Common\Controller;
-use phpList\plugin\Common\DB;
 use phpList\plugin\Common\IExportable;
 use phpList\plugin\Common\IPopulator;
 use phpList\plugin\Common\Listing;
@@ -145,10 +144,10 @@ class Subscriptions extends Controller implements IPopulator, IExportable
     /*
      *    Public methods
      */
-    public function __construct()
+    public function __construct(Model $model)
     {
         parent::__construct();
-        $this->model = new Model(new DB());
+        $this->model = $model;
         $this->model->setProperties($_GET);
     }
 

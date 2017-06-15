@@ -3,7 +3,6 @@
 namespace phpList\plugin\SubscribersPlugin\Controller;
 
 use phpList\plugin\Common\Controller;
-use phpList\plugin\Common\DB;
 use phpList\plugin\Common\IExportable;
 use phpList\plugin\Common\Listing;
 use phpList\plugin\Common\Toolbar;
@@ -38,16 +37,17 @@ class Invalid extends Controller
     const TEMPLATE = '/../view/invalidreport.tpl.php';
     const HELP = 'https://resources.phplist.com/plugin/subscribers?&#subscriber_reports';
 
+    protected $dao;
+
     /**
      * Validates the email address of each subscriber and displays those that are invalid.
      */
     protected function actionDefault()
     {
-        $dao = new DAO(new DB());
         $invalid = [];
         $params = [];
 
-        foreach ($dao->allUsers() as $row) {
+        foreach ($this->dao->allUsers() as $row) {
             if (!is_email($row['email'])) {
                 $invalid[] = $row;
             }
@@ -72,5 +72,11 @@ class Invalid extends Controller
     {
         $populator = new InvalidPopulator($this->i18n, $_SESSION[self::PLUGIN]['invalid']);
         parent::actionExportCSV($populator);
+    }
+
+    public function __construct(DAO $dao)
+    {
+        parent::__construct();
+        $this->dao = $dao;
     }
 }

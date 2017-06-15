@@ -180,9 +180,9 @@ class SubscribersPlugin extends phplistPlugin
 
         return array(
             'phpList version 3.2.5 or later' => version_compare(VERSION, '3.2.5') >= 0,
-            'Common plugin version 3.6.0 or later installed' => (
+            'Common plugin version 3.6.4 or later installed' => (
                 phpListPlugin::isEnabled('CommonPlugin')
-                && version_compare($plugins['CommonPlugin']->version, '3.6') > 0
+                && version_compare($plugins['CommonPlugin']->version, '3.6.4') >= 0
             ),
             'PHP version 5.4.0 or greater' => version_compare(PHP_VERSION, '5.4') > 0,
         );

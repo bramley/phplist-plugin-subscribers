@@ -22,7 +22,6 @@ namespace phpList\plugin\SubscribersPlugin\Controller;
 
 use CHtml;
 use phpList\plugin\Common\Controller;
-use phpList\plugin\Common\DB;
 use phpList\plugin\Common\PageLink;
 use phpList\plugin\Common\PageURL;
 use phpList\plugin\Common\Toolbar;
@@ -309,11 +308,11 @@ class Command extends Controller
         echo $this->render(__DIR__ . self::TEMPLATE, $params);
     }
 
-    public function __construct()
+    public function __construct(DAO $dao, Model $model)
     {
         parent::__construct();
-        $this->dao = new DAO(new DB());
-        $this->model = new Model(Factory::COMMAND_UNCONFIRM);
+        $this->dao = $dao;
+        $this->model = $model;
         $this->model->setProperties($_POST);
         $this->toolbar = new Toolbar($this);
         $this->toolbar->addExternalHelpButton(self::HELP);

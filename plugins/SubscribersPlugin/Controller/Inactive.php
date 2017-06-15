@@ -4,7 +4,6 @@ namespace phpList\plugin\SubscribersPlugin\Controller;
 
 use CHtml;
 use phpList\plugin\Common\Controller;
-use phpList\plugin\Common\DB;
 use phpList\plugin\Common\IExportable;
 use phpList\plugin\Common\Listing;
 use phpList\plugin\Common\PageURL;
@@ -42,7 +41,7 @@ class Inactive extends Controller
     /*
      *  Private variables
      */
-    private $dao;
+    protected $dao;
 
     /**
      * Saves variables into the session then redirects and exits.
@@ -100,9 +99,9 @@ class Inactive extends Controller
         parent::actionExportCSV($populator);
     }
 
-    public function __construct()
+    public function __construct(DAO $dao)
     {
         parent::__construct();
-        $this->dao = new DAO(new DB());
+        $this->dao = $dao;
     }
 }

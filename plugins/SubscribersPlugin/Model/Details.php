@@ -87,15 +87,15 @@ class Details extends Model
     /*
      *    Public methods
      */
-    public function __construct($db)
+    public function __construct(User $dao, DAOAttribute $attributeDAO, DAOList $listDAO)
     {
         parent::__construct('SubscribersPl_D');
         $this->access = accessLevel('users');
         $this->loginId = ($this->access == 'owner') ? $_SESSION['logindetails']['id'] : '';
 
-        $this->dao = new User($db);
-        $this->attributeDAO = new DAOAttribute($db);
-        $this->listDAO = new DAOList($db);
+        $this->dao = $dao;
+        $this->attributeDAO = $attributeDAO;
+        $this->listDAO = $listDAO;
         $this->attributes = $this->attributeDAO->attributesById();
         $this->lists = $this->listDAO->listsForOwner($this->loginId);
 

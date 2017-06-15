@@ -92,9 +92,9 @@ class History extends Model
     /*
      *    Public methods
      */
-    public function __construct($db)
+    public function __construct(DAOEvent $dao)
     {
-        $this->dao = new DAOEvent($db);
+        $this->dao = $dao;
         parent::__construct('SubscribersPl_H');
         $this->init();
     }

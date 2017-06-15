@@ -25,16 +25,19 @@ class ControllerFactory extends ControllerFactoryBase
 {
     /**
      * Custom implementation to create a controller using plugin and page.
+     * The controller is created by the dependency injection container.
      *
      * @param string $pi     the plugin
      * @param array  $params further parameters from the URL
      *
-     * @return Controller
+     * @return \phpList\plugin\Common\Controller
      */
     public function createController($pi, array $params)
     {
+        $depends = include __DIR__ . '/depends.php';
+        $container = new \phpList\plugin\Common\Container($depends);
         $class = 'phpList\plugin\\' . $pi . '\\Controller\\' . ucfirst($params['page']);
 
-        return new $class();
+        return $container->get($class);
     }
 }

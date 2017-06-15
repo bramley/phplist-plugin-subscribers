@@ -101,10 +101,10 @@ class Subscriptions extends Model
     /*
      *    Public methods
      */
-    public function __construct($db)
+    public function __construct(DAOSubscriptions $dao)
     {
         parent::__construct();
-        $this->dao = new DAOSubscriptions($db);
+        $this->dao = $dao;
     }
 
     public function subscriptions($ascendingOrder = true, $start = null, $limit = null)

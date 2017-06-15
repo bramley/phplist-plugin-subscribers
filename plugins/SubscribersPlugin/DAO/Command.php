@@ -2,7 +2,6 @@
 
 namespace phpList\plugin\SubscribersPlugin\DAO;
 
-use phpList\plugin\Common\DAO\Lists as DAOList;
 use phpList\plugin\Common\DAO\User;
 
 /**
@@ -27,10 +26,10 @@ class Command extends User
 {
     private $listDAO;
 
-    public function __construct($db)
+    public function __construct($db, $listDAO)
     {
         parent::__construct($db);
-        $this->listDAO = new DAOList($db);
+        $this->listDAO = $listDAO;
     }
 
     public function listsForOwner($loginid)
