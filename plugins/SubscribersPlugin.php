@@ -91,19 +91,61 @@ class SubscribersPlugin extends phplistPlugin
         return $this->rootUrl . '?' . http_build_query($params, '', '&');
     }
 
+    /**
+     * Remove placeholders in a message.
+     *
+     * @param string $content the message content
+     *
+     * @return string content with placeholders removed
+     */
     private function removePlaceholders($content)
     {
-        $result = str_ireplace(
-            array('[LISTUNSUBSCRIBE]', '[LISTUNSUBSCRIBEURL]'),
-            array('', ''),
-            $content
+        $result = $this->replacePlaceholders(
+            $content,
+            function (array $matches) {
+                return '';
+            },
+            function (array $matches) {
+                return '';
+            },
+            '',
+            ''
         );
 
-        return $result = preg_replace(
-            array('/\[LISTSUBSCRIBE:(\d+)]/i', '/\[LISTSUBSCRIBEURL:(\d+)]/i'),
-            array('', ''),
+        return $result;
+    }
+
+    /**
+     * Replace placeholders in a message.
+     *
+     * @param string   $content                  the message content
+     * @param callable $listSubscribeCallback    callback to replace the listsubscribe placeholder
+     * @param callable $listSubscribeUrlCallback callback to replace the listsubscribeurl placeholder
+     * @param string   $listUnsubscribe          replacement text for the listunsubscribe placeholder
+     * @param string   $listUnsubscribeUrl       replacement text for the listunsubscribeurl placeholder
+     *
+     * @return string content with placeholders replaced
+     */
+    private function replacePlaceholders($content, $listSubscribeCallback, $listSubscribeUrlCallback, $listUnsubscribe, $listUnsubscribeUrl)
+    {
+        $result = $content;
+        $result = preg_replace_callback(
+            '/\[LISTSUBSCRIBE:(\d+)]/i',
+            $listSubscribeCallback,
             $result
         );
+        $result = preg_replace_callback(
+            '/\[LISTSUBSCRIBEURL:(\d+)]/i',
+            $listSubscribeUrlCallback,
+            $result
+        );
+        $result = str_ireplace(
+            array('[LISTUNSUBSCRIBE]', '[LISTUNSUBSCRIBEURL]'),
+            array($listUnsubscribe, $listUnsubscribeUrl),
+            $result
+        );
+
+        return $result;
     }
 
     public function __construct()
@@ -204,16 +246,10 @@ class SubscribersPlugin extends phplistPlugin
         if (empty($userdata['uniqid'])) {
             return $this->removePlaceholders($content);
         }
-        $url = $this->unsubscribeUrl($messageid, $userdata['uniqid']);
+        $unsubscribeUrl = $this->unsubscribeUrl($messageid, $userdata['uniqid']);
 
-        $result = str_ireplace(
-            array('[LISTUNSUBSCRIBE]', '[LISTUNSUBSCRIBEURL]'),
-            array($this->link($this->unsubscribeLinkText, $url, $this->attributes), htmlspecialchars($url)),
-            $content
-        );
-
-        $result = preg_replace_callback(
-            '/\[LISTSUBSCRIBE:(\d+)]/i',
+        $result = $this->replacePlaceholders(
+            $content,
             function (array $matches) use ($userdata) {
                 return $this->link(
                     $this->subscribeLinkText,
@@ -221,15 +257,11 @@ class SubscribersPlugin extends phplistPlugin
                     $this->attributes
                 );
             },
-            $result
-        );
-
-        $result = preg_replace_callback(
-            '/\[LISTSUBSCRIBEURL:(\d+)]/i',
             function (array $matches) use ($userdata) {
                 return htmlspecialchars($this->listSubscribeUrl($matches[1], $userdata['uniqid']));
             },
-            $result
+            $this->link($this->unsubscribeLinkText, $unsubscribeUrl, $this->attributes),
+            htmlspecialchars($unsubscribeUrl)
         );
 
         return $result;
@@ -251,30 +283,19 @@ class SubscribersPlugin extends phplistPlugin
         if (empty($userdata['uniqid'])) {
             return $this->removePlaceholders($content);
         }
-        $url = $this->unsubscribeUrl($messageid, $userdata['uniqid']);
-
-        $result = str_ireplace(
-            array('[LISTUNSUBSCRIBE]', '[LISTUNSUBSCRIBEURL]'),
-            array("$this->unsubscribeLinkText $url", $url),
-            $content
-        );
-
-        $result = preg_replace_callback(
-            '/\[LISTSUBSCRIBE:(\d+)]/i',
+        $unsubscribeUrl = $this->unsubscribeUrl($messageid, $userdata['uniqid']);
+        $result = $this->replacePlaceholders(
+            $content,
             function (array $matches) use ($userdata) {
-                $url = $this->listSubscribeUrl($matches[1], $userdata['uniqid']);
+                $subscribeUrl = $this->listSubscribeUrl($matches[1], $userdata['uniqid']);
 
-                return "$this->subscribeLinkText $url";
+                return "$this->subscribeLinkText $subscribeUrl";
             },
-            $result
-        );
-
-        $result = preg_replace_callback(
-            '/\[LISTSUBSCRIBEURL:(\d+)]/i',
             function (array $matches) use ($userdata) {
                 return $this->listSubscribeUrl($matches[1], $userdata['uniqid']);
             },
-            $result
+            "$this->unsubscribeLinkText $unsubscribeUrl",
+            $unsubscribeUrl
         );
 
         return $result;

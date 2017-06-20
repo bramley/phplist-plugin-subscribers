@@ -1,3 +1,13 @@
+version 2.10.0+20170802
+      Convert only valid cgb attribute values
+      Add command to resend confirmation email
+      Restructure processing of commands into one class for each command.
+      Allow commands to accept/reject each entered email address.
+      Add prepend text for resending confirmation request.
+      Move additional command html into command classes.
+      Add dependencies for container
+      Rework replacing of placeholders
+
 version 2.9.4+20170414
       Correct use of iterator
       Improve display of Subscriptions page with bootlist theme
