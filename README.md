@@ -55,6 +55,7 @@ This plugin is free but if you install and find it useful then a donation to sup
 ## Version history ##
 
     version     Description
+    2.11.0+20170827 Add command to change subscribers' subscribe page
     2.10.0+20170802 Add command to resend confirmation email
     2.9.4+20170414  Improve display of Subscriptions page with bootlist theme
     2.9.3+20170409  Use new approach for exporting

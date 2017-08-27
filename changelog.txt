@@ -1,3 +1,9 @@
+version 2.11.0+20170827
+      Add command to change subscribe page
+      On the command confirmation page display only the selected command.
+      On the command confirmation page show the number of subscribers to be processed.
+      Select the last command when returning to the command selection page.
+
 version 2.10.0+20170802
       Convert only valid cgb attribute values
       Add command to resend confirmation email

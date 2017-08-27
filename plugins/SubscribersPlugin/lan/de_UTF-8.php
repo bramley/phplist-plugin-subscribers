@@ -123,6 +123,7 @@ We are cleaning up our database and it appears that you have previously signed u
 We would like to give you the opportunity to re-confirm your subscription. The instructions on how to confirm are below.
 END
     ,
+    'Number of subscribers to be processed' => 'Number of subscribers to be processed',
 /* Reports */
     'Available reports' => 'Available reports',
     'Subscribers with an invalid email address' => 'Abonnenten mit ungültiger E-Mail-Adresse',

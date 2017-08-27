@@ -53,11 +53,15 @@ class Command extends Controller
      * Saves variables into the session then redirects and exits.
      *
      * @param string $redirect the redirect location
-     * @param array  $session  variables to be stored in the session
+     * @param array  $session  variables to be added to, or replaced in, the session
      */
     private function redirectExit($redirect, array $session = [])
     {
-        $_SESSION[self::PLUGIN] = $session;
+        if (isset($_SESSION[self::PLUGIN])) {
+            $_SESSION[self::PLUGIN] = array_merge($_SESSION[self::PLUGIN], $session);
+        } else {
+            $_SESSION[self::PLUGIN] = $session;
+        }
         header('Location: ' . $redirect);
         exit;
     }
@@ -173,6 +177,7 @@ class Command extends Controller
 
     /**
      * Generates the html for a group of radio buttons.
+     * For clarity, when the control is disabled then include only the selected command.
      *
      * @param bool $disabled Whether the buttons should be disabled
      *
@@ -182,10 +187,14 @@ class Command extends Controller
     {
         $commandList = $this->factory->availableCommands($this->model->additional, $disabled);
 
+        $commands = $disabled
+            ? [$this->model->commandid => $commandList[$this->model->commandid]]
+            : $commandList;
+
         return CHtml::radioButtonList(
             'commandid',
             $this->model->commandid,
-            $commandList,
+            $commands,
             ['separator' => '<br />', 'disabled' => $disabled]
         );
     }
@@ -193,6 +202,9 @@ class Command extends Controller
     /**
      * Validates the submission of the first page.
      * On success redirects to the second page. On error redirects to the same page.
+     *
+     * @return array [0] target for redirect
+     *               [1] values to be stored in the session
      */
     private function handlePost()
     {
@@ -249,16 +261,23 @@ class Command extends Controller
             $error = $this->i18n->get('error_no_acceptable');
         }
 
-        return [new PageURL(), ['error' => $error]];
+        return [
+            new PageURL(),
+            [
+                'error' => $error,
+                'commandid' => $this->model->commandid,
+                'additional' => $this->model->additional,
+            ],
+        ];
     }
 
     /**
      * Displays the second page.
-     * For a POST processes the subscribers.
+     * For a POST processes the command and subscribers.
      */
     protected function actionDisplayUsers()
     {
-        $this->model->setProperties(array_merge_recursive($_POST, $_SESSION[self::PLUGIN]));
+        $this->model->setProperties($_SESSION[self::PLUGIN]);
         $command = $this->factory->createCommand($this->model->commandid, $this->model->additional);
 
         if (isset($_POST['submit'])) {
@@ -278,12 +297,14 @@ class Command extends Controller
             'additionalHtml' => $additionalHtml,
             'formURL' => new PageURL(null, ['action' => 'displayUsers']),
             'cancel' => $cancel,
+            'subscriberCount' => count($this->model->acceptedEmails),
         ];
         echo $this->render(__DIR__ . self::TEMPLATE_2, $params);
     }
 
     /**
      * Displays the first page including any error or result message.
+     * For a POST validates the entered command and subscribers.
      */
     protected function actionDefault()
     {
@@ -293,15 +314,18 @@ class Command extends Controller
         }
         $params = [];
 
-        if (isset($_SESSION[self::PLUGIN]['result'])) {
-            $params['result'] = $_SESSION[self::PLUGIN]['result'];
-        }
+        if (isset($_SESSION[self::PLUGIN])) {
+            $this->model->setProperties($_SESSION[self::PLUGIN]);
 
-        if (isset($_SESSION[self::PLUGIN]['error'])) {
-            $params['error'] = $_SESSION[self::PLUGIN]['error'];
-        }
-        unset($_SESSION[self::PLUGIN]);
+            if (isset($_SESSION[self::PLUGIN]['result'])) {
+                $params['result'] = $_SESSION[self::PLUGIN]['result'];
+            }
 
+            if (isset($_SESSION[self::PLUGIN]['error'])) {
+                $params['error'] = $_SESSION[self::PLUGIN]['error'];
+            }
+            unset($_SESSION[self::PLUGIN]);
+        }
         $params['toolbar'] = $this->toolbar->display();
         $params['formURL'] = new PageURL();
         $params['commandList'] = $this->commandRadioButtons(self::HTML_ENABLED);
