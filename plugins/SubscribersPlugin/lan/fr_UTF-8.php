@@ -107,13 +107,22 @@ $lan = array(
     'history_unconfirmed' => 'Unconfirmed',
     'history_blacklisted' => 'Blacklisted by %s',
     'history_removed' => 'Removed from list "%s"',
+    'history_subscribe_page' => 'Subscribe page changed from %d to %d',
     'result_blacklisted' => 'Subscribers blacklisted: %d',
     'result_unblacklisted' => 'Subscribers unblacklisted: %d',
     'result_unconfirmed' => 'Subscribers unconfirmed: %d',
     'result_deleted' => 'Subscribers deleted: %d',
     'result_removed' => 'Subscribers removed from list "%s": %d',
     'result_resent' => 'Confirmation requests resent: %d',
+    'result_subscribe_page_changed' => 'Subscribe pages changed: %d',
     'Subscriber' => 'Subscriber',
+    'Text to prepend to the confirmation request email' => 'Text to prepend to the confirmation request email',
+    'resend_prepend' => <<<'END'
+Sorry to bother you.
+We are cleaning up our database and it appears that you have previously signed up to our mailing list and not confirmed your subscription.
+We would like to give you the opportunity to re-confirm your subscription. The instructions on how to confirm are below.
+END
+    ,
 /* Reports */
     'Available reports' => 'Available reports',
     'Subscribers with an invalid email address' => 'Subscribers with an invalid email address',

@@ -159,4 +159,26 @@ END;
 
         return $this->dbCommand->queryAffectedRows($sql);
     }
+
+    public function subscribePages()
+    {
+        $sql =
+            "SELECT id, title
+            FROM {$this->tables['subscribepage']}
+            ORDER BY id
+            ";
+
+        return $this->dbCommand->queryAll($sql);
+    }
+
+    public function updateSubscribePage($userId, $pageId)
+    {
+        $sql =
+            "UPDATE {$this->tables['user']}
+            SET subscribepage = $pageId
+            WHERE id = $userId
+            ";
+
+        return $this->dbCommand->queryAffectedRows($sql);
+    }
 }

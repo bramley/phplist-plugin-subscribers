@@ -31,6 +31,7 @@ class Factory
     const COMMAND_REMOVE = 4;
     const COMMAND_UNBLACKLIST = 5;
     const COMMAND_RESEND_CONFIRMATION_REQUEST = 6;
+    const COMMAND_CHANGE_SUBSCRIBE_PAGE = 7;
 
     /**
      * Constructor.
@@ -73,6 +74,9 @@ class Factory
             case self::COMMAND_RESEND_CONFIRMATION_REQUEST:
                 $command = new Resend($commandId, $additionalFields, $this->dao, $this->i18n);
                 break;
+            case self::COMMAND_CHANGE_SUBSCRIBE_PAGE:
+                $command = new SubscribePage($commandId, $additionalFields, $this->dao, $this->i18n);
+                break;
             default:
                 throw new \Exception("Unrecognised command id - $commandId");
         }
@@ -97,6 +101,7 @@ class Factory
             self::COMMAND_DELETE => $this->i18n->get('Delete'),
             self::COMMAND_REMOVE => $this->i18n->get('Remove from list'),
             self::COMMAND_RESEND_CONFIRMATION_REQUEST => $this->i18n->get('Resend confirmation request'),
+            self::COMMAND_CHANGE_SUBSCRIBE_PAGE => $this->i18n->get('Change subscribe page'),
         ];
 
         foreach ($commandList as $commandId => &$caption) {
