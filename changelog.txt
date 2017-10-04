@@ -1,3 +1,7 @@
+version 2.12.0+20171004
+      For inactive subscribers select only confirmed and not blacklisted
+      Add command to reset subscriber's bounce count
+
 version 2.11.0+20170827
       Add command to change subscribe page
       On the command confirmation page display only the selected command.

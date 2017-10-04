@@ -115,6 +115,7 @@ $lan = array(
     'result_removed' => 'Von der Liste "%s" abgemeldete Abonnenten: %d',
     'result_resent' => 'Confirmation requests resent: %d',
     'result_subscribe_page_changed' => 'Subscribe pages changed: %d',
+    'result_bounce_count' => 'Bounce count reset: %d',
     'Subscriber' => 'Abonnent',
     'Text to prepend to the confirmation request email' => 'Text to prepend to the confirmation request email',
     'resend_prepend' => <<<'END'

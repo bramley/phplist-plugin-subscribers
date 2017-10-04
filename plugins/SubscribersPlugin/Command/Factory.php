@@ -32,6 +32,7 @@ class Factory
     const COMMAND_UNBLACKLIST = 5;
     const COMMAND_RESEND_CONFIRMATION_REQUEST = 6;
     const COMMAND_CHANGE_SUBSCRIBE_PAGE = 7;
+    const COMMAND_RESET_BOUNCE_COUNT = 8;
 
     /**
      * Constructor.
@@ -77,6 +78,9 @@ class Factory
             case self::COMMAND_CHANGE_SUBSCRIBE_PAGE:
                 $command = new SubscribePage($commandId, $additionalFields, $this->dao, $this->i18n);
                 break;
+            case self::COMMAND_RESET_BOUNCE_COUNT:
+                $command = new ResetBounceCount($commandId, $additionalFields, $this->dao, $this->i18n);
+                break;
             default:
                 throw new \Exception("Unrecognised command id - $commandId");
         }
@@ -102,6 +106,7 @@ class Factory
             self::COMMAND_REMOVE => $this->i18n->get('Remove from list'),
             self::COMMAND_RESEND_CONFIRMATION_REQUEST => $this->i18n->get('Resend confirmation request'),
             self::COMMAND_CHANGE_SUBSCRIBE_PAGE => $this->i18n->get('Change subscribe page'),
+            self::COMMAND_RESET_BOUNCE_COUNT => $this->i18n->get('Reset bounce count'),
         ];
 
         foreach ($commandList as $commandId => &$caption) {

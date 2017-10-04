@@ -183,4 +183,15 @@ END;
 
         return $this->dbCommand->queryAffectedRows($sql);
     }
+
+    public function resetBounceCount($userId)
+    {
+        $sql =
+            "UPDATE {$this->tables['user']}
+            SET bouncecount = 0
+            WHERE id = $userId
+            ";
+
+        return $this->dbCommand->queryAffectedRows($sql);
+    }
 }
