@@ -75,6 +75,7 @@ class Command extends User
                 FROM {$this->tables['user']} u
                 JOIN {$this->tables['usermessage']} um ON um.userid = u.id
                 WHERE um.status = 'sent' AND um.entered > DATE_SUB(CURDATE(), INTERVAL $interval)
+                AND u.confirmed AND !u.blacklisted
                 GROUP BY u.id
                 HAVING MAX(um.viewed) IS NULL
             ) AS t1";
@@ -103,6 +104,7 @@ class Command extends User
             FROM {$this->tables['user']} u
             JOIN {$this->tables['usermessage']} um ON um.userid = u.id
             WHERE um.status = 'sent' AND um.entered > DATE_SUB(CURDATE(), INTERVAL $interval)
+            AND u.confirmed AND !u.blacklisted
             GROUP BY u.id
             HAVING MAX(um.viewed) IS NULL
             ORDER BY lastview, email
