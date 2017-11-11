@@ -62,7 +62,7 @@ return [
     },
     'phpList\plugin\SubscribersPlugin\Model\Command' => function (ContainerInterface $container) {
         return new Model\Command(
-            Command\Factory::COMMAND_UNCONFIRM
+            Command\Factory::COMMAND_CONFIRM
         );
     },
     'phpList\plugin\SubscribersPlugin\Model\Details' => function (ContainerInterface $container) {

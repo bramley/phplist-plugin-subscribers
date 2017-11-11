@@ -15,9 +15,9 @@ The plugin also provides a placeholder [LISTUNSUBSCRIBE] to remove a subscriber 
 
 ### Dependencies ###
 
-This plugin is for phplist 3.2.5 or later and now requires php version 5.4 or later. Prior to version 2.6.0 of the plugin, it only required php version 5.3.
+This plugin is for phplist 3.2.5 or later and requires php version 5.4 or later.
 
-It also requires the Common Plugin version 3.6.0 or later to be installed. You should install or upgrade to the latest version. See <https://github.com/bramley/phplist-plugin-common>
+It also requires the Common Plugin version 3.7.1 or later to be installed. You should install or upgrade to the latest version. See <https://github.com/bramley/phplist-plugin-common>
 
 ### Set the plugin directory ###
 You can use a directory outside of the web root by changing the definition of `PLUGIN_ROOTDIR` in config.php.
@@ -39,13 +39,6 @@ This should contain
 
 For guidance on using the plugin see the plugin's page within the phplist documentation site <https://resources.phplist.com/plugin/subscribers>
 
-## Known problems ##
-
-### Export fails with "Error, incorrect session token" ###
-phplist 3.0.9 had a change that stopped the plugin export working. Instead the message "Error, incorrect session token" is displayed.
-
-To fix this problem upgrade to the latest version of CommonPlugin.
-
 ## Donation ##
 
 This plugin is free but if you install and find it useful then a donation to support further development is greatly appreciated.
@@ -55,6 +48,7 @@ This plugin is free but if you install and find it useful then a donation to sup
 ## Version history ##
 
     version     Description
+    2.13.0+20171111 Add command to confirm subscribers
     2.12.0+20171004 Add command to reset subscriber's bounce count
     2.11.0+20170827 Add command to change subscribers' subscribe page
     2.10.0+20170802 Add command to resend confirmation email

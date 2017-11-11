@@ -1,3 +1,6 @@
+version 2.13.0+20171111
+      Add command to confirm subscribers
+
 version 2.12.0+20171004
       For inactive subscribers select only confirmed and not blacklisted
       Add command to reset subscriber's bounce count

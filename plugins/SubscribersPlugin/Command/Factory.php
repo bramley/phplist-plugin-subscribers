@@ -33,6 +33,7 @@ class Factory
     const COMMAND_RESEND_CONFIRMATION_REQUEST = 6;
     const COMMAND_CHANGE_SUBSCRIBE_PAGE = 7;
     const COMMAND_RESET_BOUNCE_COUNT = 8;
+    const COMMAND_CONFIRM = 9;
 
     /**
      * Constructor.
@@ -81,6 +82,9 @@ class Factory
             case self::COMMAND_RESET_BOUNCE_COUNT:
                 $command = new ResetBounceCount($commandId, $additionalFields, $this->dao, $this->i18n);
                 break;
+            case self::COMMAND_CONFIRM:
+                $command = new Confirm($commandId, $additionalFields, $this->dao, $this->i18n);
+                break;
             default:
                 throw new \Exception("Unrecognised command id - $commandId");
         }
@@ -99,6 +103,7 @@ class Factory
     public function availableCommands($additionalFields, $disabled)
     {
         $commandList = [
+            self::COMMAND_CONFIRM => $this->i18n->get('Confirm'),
             self::COMMAND_UNCONFIRM => $this->i18n->get('Unconfirm'),
             self::COMMAND_BLACKLIST => $this->i18n->get('Blacklist'),
             self::COMMAND_UNBLACKLIST => $this->i18n->get('Unblacklist'),
