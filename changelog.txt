@@ -1,3 +1,6 @@
+version 2.13.1+20171201
+      Reinstate recursive merge that was lost in the previous commit
+
 version 2.13.0+20171111
       Add command to confirm subscribers
 

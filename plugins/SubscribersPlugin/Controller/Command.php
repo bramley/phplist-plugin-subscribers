@@ -277,7 +277,7 @@ class Command extends Controller
      */
     protected function actionDisplayUsers()
     {
-        $this->model->setProperties($_SESSION[self::PLUGIN]);
+        $this->model->setProperties(array_merge_recursive($_POST, $_SESSION[self::PLUGIN]));
         $command = $this->factory->createCommand($this->model->commandid, $this->model->additional);
 
         if (isset($_POST['submit'])) {

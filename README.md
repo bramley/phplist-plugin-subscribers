@@ -48,6 +48,7 @@ This plugin is free but if you install and find it useful then a donation to sup
 ## Version history ##
 
     version     Description
+    2.13.1+20171201 Minor bug fix
     2.13.0+20171111 Add command to confirm subscribers
     2.12.0+20171004 Add command to reset subscriber's bounce count
     2.11.0+20170827 Add command to change subscribers' subscribe page
