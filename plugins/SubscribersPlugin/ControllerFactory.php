@@ -1,9 +1,4 @@
 <?php
-
-namespace phpList\plugin\SubscribersPlugin;
-
-use phpList\plugin\Common\ControllerFactoryBase;
-
 /**
  * SubscribersPlugin for phplist.
  *
@@ -16,11 +11,10 @@ use phpList\plugin\Common\ControllerFactoryBase;
  * @license   http://www.gnu.org/licenses/gpl.html GNU General Public License, Version 3
  */
 
-/**
- * This class is a concrete implementation of ControllerFactoryBase.
- *
- * @category  phplist
- */
+namespace phpList\plugin\SubscribersPlugin;
+
+use phpList\plugin\Common\ControllerFactoryBase;
+
 class ControllerFactory extends ControllerFactoryBase
 {
     /**
@@ -36,7 +30,10 @@ class ControllerFactory extends ControllerFactoryBase
     {
         $depends = include __DIR__ . '/depends.php';
         $container = new \phpList\plugin\Common\Container($depends);
-        $class = 'phpList\plugin\\' . $pi . '\\Controller\\' . ucfirst($params['page']);
+        $param = $params['page'] == 'reports' && isset($params['report'])
+            ? $params['report']
+            : $params['page'];
+        $class = 'phpList\plugin\\' . $pi . '\\Controller\\' . ucfirst($param);
 
         return $container->get($class);
     }

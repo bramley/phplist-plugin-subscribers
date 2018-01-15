@@ -59,7 +59,7 @@ class Command extends User
     public function allUsers()
     {
         $sql =
-            "SELECT email, id
+            "SELECT email, id, confirmed, blacklisted
             FROM {$this->tables['user']} u
             ";
 
@@ -193,5 +193,17 @@ END;
             ";
 
         return $this->dbCommand->queryAffectedRows($sql);
+    }
+
+    public function subscribersNoList()
+    {
+        $sql =
+            "SELECT id, email, confirmed, blacklisted
+            FROM {$this->tables['user']} u
+            LEFT JOIN {$this->tables['listuser']} lu ON u.id = lu.userid
+            WHERE userid is NULL
+            ";
+
+        return $this->dbCommand->queryAll($sql);
     }
 }

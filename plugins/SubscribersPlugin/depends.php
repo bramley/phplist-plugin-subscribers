@@ -45,6 +45,9 @@ return [
             $container->get('phpList\plugin\SubscribersPlugin\Model\History')
         );
     },
+    'phpList\plugin\SubscribersPlugin\Controller\Reports' => function (ContainerInterface $container) {
+        return new Controller\Reports();
+    },
     'phpList\plugin\SubscribersPlugin\Controller\Inactive' => function (ContainerInterface $container) {
         return new Controller\Inactive(
             $container->get('phpList\plugin\SubscribersPlugin\DAO\Command')
@@ -52,6 +55,11 @@ return [
     },
     'phpList\plugin\SubscribersPlugin\Controller\Invalid' => function (ContainerInterface $container) {
         return new Controller\Invalid(
+            $container->get('phpList\plugin\SubscribersPlugin\DAO\Command')
+        );
+    },
+    'phpList\plugin\SubscribersPlugin\Controller\Nolist' => function (ContainerInterface $container) {
+        return new Controller\Nolist(
             $container->get('phpList\plugin\SubscribersPlugin\DAO\Command')
         );
     },

@@ -1,3 +1,9 @@
+version 2.14.0+20180126
+      Added report of subscribers who do not belong to a list.
+      Created generic populator class to display a report of email addresses.
+      Rework to have only one report page with several controllers
+      Include confirmed and blacklisted status in listing
+
 version 2.13.1+20171201
       Reinstate recursive merge that was lost in the previous commit
 

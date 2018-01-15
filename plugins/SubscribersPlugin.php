@@ -200,8 +200,6 @@ class SubscribersPlugin extends phplistPlugin
             'subscriptions' => $i18n->get('Subscriptions'),
             'command' => $i18n->get('Subscriber commands'),
             'reports' => $i18n->get('Subscriber reports'),
-            'invalid' => $i18n->get('Invalid emails'),
-            'inactive' => $i18n->get('Inactive subscribers'),
         );
         $this->subscribeLinkText = getConfig('subscribers_subscribelinktext');
         $this->unsubscribeLinkText = getConfig('subscribers_linktext');

@@ -131,16 +131,18 @@ END
     'Available reports' => 'Available reports',
     'Subscribers with an invalid email address' => 'Subscribers with an invalid email address',
     'Inactive subscribers' => 'Inactive subscribers',
+    'Subscribers who do not belong to a list' => 'Subscribers who do not belong to a list',
     'Run' => 'Run',
 /* Invalid subscribers */
-    'Invalid emails' => 'Invalid emails',
     'All subscribers have a valid email address' => 'All subscribers have a valid email address',
 /* Inactive subscribers */
-    'Display inactive subscribers' => 'Display inactive subscribers',
+    'Enter period of inactivity' => 'Enter period of inactivity',
     'Inactivity period' => 'Inactivity period',
     'Number of campaigns' => 'Number of campaigns',
     'Last view' => 'Last view',
     'Recent campaigns' => 'Recent campaigns',
     'Total campaigns' => 'Total campaigns',
     "Invalid interval value '%s'" => "Invalid interval value '%s'",
+/* Subscribers who do not belong to a list */
+    'All subscribers belong to at least one list' => 'All subscribers belong to at least one list',
 );

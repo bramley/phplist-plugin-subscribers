@@ -67,9 +67,9 @@ class Inactive extends Controller
             $interval = $_POST['interval'];
 
             if (preg_match('/^(\d+\s+(day|week|month|quarter|year))s?$/i', $interval, $matches)) {
-                $this->redirectExit(new PageURL(null, ['interval' => $matches[1]]));
+                $this->redirectExit(PageURL::createFromGet(['interval' => $matches[1]]));
             }
-            $this->redirectExit(new PageURL(), ['error' => $this->i18n->get("Invalid interval value '%s'", $interval)]);
+            $this->redirectExit(PageURL::createFromGet(), ['error' => $this->i18n->get("Invalid interval value '%s'", $interval)]);
         }
 
         if (isset($_SESSION[self::PLUGIN]['error'])) {
@@ -82,13 +82,13 @@ class Inactive extends Controller
         $listing = new Listing($this, $populator);
         $listing->pager->setItemsPerPage([25, 50, 100], 25);
         $toolbar = new Toolbar($this);
-        $toolbar->addExportButton(['interval' => $interval]);
+        $toolbar->addExportButton(['interval' => $interval, 'report' => $_GET['report']]);
         $toolbar->addExternalHelpButton(self::HELP);
 
         $params['listing'] = $listing->display();
         $params['toolbar'] = $toolbar->display();
         $params['interval'] = CHtml::textField('interval', $interval, ['id' => 'interval']);
-        $params['formURL'] = new PageURL();
+        $params['formURL'] = PageURL::createFromGet();
 
         echo $this->render(dirname(__FILE__) . self::TEMPLATE, $params);
     }

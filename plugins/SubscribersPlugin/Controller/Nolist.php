@@ -20,7 +20,6 @@
 
 namespace phpList\plugin\SubscribersPlugin\Controller;
 
-use ArrayIterator;
 use phpList\plugin\Common\Controller;
 use phpList\plugin\Common\IExportable;
 use phpList\plugin\Common\Listing;
@@ -31,7 +30,7 @@ use phpList\plugin\SubscribersPlugin\DAO\Command as DAO;
 /**
  * This class is the controller for the plugin providing the action methods.
  */
-class Invalid extends Controller
+class Nolist extends Controller
 {
     const PLUGIN = 'SubscribersPlugin';
     const TEMPLATE = '/../view/subscriber_report.tpl.php';
@@ -39,34 +38,21 @@ class Invalid extends Controller
 
     protected $dao;
 
-    private function invalidSubscribers()
-    {
-        $invalid = [];
-
-        foreach ($this->dao->allUsers() as $row) {
-            if (!is_email($row['email'])) {
-                $invalid[] = $row;
-            }
-        }
-
-        return new ArrayIterator($invalid);
-    }
-
     /**
-     * Validates the email address of each subscriber and displays those that are invalid.
+     * Displays the subscribers who do not belong to any list.
      */
     protected function actionDefault()
     {
         $params = [];
-        $iterator = $this->invalidSubscribers();
+        $iterator = $this->dao->subscribersNoList();
 
         if (count($iterator) == 0) {
-            $params['warning'] = $this->i18n->get('All subscribers have a valid email address');
+            $params['warning'] = $this->i18n->get('All subscribers belong to at least one list');
         }
         $populator = new SubscriberPopulator(
             $this->i18n,
             $iterator,
-            $this->i18n->get('Subscribers with an invalid email address')
+            $this->i18n->get('Subscribers who do not belong to a list')
         );
         $listing = new Listing($this, $populator);
         $toolbar = new Toolbar($this);
@@ -80,7 +66,8 @@ class Invalid extends Controller
 
     protected function actionExportCSV(IExportable $exportable = null)
     {
-        $populator = new SubscriberPopulator($this->i18n, $this->invalidSubscribers(), 'invalid_email');
+        $iterator = $this->dao->subscribersNoList();
+        $populator = new SubscriberPopulator($this->i18n, $iterator, 'subscribers_no_list');
         parent::actionExportCSV($populator);
     }
 

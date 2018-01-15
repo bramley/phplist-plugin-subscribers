@@ -36,7 +36,7 @@ form {
     <div style='padding-top: 10px;'>
         <div class="panel">
             <div class="header">
-                <h2><?= $this->i18n->get('Display inactive subscribers'); ?></h2>
+                <h2><?= $this->i18n->get('Enter period of inactivity'); ?></h2>
             </div>
             <div class="content">
                 <form class="inline" enctype="multipart/form-data" method='post' action="<?= $formURL; ?>">
