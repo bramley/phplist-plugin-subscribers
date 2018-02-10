@@ -1,3 +1,6 @@
+version 2.15.0+20180210
+      Add command line page to import a file
+
 version 2.14.0+20180126
       Added report of subscribers who do not belong to a list.
       Created generic populator class to display a report of email addresses.

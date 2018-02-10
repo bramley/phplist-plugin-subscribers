@@ -28,12 +28,15 @@ class ControllerFactory extends ControllerFactoryBase
      */
     public function createController($pi, array $params)
     {
+        global $commandline;
+
         $depends = include __DIR__ . '/depends.php';
         $container = new \phpList\plugin\Common\Container($depends);
-        $param = $params['page'] == 'reports' && isset($params['report'])
+        $page = $params['page'];
+        $controller = $page == 'reports' && isset($params['report'])
             ? $params['report']
-            : $params['page'];
-        $class = 'phpList\plugin\\' . $pi . '\\Controller\\' . ucfirst($param);
+            : $page;
+        $class = 'phpList\plugin\\' . $pi . '\\Controller\\' . ucfirst($controller);
 
         return $container->get($class);
     }

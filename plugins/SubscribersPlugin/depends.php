@@ -48,6 +48,12 @@ return [
     'phpList\plugin\SubscribersPlugin\Controller\Reports' => function (ContainerInterface $container) {
         return new Controller\Reports();
     },
+    'phpList\plugin\SubscribersPlugin\Controller\Import2' => function (ContainerInterface $container) {
+        return new Controller\Import2(
+            $container->get('phpList\plugin\Common\DAO\Attribute'),
+            $container->get('phpList\plugin\Common\Context')
+        );
+    },
     'phpList\plugin\SubscribersPlugin\Controller\Inactive' => function (ContainerInterface $container) {
         return new Controller\Inactive(
             $container->get('phpList\plugin\SubscribersPlugin\DAO\Command')

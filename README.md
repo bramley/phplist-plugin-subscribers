@@ -48,6 +48,7 @@ This plugin is free but if you install and find it useful then a donation to sup
 ## Version history ##
 
     version     Description
+    2.15.0+20180210 Add command line page to import a file
     2.14.0+20180126 Add report of subscribers who do not belong to a list
     2.13.1+20171201 Minor bug fix
     2.13.0+20171111 Add command to confirm subscribers

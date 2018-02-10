@@ -6,6 +6,7 @@ return array(
     'phpList\plugin\SubscribersPlugin\Controller\Command' => $base . '/SubscribersPlugin/Controller/Command.php',
     'phpList\plugin\SubscribersPlugin\Controller\Details' => $base . '/SubscribersPlugin/Controller/Details.php',
     'phpList\plugin\SubscribersPlugin\Controller\History' => $base . '/SubscribersPlugin/Controller/History.php',
+    'phpList\plugin\SubscribersPlugin\Controller\Import2' => $base . '/SubscribersPlugin/Controller/Import2.php',
     'phpList\plugin\SubscribersPlugin\Controller\Inactive' => $base . '/SubscribersPlugin/Controller/Inactive.php',
     'phpList\plugin\SubscribersPlugin\Controller\Invalid' => $base . '/SubscribersPlugin/Controller/Invalid.php',
     'phpList\plugin\SubscribersPlugin\Controller\Nolist' => $base . '/SubscribersPlugin/Controller/Nolist.php',
