@@ -1,3 +1,7 @@
+version 2.15.1+20180228
+      Change Subscriptions to match the way that core phplist counts confirmed, unconfirmed and blacklisted.
+      Clean-up code layout and namespaces.
+
 version 2.15.0+20180210
       Add command line page to import a file
 

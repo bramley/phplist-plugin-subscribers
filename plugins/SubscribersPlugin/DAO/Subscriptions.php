@@ -79,10 +79,9 @@ class Subscriptions extends DAO
             LPAD(MONTH(entered), 2, '0') AS month,
             EXTRACT(YEAR_MONTH FROM entered) AS period,
             SUM(1) AS subscriptions,
-            SUM(CASE WHEN confirmed = 1 THEN 1 ELSE 0 END) AS confirmed,
-            SUM(CASE WHEN confirmed = 0 THEN 1 ELSE 0 END) AS unconfirmed,
-            SUM(CASE WHEN blacklisted = 1 AND confirmed = 1 THEN 1 ELSE 0 END) AS blacklisted,
-            SUM(CASE WHEN blacklisted = 0 AND confirmed = 1 THEN 1 ELSE 0 END) AS active
+            SUM(CASE WHEN blacklisted = 0 AND confirmed = 1 THEN 1 ELSE 0 END) AS active,
+            SUM(CASE WHEN blacklisted = 0 AND confirmed = 0 THEN 1 ELSE 0 END) AS unconfirmed,
+            SUM(CASE WHEN blacklisted = 1 THEN 1 ELSE 0 END) AS blacklisted
             FROM {$this->tables['user']} u
             WHERE YEAR(entered) > 0
             $periodRange

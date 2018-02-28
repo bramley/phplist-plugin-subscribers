@@ -1,14 +1,4 @@
 <?php
-
-namespace phpList\plugin\SubscribersPlugin\Controller;
-
-use phpList\plugin\Common\Controller;
-use phpList\plugin\Common\IExportable;
-use phpList\plugin\Common\IPopulator;
-use phpList\plugin\Common\Listing;
-use phpList\plugin\Common\Toolbar;
-use phpList\plugin\SubscribersPlugin\Model\Subscriptions as Model;
-
 /**
  * SubscribersPlugin for phplist.
  *
@@ -35,6 +25,18 @@ use phpList\plugin\SubscribersPlugin\Model\Subscriptions as Model;
  *
  * @category  phplist
  */
+
+namespace phpList\plugin\SubscribersPlugin\Controller;
+
+use Chart;
+use phpList\plugin\Common\Controller;
+use phpList\plugin\Common\IExportable;
+use phpList\plugin\Common\IPopulator;
+use phpList\plugin\Common\Listing;
+use phpList\plugin\Common\Toolbar;
+use phpList\plugin\SubscribersPlugin\Model\Subscriptions as Model;
+use WebblerListing;
+
 class Subscriptions extends Controller implements IPopulator, IExportable
 {
     const TEMPLATE = '/../view/subscriptions.tpl.php';
@@ -45,30 +47,32 @@ class Subscriptions extends Controller implements IPopulator, IExportable
 
     protected $model;
 
-    /*
-     *    Private methods
-     */
-    private function addRow(\WebblerListing $w, array $row)
+    private function addRow(WebblerListing $w, array $row)
     {
         $key = "{$row['year']} {$row['month']}";
         $w->addElement($key);
         $w->addColumn($key, $this->i18n->get('subscriptions'), $row['subscriptions']);
-
-        $format = '%2$d (%1$d%%)';
-        $w->addColumn($key, $this->i18n->get('active'),
-            sprintf($format,
-                $row['subscriptions'] == 0 ? 0 : round($row['active'] / $row['subscriptions'] * 100),
-                $row['active'])
+        $format = '%d (%d%%)';
+        $w->addColumn(
+            $key,
+            $this->i18n->get('active'),
+            $row['active'] > 0
+                ? sprintf($format, $row['active'], round($row['active'] / $row['subscriptions'] * 100))
+                : 0
         );
-        $w->addColumn($key, $this->i18n->get('blacklisted'),
-            sprintf($format,
-                $row['subscriptions'] == 0 ? 0 : round($row['blacklisted'] / $row['subscriptions'] * 100),
-                $row['blacklisted'])
+        $w->addColumn(
+            $key,
+            $this->i18n->get('blacklisted'),
+            $row['blacklisted'] > 0
+                ? sprintf($format, $row['blacklisted'], round($row['blacklisted'] / $row['subscriptions'] * 100))
+                : 0
         );
-        $w->addColumn($key, $this->i18n->get('unconfirmed'),
-            sprintf($format,
-                $row['subscriptions'] == 0 ? 0 : round($row['unconfirmed'] / $row['subscriptions'] * 100),
-                $row['unconfirmed'])
+        $w->addColumn(
+            $key,
+            $this->i18n->get('unconfirmed'),
+            $row['unconfirmed'] > 0
+                ? sprintf($format, $row['unconfirmed'], round($row['unconfirmed'] / $row['subscriptions'] * 100))
+                : 0
         );
         $w->addColumn($key, $this->i18n->get('unsubscriptions'), $row['unsubscriptions']);
     }
@@ -99,7 +103,7 @@ class Subscriptions extends Controller implements IPopulator, IExportable
 
             $currentYear = $row['year'];
         }
-        $chart = new \Chart('ComboChart');
+        $chart = new Chart('ComboChart');
         $chart->load($data, 'array');
         $options = array(
             'chartArea' => array('left' => 50, 'width' => '90%'),
@@ -118,13 +122,8 @@ class Subscriptions extends Controller implements IPopulator, IExportable
         return $result;
     }
 
-    /*
-     *    Protected methods
-     */
     protected function actionDefault()
     {
-        global $google_chart_direct;
-
         $params = array();
         $toolbar = new Toolbar($this);
         $toolbar->addExportButton();
@@ -141,9 +140,6 @@ class Subscriptions extends Controller implements IPopulator, IExportable
         echo $this->render(dirname(__FILE__) . self::TEMPLATE, $params);
     }
 
-    /*
-     *    Public methods
-     */
     public function __construct(Model $model)
     {
         parent::__construct();
@@ -154,7 +150,7 @@ class Subscriptions extends Controller implements IPopulator, IExportable
     /*
      * Implementation of IPopulator
      */
-    public function populate(\WebblerListing $w, $start, $limit)
+    public function populate(WebblerListing $w, $start, $limit)
     {
         /*
          * Populates the webbler list with subscription details
@@ -162,13 +158,12 @@ class Subscriptions extends Controller implements IPopulator, IExportable
         $w->setTitle($this->i18n->get('Subscriptions'));
         $w->setElementHeading($this->i18n->get('period'));
 
-        $sumSubscriptions = $sumConfirmed = $sumUnconfirmed = $sumBlacklisted = $sumActive = $sumUnsubscriptions = 0;
+        $sumSubscriptions = $sumUnconfirmed = $sumBlacklisted = $sumActive = $sumUnsubscriptions = 0;
         $rows = $this->model->subscriptions(false, $start, $limit);
         $this->subscriptions = array_reverse($rows);
 
         foreach ($rows as $row) {
             $sumSubscriptions += $row['subscriptions'];
-            $sumConfirmed += $row['confirmed'];
             $sumUnconfirmed += $row['unconfirmed'];
             $sumBlacklisted += $row['blacklisted'];
             $sumActive += $row['active'];
@@ -180,7 +175,6 @@ class Subscriptions extends Controller implements IPopulator, IExportable
             'month' => '',
             'subscriptions' => $sumSubscriptions,
             'unsubscriptions' => $sumUnsubscriptions,
-            'confirmed' => $sumConfirmed,
             'unconfirmed' => $sumUnconfirmed,
             'blacklisted' => $sumBlacklisted,
             'active' => $sumActive,

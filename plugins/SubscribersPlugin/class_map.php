@@ -2,6 +2,17 @@
 
 return array(
     'phpList\plugin\SubscribersPlugin\CbgConverter' => $base . '/SubscribersPlugin/CbgConverter.php',
+    'phpList\plugin\SubscribersPlugin\Command\Base' => $base . '/SubscribersPlugin/Command/Base.php',
+    'phpList\plugin\SubscribersPlugin\Command\Blacklist' => $base . '/SubscribersPlugin/Command/Blacklist.php',
+    'phpList\plugin\SubscribersPlugin\Command\Confirm' => $base . '/SubscribersPlugin/Command/Confirm.php',
+    'phpList\plugin\SubscribersPlugin\Command\Delete' => $base . '/SubscribersPlugin/Command/Delete.php',
+    'phpList\plugin\SubscribersPlugin\Command\Factory' => $base . '/SubscribersPlugin/Command/Factory.php',
+    'phpList\plugin\SubscribersPlugin\Command\Remove' => $base . '/SubscribersPlugin/Command/Remove.php',
+    'phpList\plugin\SubscribersPlugin\Command\Resend' => $base . '/SubscribersPlugin/Command/Resend.php',
+    'phpList\plugin\SubscribersPlugin\Command\ResetBounceCount' => $base . '/SubscribersPlugin/Command/ResetBounceCount.php',
+    'phpList\plugin\SubscribersPlugin\Command\SubscribePage' => $base . '/SubscribersPlugin/Command/SubscribePage.php',
+    'phpList\plugin\SubscribersPlugin\Command\Unblacklist' => $base . '/SubscribersPlugin/Command/Unblacklist.php',
+    'phpList\plugin\SubscribersPlugin\Command\Unconfirm' => $base . '/SubscribersPlugin/Command/Unconfirm.php',
     'phpList\plugin\SubscribersPlugin\ControllerFactory' => $base . '/SubscribersPlugin/ControllerFactory.php',
     'phpList\plugin\SubscribersPlugin\Controller\Command' => $base . '/SubscribersPlugin/Controller/Command.php',
     'phpList\plugin\SubscribersPlugin\Controller\Details' => $base . '/SubscribersPlugin/Controller/Details.php',
