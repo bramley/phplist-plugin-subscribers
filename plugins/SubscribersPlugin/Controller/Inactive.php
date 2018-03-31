@@ -82,7 +82,7 @@ class Inactive extends Controller
         $listing = new Listing($this, $populator);
         $listing->pager->setItemsPerPage([25, 50, 100], 25);
         $toolbar = new Toolbar($this);
-        $toolbar->addExportButton(['interval' => $interval, 'report' => $_GET['report']]);
+        $toolbar->addExportButton(['interval' => $interval]);
         $toolbar->addExternalHelpButton(self::HELP);
 
         $params['listing'] = $listing->display();

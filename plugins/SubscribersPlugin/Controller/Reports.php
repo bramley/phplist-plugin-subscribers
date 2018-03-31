@@ -23,6 +23,7 @@ namespace phpList\plugin\SubscribersPlugin\Controller;
 use phpList\plugin\Common\Controller;
 use phpList\plugin\Common\PageLink;
 use phpList\plugin\Common\PageURL;
+use phpList\plugin\SubscribersPlugin\ReportFactory;
 
 /**
  * This class is the controller for the plugin providing the action methods.
@@ -36,16 +37,12 @@ class Reports extends Controller
      */
     protected function actionDefault()
     {
-        $items = [
-            ['params' => ['report' => 'invalid'], 'caption' => $this->i18n->get('Subscribers with an invalid email address')],
-            ['params' => ['report' => 'inactive'], 'caption' => $this->i18n->get('Inactive subscribers')],
-            ['params' => ['report' => 'nolist'], 'caption' => $this->i18n->get('Subscribers who do not belong to a list')],
-        ];
+        $factory = new ReportFactory($this->i18n);
         $links = [];
 
-        foreach ($items as $item) {
+        foreach ($factory->listReports() as $item) {
             $links[] = [
-                'caption' => $item['caption'],
+                'caption' => $this->i18n->get($item['caption']),
                 'button' => new PageLink(
                     PageURL::createFromGet($item['params']),
                     htmlspecialchars($this->i18n->get('Run')),
@@ -55,7 +52,6 @@ class Reports extends Controller
         }
         $vars = [
             'links' => $links,
-            'heading' => $this->i18n->get('Available reports'),
         ];
         echo $this->render(__DIR__ . self::TEMPLATE, $vars);
     }

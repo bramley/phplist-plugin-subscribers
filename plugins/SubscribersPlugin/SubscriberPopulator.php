@@ -27,8 +27,9 @@ use phpList\plugin\Common\PageURL;
 class SubscriberPopulator implements IPopulator, IExportable
 {
     private $i18n;
-    private $subscribers;
+    private $subscriberIterator;
     private $title;
+    private $columnCallback;
 
     /**
      * Constructor.
@@ -36,12 +37,16 @@ class SubscriberPopulator implements IPopulator, IExportable
      * @param I18n     $i18n               language selector
      * @param Iterator $subscriberIterator provides the subscribers to be listed
      * @param string   $title              title for the listing or file name for exporting
+     * @param callable $columnCallback     function to provide names of additional columns
+     * @param callable $valuesCallback     function to provide values of additional columns
      */
-    public function __construct(I18n $i18n, Iterator $subscriberIterator, $title)
+    public function __construct(I18n $i18n, Iterator $subscriberIterator, $title, $columnCallback = null, $valuesCallback = null)
     {
         $this->i18n = $i18n;
         $this->subscriberIterator = $subscriberIterator;
         $this->title = $title;
+        $this->columnCallback = $columnCallback;
+        $this->valuesCallback = $valuesCallback;
     }
 
     /**
@@ -60,6 +65,14 @@ class SubscriberPopulator implements IPopulator, IExportable
         foreach ($limitIterator as $row) {
             $key = $row['email'];
             $w->addElement($key, new PageURL('user', array('id' => $row['id'])));
+
+            if ($this->columnCallback) {
+                $values = ($this->valuesCallback)($row);
+
+                foreach (($this->columnCallback)() as $i => $name) {
+                    $w->addColumn($key, $name, $values[$i]);
+                }
+            }
 
             if (isset($row['confirmed'])) {
                 $value = $row['confirmed']
@@ -102,11 +115,23 @@ class SubscriberPopulator implements IPopulator, IExportable
 
     public function exportFieldNames()
     {
-        return [$this->i18n->get('email')];
+        $fields = [$this->i18n->get('email')];
+
+        if ($this->columnCallback) {
+            $fields = array_merge($fields, ($this->columnCallback)());
+        }
+
+        return $fields;
     }
 
     public function exportValues(array $row)
     {
-        return [$row['email']];
+        $values = [$row['email']];
+
+        if ($this->valuesCallback) {
+            $values = array_merge($values, ($this->valuesCallback)($row));
+        }
+
+        return $values;
     }
 }

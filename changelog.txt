@@ -1,3 +1,9 @@
+version 2.16.0+20180402
+      Add report of unsubscribe reasons
+      Refactor SubscriberPopulator
+      Created generic simple report
+      Move User History and Subscriptions to the reports menu page
+
 version 2.15.1+20180228
       Change Subscriptions to match the way that core phplist counts confirmed, unconfirmed and blacklisted.
       Clean-up code layout and namespaces.

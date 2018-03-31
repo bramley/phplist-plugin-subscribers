@@ -1,15 +1,12 @@
 <div class="panel">
-    <div class="header">
-        <h3><?= $heading; ?></h3>
-    </div>
     <div class="content">
+        <table>
 <?php foreach ($links as $l) : ?>
-        <div>
-            <label>
-    <?= $l['caption']; ?>
-    <?= $l['button']; ?>
-            </label>
-        </div>
+            <tr>
+                <td><label><?= $l['caption']; ?></label></td>
+                <td><?= $l['button']; ?></td>
+            </tr>
 <?php endforeach; ?>
+        </table>
     </div>
 </div>

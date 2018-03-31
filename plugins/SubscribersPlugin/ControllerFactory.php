@@ -13,6 +13,7 @@
 
 namespace phpList\plugin\SubscribersPlugin;
 
+use phpList\plugin\Common\Container;
 use phpList\plugin\Common\ControllerFactoryBase;
 
 class ControllerFactory extends ControllerFactoryBase
@@ -31,12 +32,12 @@ class ControllerFactory extends ControllerFactoryBase
         global $commandline;
 
         $depends = include __DIR__ . '/depends.php';
-        $container = new \phpList\plugin\Common\Container($depends);
+        $container = new Container($depends);
         $page = $params['page'];
         $controller = $page == 'reports' && isset($params['report'])
-            ? $params['report']
+            ? (in_array($params['report'], ['history', 'subscriptions', 'inactive']) ? $params['report'] : 'simplereport')
             : $page;
-        $class = 'phpList\plugin\\' . $pi . '\\Controller\\' . ucfirst($controller);
+        $class = __NAMESPACE__ . '\Controller\\' . ucfirst($controller);
 
         return $container->get($class);
     }

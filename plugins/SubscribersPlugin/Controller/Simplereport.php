@@ -26,54 +26,52 @@ use phpList\plugin\Common\Listing;
 use phpList\plugin\Common\Toolbar;
 use phpList\plugin\SubscribersPlugin\SubscriberPopulator;
 use phpList\plugin\SubscribersPlugin\DAO\Command as DAO;
+use phpList\plugin\SubscribersPlugin\ReportFactory;
 
-/**
- * This class is the controller for the plugin providing the action methods.
- */
-class Nolist extends Controller
+class Simplereport extends Controller
 {
     const PLUGIN = 'SubscribersPlugin';
     const TEMPLATE = '/../view/subscriber_report.tpl.php';
     const HELP = 'https://resources.phplist.com/plugin/subscribers?&#subscriber_reports';
 
-    protected $dao;
+    private $iterator;
+    private $populator;
+    private $report;
 
-    /**
-     * Displays the subscribers who do not belong to any list.
-     */
     protected function actionDefault()
     {
-        $params = [];
-        $iterator = $this->dao->subscribersNoList();
-
-        if (count($iterator) == 0) {
-            $params['warning'] = $this->i18n->get('All subscribers belong to at least one list');
-        }
-        $populator = new SubscriberPopulator(
-            $this->i18n,
-            $iterator,
-            $this->i18n->get('Subscribers who do not belong to a list')
-        );
-        $listing = new Listing($this, $populator);
+        $listing = new Listing($this, $this->populator);
         $toolbar = new Toolbar($this);
-        $toolbar->addExportButton(['report' => $_GET['report']]);
+        $toolbar->addExportButton();
         $toolbar->addExternalHelpButton(self::HELP);
 
+        $params = [];
         $params['listing'] = $listing->display();
         $params['toolbar'] = $toolbar->display();
+
+        if (count($this->iterator) == 0) {
+            $params['warning'] = $this->report->noSubscribersWarning();
+        }
         echo $this->render(dirname(__FILE__) . self::TEMPLATE, $params);
     }
 
     protected function actionExportCSV(IExportable $exportable = null)
     {
-        $iterator = $this->dao->subscribersNoList();
-        $populator = new SubscriberPopulator($this->i18n, $iterator, 'subscribers_no_list');
-        parent::actionExportCSV($populator);
+        parent::actionExportCSV($this->populator);
     }
 
-    public function __construct(DAO $dao)
+    public function __construct($reportId, ReportFactory $factory, DAO $dao)
     {
         parent::__construct();
-        $this->dao = $dao;
+
+        $this->report = $factory->create($reportId);
+        $this->iterator = $this->report->iterator($dao);
+        $this->populator = new SubscriberPopulator(
+            $this->i18n,
+            $this->iterator,
+            $this->report->title(),
+            $this->report->columnCallback(),
+            $this->report->valuesCallback()
+        );
     }
 }

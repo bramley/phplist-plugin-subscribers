@@ -1,8 +1,5 @@
 <?php
-
-namespace phpList\plugin\SubscribersPlugin;
-
-/*
+/**
  * SubscribersPlugin for phplist.
  *
  * This file is a part of SubscribersPlugin.
@@ -16,22 +13,30 @@ namespace phpList\plugin\SubscribersPlugin;
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
  *
- * @category  phplist
- *
  * @author    Duncan Cameron
  * @copyright 2011-2017 Duncan Cameron
  * @license   http://www.gnu.org/licenses/gpl.html GNU General Public License, Version 3
  */
 
-/*
- * This is the entry code invoked by phplist.
- *
- * @category  phplist
+namespace phpList\plugin\SubscribersPlugin\Report;
+
+/**
+ * {@inheritdoc}
  */
-if (!(\phplistPlugin::isEnabled('CommonPlugin'))) {
-    echo 'phplist-plugin-common must be installed and enabled to use this plugin';
+class Nolist extends AbstractReport
+{
+    public function iterator($dao)
+    {
+        return $dao->subscribersNoList();
+    }
 
-    return;
+    public function title()
+    {
+        return 'Subscribers who do not belong to a list';
+    }
+
+    public function noSubscribersWarning()
+    {
+        return 'All subscribers belong to at least one list';
+    }
 }
-
-\phpList\plugin\Common\Main::run(new ControllerFactory());

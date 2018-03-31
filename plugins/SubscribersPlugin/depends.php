@@ -45,9 +45,6 @@ return [
             $container->get('phpList\plugin\SubscribersPlugin\Model\History')
         );
     },
-    'phpList\plugin\SubscribersPlugin\Controller\Reports' => function (ContainerInterface $container) {
-        return new Controller\Reports();
-    },
     'phpList\plugin\SubscribersPlugin\Controller\Import2' => function (ContainerInterface $container) {
         return new Controller\Import2(
             $container->get('phpList\plugin\Common\DAO\Attribute'),
@@ -59,15 +56,18 @@ return [
             $container->get('phpList\plugin\SubscribersPlugin\DAO\Command')
         );
     },
-    'phpList\plugin\SubscribersPlugin\Controller\Invalid' => function (ContainerInterface $container) {
-        return new Controller\Invalid(
+    'phpList\plugin\SubscribersPlugin\Controller\Reports' => function (ContainerInterface $container) {
+        return new Controller\Reports();
+    },
+    'phpList\plugin\SubscribersPlugin\Controller\Simplereport' => function (ContainerInterface $container) {
+        return new Controller\Simplereport(
+            $_GET['report'],
+            $container->get('phpList\plugin\SubscribersPlugin\ReportFactory'),
             $container->get('phpList\plugin\SubscribersPlugin\DAO\Command')
         );
     },
-    'phpList\plugin\SubscribersPlugin\Controller\Nolist' => function (ContainerInterface $container) {
-        return new Controller\Nolist(
-            $container->get('phpList\plugin\SubscribersPlugin\DAO\Command')
-        );
+    'phpList\plugin\SubscribersPlugin\ReportFactory' => function (ContainerInterface $container) {
+        return new ReportFactory();
     },
     'phpList\plugin\SubscribersPlugin\Controller\Subscriptions' => function (ContainerInterface $container) {
         return new Controller\Subscriptions(

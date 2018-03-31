@@ -1,8 +1,5 @@
 <?php
-
-namespace phpList\plugin\SubscribersPlugin;
-
-/*
+/**
  * SubscribersPlugin for phplist.
  *
  * This file is a part of SubscribersPlugin.
@@ -16,22 +13,45 @@ namespace phpList\plugin\SubscribersPlugin;
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
  *
- * @category  phplist
- *
  * @author    Duncan Cameron
  * @copyright 2011-2017 Duncan Cameron
  * @license   http://www.gnu.org/licenses/gpl.html GNU General Public License, Version 3
  */
 
-/*
- * This is the entry code invoked by phplist.
- *
- * @category  phplist
+namespace phpList\plugin\SubscribersPlugin\Report;
+
+use ArrayIterator;
+
+/**
+ * {@inheritdoc}
  */
-if (!(\phplistPlugin::isEnabled('CommonPlugin'))) {
-    echo 'phplist-plugin-common must be installed and enabled to use this plugin';
+class Invalid extends AbstractReport
+{
+    private function invalidSubscribers($dao)
+    {
+        $invalid = [];
 
-    return;
+        foreach ($dao->allUsers() as $row) {
+            if (!is_email($row['email'])) {
+                $invalid[] = $row;
+            }
+        }
+
+        return new ArrayIterator($invalid);
+    }
+
+    public function iterator($dao)
+    {
+        return $this->invalidSubscribers($dao);
+    }
+
+    public function title()
+    {
+        return 'Subscribers with an invalid email address';
+    }
+
+    public function noSubscribersWarning()
+    {
+        return 'All subscribers have a valid email address';
+    }
 }
-
-\phpList\plugin\Common\Main::run(new ControllerFactory());

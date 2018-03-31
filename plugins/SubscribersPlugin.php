@@ -51,8 +51,6 @@ class SubscribersPlugin extends phplistPlugin
     public $description = 'Provides pages for advanced searching, subscriber history, subscriptions, and subscriber commands.';
     public $topMenuLinks = array(
         'details' => array('category' => 'subscribers'),
-        'history' => array('category' => 'subscribers'),
-        'subscriptions' => array('category' => 'subscribers'),
         'command' => array('category' => 'subscribers'),
         'reports' => array('category' => 'subscribers'),
     );
@@ -197,8 +195,6 @@ class SubscribersPlugin extends phplistPlugin
         $i18n = new CommonPlugin_I18N($this);
         $this->pageTitles = array(
             'details' => $i18n->get('Advanced search'),
-            'history' => $i18n->get('Subscriber History'),
-            'subscriptions' => $i18n->get('Subscriptions'),
             'command' => $i18n->get('Subscriber commands'),
             'reports' => $i18n->get('Subscriber reports'),
         );
@@ -221,9 +217,9 @@ class SubscribersPlugin extends phplistPlugin
 
         return array(
             'phpList version 3.2.5 or later' => version_compare(VERSION, '3.2.5') >= 0,
-            'Common plugin version 3.7.1 or later installed' => (
+            'Common plugin version 3.7.15 or later installed' => (
                 phpListPlugin::isEnabled('CommonPlugin')
-                && version_compare($plugins['CommonPlugin']->version, '3.7.1') >= 0
+                && version_compare($plugins['CommonPlugin']->version, '3.7.15') >= 0
             ),
             'PHP version 5.4.0 or greater' => version_compare(PHP_VERSION, '5.4') > 0,
         );

@@ -48,6 +48,7 @@ This plugin is free but if you install and find it useful then a donation to sup
 ## Version history ##
 
     version     Description
+    2.16.0+20180402 Add report of unsubscribe reasons
     2.15.1+20180228 Change the way that confirmed, unconfirmed and blacklisted are counted on the Subscriptions page
     2.15.0+20180210 Add command line page to import a file
     2.14.0+20180126 Add report of subscribers who do not belong to a list
