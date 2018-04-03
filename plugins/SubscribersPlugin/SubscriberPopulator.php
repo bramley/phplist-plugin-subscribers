@@ -67,9 +67,11 @@ class SubscriberPopulator implements IPopulator, IExportable
             $w->addElement($key, new PageURL('user', array('id' => $row['id'])));
 
             if ($this->columnCallback) {
-                $values = ($this->valuesCallback)($row);
+                $valuesCallback = $this->valuesCallback;
+                $values = $valuesCallback($row);
+                $columnCallback = $this->columnCallback;
 
-                foreach (($this->columnCallback)() as $i => $name) {
+                foreach ($columnCallback() as $i => $name) {
                     $w->addColumn($key, $name, $values[$i]);
                 }
             }
@@ -118,7 +120,8 @@ class SubscriberPopulator implements IPopulator, IExportable
         $fields = [$this->i18n->get('email')];
 
         if ($this->columnCallback) {
-            $fields = array_merge($fields, ($this->columnCallback)());
+            $columnCallback = $this->columnCallback;
+            $fields = array_merge($fields, $columnCallback());
         }
 
         return $fields;
@@ -129,7 +132,8 @@ class SubscriberPopulator implements IPopulator, IExportable
         $values = [$row['email']];
 
         if ($this->valuesCallback) {
-            $values = array_merge($values, ($this->valuesCallback)($row));
+            $valuesCallback = $this->valuesCallback;
+            $values = array_merge($values, $valuesCallback($row));
         }
 
         return $values;

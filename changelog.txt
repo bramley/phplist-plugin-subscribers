@@ -1,3 +1,6 @@
+version 2.16.1+20180403
+      Avoid dependency on php 7
+
 version 2.16.0+20180402
       Add report of unsubscribe reasons
       Refactor SubscriberPopulator
