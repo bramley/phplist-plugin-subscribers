@@ -48,6 +48,7 @@ This plugin is free but if you install and find it useful then a donation to sup
 ## Version history ##
 
     version     Description
+    2.16.2+20180519 Remove hard-coded table names
     2.16.1+20180403 Avoid dependency on php 7
     2.16.0+20180402 Add report of unsubscribe reasons
     2.15.1+20180228 Change the way that confirmed, unconfirmed and blacklisted are counted on the Subscriptions page

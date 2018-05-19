@@ -1,3 +1,6 @@
+version 2.16.2+20180519
+      Remove hard-coded table names
+
 version 2.16.1+20180403
       Avoid dependency on php 7
 

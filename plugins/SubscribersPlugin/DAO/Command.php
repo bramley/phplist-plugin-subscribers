@@ -212,9 +212,9 @@ END;
         $range = is_null($start) ? '' : "LIMIT $start, $limit";
         $sql = <<<END
             SELECT u.id, u.email, ub.added, ubd.data
-            FROM phplist_user_user u
-            JOIN phplist_user_blacklist ub ON ub.email = u.email
-            JOIN phplist_user_blacklist_data ubd ON ubd.email = ub.email AND ubd.name = 'reason'
+            FROM {$this->tables['user']} u
+            JOIN {$this->tables['user_blacklist']} ub ON ub.email = u.email
+            JOIN {$this->tables['user_blacklist_data']} ubd ON ubd.email = ub.email AND ubd.name = 'reason'
             WHERE ubd.data != ''
             AND ubd.data != 'Admin Blacklisted'
             AND ubd.data != 'Admin'
