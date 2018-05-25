@@ -53,7 +53,7 @@ class History extends Controller implements IPopulator, IExportable
         if (isset($_POST['ShowForm'])) {
             $this->normalise($_POST['ShowForm']);
             $this->model->setProperties($_POST['ShowForm']);
-            $redirect = new PageURL();
+            $redirect = PageURL::createFromGet();
             header("Location: $redirect");
             exit;
         }
