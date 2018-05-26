@@ -1,3 +1,7 @@
+version 2.16.3+20180526
+      Correct the URL used on the Show button for the Subscriber History report
+      Display report title
+
 version 2.16.2+20180519
       Remove hard-coded table names
 
