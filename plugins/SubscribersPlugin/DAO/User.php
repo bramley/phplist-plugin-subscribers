@@ -86,7 +86,10 @@ class User extends DAO
     }
 
     /**
-     * Generates a list of join expressions for the FROM table references and a list of attribute fields for the SELECT expression.
+     * Generates a list of join expressions for the FROM table references, a list of attribute fields for the SELECT
+     * expression, and conditions for the WHERE clause.
+     *
+     * The user_attribute table is left joined for each attribute to allow for subscribers not having an attribute value.
      *
      * @param array  $attributes
      * @param string $searchTerm optional attribute value to be matched
@@ -94,73 +97,79 @@ class User extends DAO
      *
      * @return array [0] joins for the FROM table references
      *               [1] attribute fields for the SELECT expression
+     *               [2] conditions for the WHERE clause
      */
     private function userAttributeJoin($attributes, $searchTerm, $searchAttr)
     {
         $attr_fields = '';
         $attr_join = '';
+        $attr_where = [];
         $doSearch = $searchTerm !== '';
 
         foreach ($attributes as $attr) {
             $id = $attr['id'];
             $tableName = $this->table_prefix . 'listattr_' . $attr['tablename'];
-
-            $thisJoin = "\n" . (($doSearch && $searchAttr == $id) ? '' : 'LEFT ');
+            $attr_join .= "\n";
 
             switch ($attr['type']) {
-            case 'radio':
-            case 'select':
-                $thisJoin .= "JOIN ({$this->tables['user_attribute']} ua{$id} JOIN {$tableName} la{$id} ON la{$id}.id = ua{$id}.value)
-                    ON ua{$id}.userid = u.id AND ua{$id}.attributeid = {$id}";
-
-                if ($doSearch && $searchAttr == $id) {
-                    $template = "la{$id}.name LIKE '%%%s%%'";
-                    $expr = $this->searchExpression($searchTerm, $template);
-                    $thisJoin .= " AND\n$expr";
-                }
-                $attr_fields .= ", la{$id}.name as attr{$id}";
-                break;
-            case 'checkboxgroup':
-                $thisJoin .= "JOIN {$this->tables['user_attribute']} ua{$id}
-                    ON ua{$id}.userid = u.id AND ua{$id}.attributeid = {$id}";
-
-                if ($doSearch && $searchAttr == $id) {
-                    /*
-                     * search term can have multiple values
-                     * want to select subscribers whose attribute value matches any/all of the terms
-                     */
-                    $template = <<<END
-                        FIND_IN_SET(
-                            IFNULL(
-                                (SELECT id
-                                FROM $tableName
-                                WHERE name = '%s'),
-                                0
-                            ),
-                            IFNULL(ua{$id}.value, '')
-                        ) > 0
+                case 'radio':
+                case 'select':
+                    if ($doSearch && $searchAttr == $id) {
+                        $template = "la{$id}.name LIKE '%%%s%%'";
+                        $expr = $this->searchExpression($searchTerm, $template);
+                        $attr_where[] = $expr;
+                    }
+                    $attr_join .= "LEFT JOIN ({$this->tables['user_attribute']} ua{$id} JOIN {$tableName} la{$id} ON la{$id}.id = ua{$id}.value)
+                        ON ua{$id}.userid = u.id AND ua{$id}.attributeid = {$id}";
+                    $attr_fields .= ", la{$id}.name as attr{$id}";
+                    break;
+                case 'checkboxgroup':
+                    if ($doSearch && $searchAttr == $id) {
+                        /*
+                         * search term can have multiple values
+                         * want to select subscribers whose attribute value matches any/all of the terms
+                         */
+                        $template = <<<END
+                            FIND_IN_SET(
+                                IFNULL(
+                                    (SELECT id
+                                    FROM $tableName
+                                    WHERE name = '%s'),
+                                    0
+                                ),
+                                IFNULL(ua{$id}.value, '')
+                            ) > 0
 END;
-                    $expr = $this->searchExpression($searchTerm, $template);
-                    $thisJoin .= " AND\n$expr";
-                }
-                $attr_fields .= ", ua{$id}.value as attr{$id}";
-                break;
-            default:
-                $thisJoin .= "JOIN {$this->tables['user_attribute']} ua{$id}
-                    ON ua{$id}.userid = u.id AND ua{$id}.attributeid = {$id}";
-
-                if ($doSearch && $searchAttr == $id) {
-                    $template = "ua{$id}.value LIKE '%%%s%%'";
-                    $expr = $this->searchExpression($searchTerm, $template);
-                    $thisJoin .= " AND\n$expr";
-                }
-                $attr_fields .= ", ua{$id}.value as attr{$id}";
-                break;
+                        $expr = $this->searchExpression($searchTerm, $template);
+                        $attr_where[] = $expr;
+                    }
+                    $attr_join .= "LEFT JOIN {$this->tables['user_attribute']} ua{$id}
+                        ON ua{$id}.userid = u.id AND ua{$id}.attributeid = {$id}";
+                    $attr_fields .= ", ua{$id}.value as attr{$id}";
+                    break;
+                case 'checkbox':
+                    if ($doSearch && $searchAttr == $id) {
+                        $op = $searchTerm == 'on' ? '=' : '!=';
+                        $attr_where[] = "COALESCE(ua{$id}.value, '') $op 'on'";
+                    }
+                    $attr_join .= "LEFT JOIN {$this->tables['user_attribute']} ua{$id}
+                        ON ua{$id}.userid = u.id AND ua{$id}.attributeid = {$id}";
+                    $attr_fields .= ", ua{$id}.value as attr{$id}";
+                    break;
+                default:
+                    if ($doSearch && $searchAttr == $id) {
+                        $template = "ua{$id}.value LIKE '%%%s%%'";
+                        $expr = $this->searchExpression($searchTerm, $template);
+                        $attr_where[] = $expr;
+                    }
+                    $attr_join .= "LEFT JOIN {$this->tables['user_attribute']} ua{$id}
+                        ON ua{$id}.userid = u.id AND ua{$id}.attributeid = {$id}";
+                    $attr_fields .= ", ua{$id}.value as attr{$id}";
+                    break;
             }
-            $attr_join .= $thisJoin;
         }
 
-        return array($attr_join, $attr_fields);
+        return array($attr_join, $attr_fields, $attr_where);
     }
 
     public function users($listID, $owner, $attributes, $searchTerm, $searchAttr,
@@ -171,9 +180,9 @@ END;
          */
         $doSearch = $searchTerm !== '';
         $searchTerm = sql_escape($searchTerm);
-        list($attr_join, $attr_fields) = $this->userAttributeJoin($attributes, $searchTerm, $searchAttr);
+        list($attr_join, $attr_fields, $attr_where) = $this->userAttributeJoin($attributes, $searchTerm, $searchAttr);
         $limitClause = is_null($start) ? '' : "LIMIT $start, $limit";
-        $w = array();
+        $w = $attr_where;
 
         if ($doSearch) {
             if ($searchAttr == 'email') {
@@ -238,11 +247,12 @@ END;
         $searchTerm = sql_escape($searchTerm);
 
         if ($doSearch) {
-            list($attr_join) = $this->userAttributeJoin($attributes, $searchTerm, $searchAttr);
+            list($attr_join, $attr_fields, $attr_where) = $this->userAttributeJoin($attributes, $searchTerm, $searchAttr);
         } else {
             $attr_join = '';
+            $attr_where = [];
         }
-        $w = array();
+        $w = $attr_where;
 
         if ($doSearch) {
             if ($searchAttr == 'email') {
