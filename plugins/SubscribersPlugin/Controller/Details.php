@@ -107,7 +107,7 @@ class Details extends Controller implements IPopulator, IExportable
         foreach ($this->model->selectedAttrs as $attr) {
             $result[] = $this->model->attributes[$attr]['name'];
         }
-        $result[] = $this->i18n->get('HTML');
+        $result[] = $this->i18n->get('Subs page');
         $result[] = $this->i18n->get('Lists');
         $result[] = $this->i18n->get('Campaigns sent');
         $result[] = $this->i18n->get('Campaigns opened');
@@ -127,7 +127,7 @@ class Details extends Controller implements IPopulator, IExportable
         foreach ($this->model->selectedAttrs as $attr) {
             $result[] = $row["attr{$attr}"];
         }
-        $result[] = $row['htmlemail'];
+        $result[] = $row['subscribepage'];
         $result[] = $row['lists'];
         $result[] = $row['sent'];
         $result[] = $row['opens'];
@@ -166,7 +166,7 @@ class Details extends Controller implements IPopulator, IExportable
             foreach ($selectedAttrs as $attr) {
                 $w->addColumn($key, $attributes[$attr]['name'], $row["attr{$attr}"]);
             }
-            $w->addColumn($key, $this->i18n->get('HTML'), $row['htmlemail']);
+            $w->addColumn($key, $this->i18n->get('Subs page'), $row['subscribepage']);
             $w->addColumn($key, $this->i18n->get('Lists'), $row['lists']);
             $w->addColumn($key, $this->i18n->get('Campaigns'), "{$row['sent']} | {$row['opens']} | {$row['clicks']}");
         }

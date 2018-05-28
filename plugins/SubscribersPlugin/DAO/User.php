@@ -193,6 +193,8 @@ END;
                 $w[] = "u.id = '$searchTerm'";
             } elseif ($searchAttr == 'uniqid') {
                 $w[] = "u.uniqid = '$searchTerm'";
+            } elseif ($searchAttr == 'subspage') {
+                $w[] = "u.subscribepage = '$searchTerm'";
             }
         }
 
@@ -215,7 +217,7 @@ END;
         $where = $w ? 'WHERE ' . implode(' AND ', $w) : '';
 
         $sql =
-            "SELECT u.id, u.email, u.confirmed, u.blacklisted, u.htmlemail, u.uniqid $attr_fields,
+            "SELECT u.id, u.email, u.confirmed, u.blacklisted, u.htmlemail, u.uniqid, u.subscribepage, sp.title $attr_fields,
                 (SELECT count(lu.listid)
                 FROM {$this->tables['listuser']} lu
                 WHERE lu.userid = u.id
@@ -233,6 +235,7 @@ END;
                 WHERE userid = u.id
                 ) AS clicks
             FROM {$this->tables['user']} u
+            LEFT JOIN {$this->tables['subscribepage']} sp ON sp.id = u.subscribepage
             $attr_join
             $where
             ORDER by u.id
@@ -263,6 +266,8 @@ END;
                 $w[] = "u.id = '$searchTerm'";
             } elseif ($searchAttr == 'uniqid') {
                 $w[] = "u.uniqid = '$searchTerm'";
+            } elseif ($searchAttr == 'subspage') {
+                $w[] = "u.subscribepage = '$searchTerm'";
             }
         }
 

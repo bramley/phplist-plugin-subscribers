@@ -48,6 +48,7 @@ This plugin is free but if you install and find it useful then a donation to sup
 ## Version history ##
 
     version     Description
+    2.17.0+20180528 Improvements to display and search on Advanced Search page
     2.16.3+20180526 Correct filter on Subscriber History report
     2.16.2+20180519 Remove hard-coded table names
     2.16.1+20180403 Avoid dependency on php 7
