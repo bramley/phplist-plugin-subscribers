@@ -1,3 +1,7 @@
+version 2.17.1+20180620
+      Add foreign key to import
+      Support negative searching
+
 version 2.17.0+20180528
       Allow searching for unchecked checkbox using 'off'
       Implement display and search on subscribe page
