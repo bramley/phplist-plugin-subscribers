@@ -34,7 +34,7 @@ class Import2 extends Controller
      */
     private function importFile($file, $listId)
     {
-        global $tmpdir, $tables, $table_prefix, $admin_auth, $systemroot, $envelope;
+        global $tmpdir, $tables, $table_prefix, $admin_auth, $systemroot, $envelope, $DBstruct;
 
         if (!is_readable($file) || ($handle = fopen($file, 'r')) === false) {
             echo "unable to open $file\n";
@@ -45,10 +45,17 @@ class Import2 extends Controller
         $attributesByName = array_column($attributes, 'id', 'name');
         $emailPosition = null;
         $_SESSION['import_attribute'] = array();
+        $_SESSION['systemindex'] = array();
 
         foreach ($columnNames as $i => $name) {
             if ($name == 'email') {
+                $_SESSION['systemindex']['email'] = $i;
                 $emailPosition = $i;
+                continue;
+            }
+
+            if ($name == 'foreignkey') {
+                $_SESSION['systemindex']['foreignkey'] = $i;
                 continue;
             }
 
@@ -82,9 +89,6 @@ class Import2 extends Controller
         $_SESSION['overwrite'] = true;
         $_SESSION['notify'] = 'no';         // actually confirmation required
         $_SESSION['groups'] = null;
-        $_SESSION['systemindex'] = array(
-            'email' => $emailPosition,
-        );
         $_SESSION['logindetails']['id'] = 1;
         $unused_systemattr = array();
 
