@@ -187,11 +187,10 @@ class SubscribersPlugin extends phplistPlugin
     /**
      * Use this hook to set translatable text and retrieve config entries.
      */
-    public function sendFormats()
+    public function activate()
     {
-        global $plugins, $public_scheme, $pageroot;
+        global $public_scheme, $pageroot;
 
-        require_once $plugins['CommonPlugin']->coderoot . 'Autoloader.php';
         $i18n = new CommonPlugin_I18N($this);
         $this->pageTitles = array(
             'details' => $i18n->get('Advanced search'),
@@ -202,8 +201,6 @@ class SubscribersPlugin extends phplistPlugin
         $this->unsubscribeLinkText = getConfig('subscribers_linktext');
         $this->attributes = stripslashes(getConfig('subscribers_attributes'));
         $this->rootUrl = sprintf('%s://%s%s/', $public_scheme, getConfig('website'), $pageroot);
-
-        return;
     }
 
     /**
@@ -216,10 +213,10 @@ class SubscribersPlugin extends phplistPlugin
         global $plugins;
 
         return array(
-            'phpList version 3.2.5 or later' => version_compare(VERSION, '3.2.5') >= 0,
-            'Common plugin version 3.7.18 or later installed' => (
+            'phpList version 3.3.2 or later' => version_compare(VERSION, '3.3.2') >= 0,
+            'Common Plugin version 3.8.0 or later installed' => (
                 phpListPlugin::isEnabled('CommonPlugin')
-                && version_compare($plugins['CommonPlugin']->version, '3.7.18') >= 0
+                && version_compare($plugins['CommonPlugin']->version, '3.8.0') >= 0
             ),
             'PHP version 5.4.0 or greater' => version_compare(PHP_VERSION, '5.4') > 0,
         );

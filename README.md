@@ -15,9 +15,9 @@ The plugin also provides a placeholder [LISTUNSUBSCRIBE] to remove a subscriber 
 
 ### Dependencies ###
 
-This plugin is for phplist 3.2.5 or later and requires php version 5.4 or later.
+This plugin requires phplist 3.3.2 or later and php version 5.4 or later.
 
-It also requires the Common Plugin version 3.7.1 or later to be installed. You should install or upgrade to the latest version. See <https://github.com/bramley/phplist-plugin-common>
+It also requires the Common Plugin version 3.8.0 or later to be installed. You should install or upgrade to the latest version. See <https://github.com/bramley/phplist-plugin-common>
 
 ### Set the plugin directory ###
 You can use a directory outside of the web root by changing the definition of `PLUGIN_ROOTDIR` in config.php.
@@ -48,6 +48,7 @@ This plugin is free but if you install and find it useful then a donation to sup
 ## Version history ##
 
     version     Description
+    2.17.2+20180623 Internal change that adds dependency on phplist 3.3.2
     2.17.1+20180620 Support negative searching
                     Add foreign key to command line import
     2.17.0+20180528 Improvements to display and search on Advanced Search page

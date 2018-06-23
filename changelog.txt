@@ -1,3 +1,6 @@
+version 2.17.2+20180623
+      Use activate() instead of sendFormats() for initialisation
+
 version 2.17.1+20180620
       Add foreign key to import
       Support negative searching
