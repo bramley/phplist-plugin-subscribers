@@ -34,6 +34,7 @@ class Factory
     const COMMAND_CHANGE_SUBSCRIBE_PAGE = 7;
     const COMMAND_RESET_BOUNCE_COUNT = 8;
     const COMMAND_CONFIRM = 9;
+    const COMMAND_REMOVE_All = 10;
 
     /**
      * Constructor.
@@ -69,6 +70,9 @@ class Factory
                 break;
             case self::COMMAND_REMOVE:
                 $command = new Remove($commandId, $additionalFields, $this->dao, $this->i18n);
+                break;
+            case self::COMMAND_REMOVE_All:
+                $command = new RemoveAll($commandId, $additionalFields, $this->dao, $this->i18n);
                 break;
             case self::COMMAND_UNBLACKLIST:
                 $command = new Unblacklist($commandId, $additionalFields, $this->dao, $this->i18n);
@@ -109,6 +113,7 @@ class Factory
             self::COMMAND_UNBLACKLIST => $this->i18n->get('Unblacklist'),
             self::COMMAND_DELETE => $this->i18n->get('Delete'),
             self::COMMAND_REMOVE => $this->i18n->get('Remove from list'),
+            self::COMMAND_REMOVE_All => $this->i18n->get('Remove from all subscribed lists'),
             self::COMMAND_RESEND_CONFIRMATION_REQUEST => $this->i18n->get('Resend confirmation request'),
             self::COMMAND_CHANGE_SUBSCRIBE_PAGE => $this->i18n->get('Change subscribe page'),
             self::COMMAND_RESET_BOUNCE_COUNT => $this->i18n->get('Reset bounce count'),

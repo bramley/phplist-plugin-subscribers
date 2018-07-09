@@ -8,6 +8,7 @@ return array(
     'phpList\plugin\SubscribersPlugin\Command\Delete' => $base . '/SubscribersPlugin/Command/Delete.php',
     'phpList\plugin\SubscribersPlugin\Command\Factory' => $base . '/SubscribersPlugin/Command/Factory.php',
     'phpList\plugin\SubscribersPlugin\Command\Remove' => $base . '/SubscribersPlugin/Command/Remove.php',
+    'phpList\plugin\SubscribersPlugin\Command\RemoveAll' => $base . '/SubscribersPlugin/Command/RemoveAll.php',
     'phpList\plugin\SubscribersPlugin\Command\Resend' => $base . '/SubscribersPlugin/Command/Resend.php',
     'phpList\plugin\SubscribersPlugin\Command\ResetBounceCount' => $base . '/SubscribersPlugin/Command/ResetBounceCount.php',
     'phpList\plugin\SubscribersPlugin\Command\SubscribePage' => $base . '/SubscribersPlugin/Command/SubscribePage.php',

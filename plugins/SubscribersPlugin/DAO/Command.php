@@ -151,6 +151,17 @@ END;
         return $this->dbCommand->queryOne($sql);
     }
 
+    public function removeFromAllLists($userId)
+    {
+        $sql =
+            "DELETE
+            FROM {$this->tables['listuser']}
+            WHERE userid = $userId
+            ";
+
+        return $this->dbCommand->queryAffectedRows($sql);
+    }
+
     public function removeFromList($userId, $listId)
     {
         $sql =

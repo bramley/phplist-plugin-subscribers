@@ -48,6 +48,7 @@ This plugin is free but if you install and find it useful then a donation to sup
 ## Version history ##
 
     version     Description
+    2.18.0+20180709 Add command to remove subscribers from all lists to which they belong
     2.17.2+20180623 Internal change that adds dependency on phplist 3.3.2
     2.17.1+20180620 Support negative searching
                     Add foreign key to command line import
