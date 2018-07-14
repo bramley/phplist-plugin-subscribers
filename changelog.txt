@@ -1,3 +1,6 @@
+version 2.18.1+20180714
+      Added missing call to parent activate() method
+
 version 2.18.0+20180709
       Add command to remove subscribers from all lists to which they belong
 

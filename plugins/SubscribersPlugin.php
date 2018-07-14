@@ -201,6 +201,8 @@ class SubscribersPlugin extends phplistPlugin
         $this->unsubscribeLinkText = getConfig('subscribers_linktext');
         $this->attributes = stripslashes(getConfig('subscribers_attributes'));
         $this->rootUrl = sprintf('%s://%s%s/', $public_scheme, getConfig('website'), $pageroot);
+
+        parent::activate();
     }
 
     /**
