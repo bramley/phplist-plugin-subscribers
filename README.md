@@ -48,6 +48,7 @@ This plugin is free but if you install and find it useful then a donation to sup
 ## Version history ##
 
     version     Description
+    2.18.2+20181211 On Inactive report link to user page instead of userhistory
     2.18.1+20180714 Fix problem of config settings not being displayed
     2.18.0+20180709 Add command to remove subscribers from all lists to which they belong
     2.17.2+20180623 Internal change that adds dependency on phplist 3.3.2

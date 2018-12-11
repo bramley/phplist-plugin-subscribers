@@ -1,3 +1,6 @@
+version 2.18.2+20181211
+      Link to user page instead of userhistory, which has been removed
+
 version 2.18.1+20180714
       Added missing call to parent activate() method
 

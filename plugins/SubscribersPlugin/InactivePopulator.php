@@ -58,7 +58,7 @@ class InactivePopulator implements IPopulator, IExportable
 
         foreach ($subscribers as $subscriber) {
             $key = $subscriber['email'];
-            $w->addElement($key, new PageURL('userhistory', ['id' => $subscriber['id']]));
+            $w->addElement($key, new PageURL('user', ['id' => $subscriber['id']]));
             $w->addColumn($key, $this->i18n->get('Lists'), $subscriber['listname']);
             $w->addColumn(
                 $key,
