@@ -97,7 +97,7 @@ class Command extends User
                 WHERE um.userid = u.id
                 ) AS lastview,
                 (SELECT GROUP_CONCAT(name)
-                FROM {$this->tables['listuser']} lu 
+                FROM {$this->tables['listuser']} lu
                 JOIN {$this->tables['list']} l ON lu.listid = l.id
                 WHERE lu.userid = u.id
                 ) AS listname
@@ -120,12 +120,12 @@ class Command extends User
             select u.id, u.email,
             (
                 select count(um.userid)
-                from {$this->tables['usermessage']} um 
+                from {$this->tables['usermessage']} um
                 where u.id = um.userid
                 and um.status = 'sent'
                 -- handle no rows being viewed, max then returns null
                 and ifnull(
-                    um.entered > 
+                    um.entered >
                         (select max(entered) from {$this->tables['usermessage']}
                         where userid = u.id and status = 'sent' and viewed is not null
                         ),
@@ -231,6 +231,20 @@ END;
             AND ubd.data != 'Admin'
             AND ubd.data NOT LIKE '%reason not requested%'
             ORDER BY ub.added DESC
+            $range
+END;
+
+        return $this->dbCommand->queryAll($sql);
+    }
+
+    public function hasBounced($start = null, $limit = null)
+    {
+        $range = is_null($start) ? '' : "LIMIT $start, $limit";
+        $sql = <<<END
+            SELECT u.id, u.email, u.confirmed, u.blacklisted, u.bouncecount
+            FROM {$this->tables['user']} u
+            WHERE u.bouncecount > 0
+            ORDER BY u.id
             $range
 END;
 

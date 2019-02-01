@@ -1,3 +1,7 @@
+version 2.19.0+20190201
+      Include confirmed and blacklisted fields in export
+      Add report to show subscribers with bounce count > 0
+
 version 2.18.2+20181211
       Link to user page instead of userhistory, which has been removed
 

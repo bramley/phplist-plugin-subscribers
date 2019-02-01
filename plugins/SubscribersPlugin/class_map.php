@@ -35,6 +35,7 @@ return array(
     'phpList\plugin\SubscribersPlugin\Model\Subscriptions' => $base . '/SubscribersPlugin/Model/Subscriptions.php',
     'phpList\plugin\SubscribersPlugin\ReportFactory' => $base . '/SubscribersPlugin/ReportFactory.php',
     'phpList\plugin\SubscribersPlugin\Report\AbstractReport' => $base . '/SubscribersPlugin/Report/AbstractReport.php',
+    'phpList\plugin\SubscribersPlugin\Report\Bounce' => $base . '/SubscribersPlugin/Report/Bounce.php',
     'phpList\plugin\SubscribersPlugin\Report\Invalid' => $base . '/SubscribersPlugin/Report/Invalid.php',
     'phpList\plugin\SubscribersPlugin\Report\Nolist' => $base . '/SubscribersPlugin/Report/Nolist.php',
     'phpList\plugin\SubscribersPlugin\Report\Unsubscribereason' => $base . '/SubscribersPlugin/Report/Unsubscribereason.php',

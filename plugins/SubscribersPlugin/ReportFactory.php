@@ -29,6 +29,7 @@ class ReportFactory
         'inactive' => ['params' => ['report' => 'inactive'], 'caption' => 'Inactive subscribers'],
         'nolist' => ['params' => ['report' => 'nolist'], 'caption' => 'Subscribers who do not belong to a list'],
         'unsubscribereason' => ['params' => ['report' => 'unsubscribereason'], 'caption' => 'Unsubscribe reasons'],
+        'bounce' => ['params' => ['report' => 'bounce'], 'caption' => 'Bounce count'],
     ];
 
     public function listReports()
