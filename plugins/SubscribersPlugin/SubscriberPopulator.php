@@ -123,6 +123,8 @@ class SubscriberPopulator implements IPopulator, IExportable
             $columnCallback = $this->columnCallback;
             $fields = array_merge($fields, $columnCallback());
         }
+        $fields[] = $this->i18n->get('confirmed');
+        $fields[] = $this->i18n->get('blacklisted');
 
         return $fields;
     }
@@ -134,6 +136,14 @@ class SubscriberPopulator implements IPopulator, IExportable
         if ($this->valuesCallback) {
             $valuesCallback = $this->valuesCallback;
             $values = array_merge($values, $valuesCallback($row));
+        }
+
+        if (isset($row['confirmed'])) {
+            $values[] = $row['confirmed'];
+        }
+
+        if (isset($row['blacklisted'])) {
+            $values[] = $row['blacklisted'];
         }
 
         return $values;
