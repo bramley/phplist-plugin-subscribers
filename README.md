@@ -48,6 +48,7 @@ This plugin is free but if you install and find it useful then a donation to sup
 ## Version history ##
 
     version     Description
+    2.19.1+20190225 Improve performance of searching for subscribers
     2.19.0+20190201 Add report to show subscribers with bounce count > 0
     2.18.2+20181211 On Inactive report link to user page instead of userhistory
     2.18.1+20180714 Fix problem of config settings not being displayed

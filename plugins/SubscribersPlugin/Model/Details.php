@@ -40,6 +40,7 @@ class Details extends Model
     private $listDAO;
     private $access;
     private $loginId;
+    private $referencedAttributes;
     /*
      *    inherited protected variables
      */
@@ -100,6 +101,7 @@ class Details extends Model
         $this->lists = $this->listDAO->listsForOwner($this->loginId);
 
         $this->verifySelectedAttributes();
+        $this->referencedAttributes = array_intersect_key($this->attributes, array_flip($this->selectedAttrs) + [$this->searchBy => '']);
     }
 
     /**
@@ -114,7 +116,7 @@ class Details extends Model
      */
     public function users($start = null, $limit = null)
     {
-        $users = $this->dao->users($this->listID, $this->loginId, $this->attributes,
+        $users = $this->dao->users($this->listID, $this->loginId, $this->referencedAttributes,
             $this->searchTerm, $this->searchBy, $this->confirmed, $this->blacklisted, $start, $limit
         );
 
@@ -138,7 +140,7 @@ class Details extends Model
     public function totalUsers()
     {
         return $this->dao->totalUsers(
-            $this->listID, $this->loginId, $this->attributes, $this->searchTerm, $this->searchBy,
+            $this->listID, $this->loginId, $this->referencedAttributes, $this->searchTerm, $this->searchBy,
             $this->confirmed, $this->blacklisted
         );
     }
