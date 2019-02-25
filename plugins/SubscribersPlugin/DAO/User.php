@@ -228,8 +228,8 @@ END;
 
         $where = $w ? 'WHERE ' . implode(' AND ', $w) : '';
 
-        $sql =
-            "SELECT u.id, u.email, u.confirmed, u.blacklisted, u.htmlemail, u.uniqid, u.subscribepage, sp.title $attr_fields,
+        $sql = <<<END
+            SELECT u.id, u.email, u.confirmed, u.blacklisted, u.htmlemail, u.uniqid, u.subscribepage, sp.title $attr_fields,
                 (SELECT count(lu.listid)
                 FROM {$this->tables['listuser']} lu
                 WHERE lu.userid = u.id
@@ -249,9 +249,18 @@ END;
             FROM {$this->tables['user']} u
             LEFT JOIN {$this->tables['subscribepage']} sp ON sp.id = u.subscribepage
             $attr_join
-            $where
+            WHERE u.id IN (
+                SELECT * FROM (
+                    SELECT u.id
+                    FROM {$this->tables['user']} u
+                    $attr_join
+                    $where
+                    ORDER by u.id
+                    $limitClause
+                ) AS t
+            )
             ORDER by u.id
-            $limitClause";
+END;
 
         return $this->dbCommand->queryAll($sql);
     }
