@@ -34,11 +34,13 @@ class ControllerFactory extends ControllerFactoryBase
         $depends = include __DIR__ . '/depends.php';
         $container = new Container($depends);
         $page = $params['page'];
-        $controller = $page == 'reports' && isset($params['report'])
-            ? (in_array($params['report'], ['history', 'subscriptions', 'inactive']) ? $params['report'] : 'simplereport')
-            : $page;
-        $class = __NAMESPACE__ . '\Controller\\' . ucfirst($controller);
 
-        return $container->get($class);
+        if ($page == 'reports' && isset($params['report'])) {
+            $item = 'report_' . $params['report'];
+        } else {
+            $item = __NAMESPACE__ . '\Controller\\' . ucfirst($page);
+        }
+
+        return $container->get($item);
     }
 }

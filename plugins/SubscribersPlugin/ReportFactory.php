@@ -30,6 +30,7 @@ class ReportFactory
         'nolist' => ['params' => ['report' => 'nolist'], 'caption' => 'Subscribers who do not belong to a list'],
         'unsubscribereason' => ['params' => ['report' => 'unsubscribereason'], 'caption' => 'Unsubscribe reasons'],
         'bounce' => ['params' => ['report' => 'bounce'], 'caption' => 'Bounce count'],
+        'domains' => ['params' => ['report' => 'domains'], 'caption' => 'Domain subscriber counts'],
     ];
 
     public function listReports()
@@ -39,10 +40,11 @@ class ReportFactory
 
     public function create($reportId)
     {
-        if (!isset($this->reports[$reportId])) {
+        $class = __NAMESPACE__ . '\Report\\' . ucfirst($reportId);
+
+        if (!class_exists($class)) {
             throw new \Exception("report $reportId not found");
         }
-        $class = __NAMESPACE__ . '\Report\\' . ucfirst($reportId);
 
         return new $class();
     }

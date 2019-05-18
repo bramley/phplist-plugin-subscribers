@@ -1,3 +1,6 @@
+version 2.20.0+20190521
+      Add report of email domains and report of subscribers for a specific domain.
+
 version 2.19.1+20190225
       Separate selecting matching subscribers into a subquery
       Join only those attributes whose value is required

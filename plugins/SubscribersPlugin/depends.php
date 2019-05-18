@@ -40,20 +40,10 @@ return [
             $container->get('phpList\plugin\SubscribersPlugin\Model\Details')
         );
     },
-    'phpList\plugin\SubscribersPlugin\Controller\History' => function (ContainerInterface $container) {
-        return new Controller\History(
-            $container->get('phpList\plugin\SubscribersPlugin\Model\History')
-        );
-    },
     'phpList\plugin\SubscribersPlugin\Controller\Import2' => function (ContainerInterface $container) {
         return new Controller\Import2(
             $container->get('phpList\plugin\Common\DAO\Attribute'),
             $container->get('phpList\plugin\Common\Context')
-        );
-    },
-    'phpList\plugin\SubscribersPlugin\Controller\Inactive' => function (ContainerInterface $container) {
-        return new Controller\Inactive(
-            $container->get('phpList\plugin\SubscribersPlugin\DAO\Command')
         );
     },
     'phpList\plugin\SubscribersPlugin\Controller\Reports' => function (ContainerInterface $container) {
@@ -68,11 +58,6 @@ return [
     },
     'phpList\plugin\SubscribersPlugin\ReportFactory' => function (ContainerInterface $container) {
         return new ReportFactory();
-    },
-    'phpList\plugin\SubscribersPlugin\Controller\Subscriptions' => function (ContainerInterface $container) {
-        return new Controller\Subscriptions(
-            $container->get('phpList\plugin\SubscribersPlugin\Model\Subscriptions')
-        );
     },
     'phpList\plugin\SubscribersPlugin\Model\Command' => function (ContainerInterface $container) {
         return new Model\Command(
@@ -116,5 +101,42 @@ return [
         return new DAO\User(
             $container->get('phpList\plugin\Common\DB')
         );
+    },
+    // these reports each have their own controller
+    'report_domains' => function (ContainerInterface $container) {
+        return new Controller\Domains(
+            $container->get('phpList\plugin\SubscribersPlugin\DAO\Command')
+        );
+    },
+    'report_history' => function (ContainerInterface $container) {
+        return new Controller\History(
+            $container->get('phpList\plugin\SubscribersPlugin\Model\History')
+        );
+    },
+    'report_inactive' => function (ContainerInterface $container) {
+        return new Controller\Inactive(
+            $container->get('phpList\plugin\SubscribersPlugin\DAO\Command')
+        );
+    },
+    'report_subscriptions' => function (ContainerInterface $container) {
+        return new Controller\Subscriptions(
+            $container->get('phpList\plugin\SubscribersPlugin\Model\Subscriptions')
+        );
+    },
+    // these reports all use the simple report controller
+    'report_bounce' => function (ContainerInterface $container) {
+        return $container->get('phpList\plugin\SubscribersPlugin\Controller\Simplereport');
+    },
+    'report_domainsubscribers' => function (ContainerInterface $container) {
+        return $container->get('phpList\plugin\SubscribersPlugin\Controller\Simplereport');
+    },
+    'report_invalid' => function (ContainerInterface $container) {
+        return $container->get('phpList\plugin\SubscribersPlugin\Controller\Simplereport');
+    },
+    'report_nolist' => function (ContainerInterface $container) {
+        return $container->get('phpList\plugin\SubscribersPlugin\Controller\Simplereport');
+    },
+    'report_unsubscribereason' => function (ContainerInterface $container) {
+        return $container->get('phpList\plugin\SubscribersPlugin\Controller\Simplereport');
     },
 ];

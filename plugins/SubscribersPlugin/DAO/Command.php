@@ -250,4 +250,30 @@ END;
 
         return $this->dbCommand->queryAll($sql);
     }
+
+    public function domains()
+    {
+        $sql = <<<END
+            SELECT SUBSTRING_INDEX(email, '@', -1) AS domain,
+                COUNT(*) AS total,
+                SUM(CASE WHEN confirmed = 1 AND blacklisted = 0 THEN 1 ELSE 0 END) AS active
+            FROM {$this->tables['user']}
+            GROUP BY domain
+            ORDER by total DESC
+END;
+
+        return $this->dbCommand->queryAll($sql);
+    }
+
+    public function domainSubscribers($domain)
+    {
+        $domain = sql_escape($domain);
+        $sql = <<<END
+            SELECT id, email, confirmed, blacklisted
+            FROM {$this->tables['user']}
+            WHERE SUBSTRING_INDEX(email, '@', -1) = '$domain'
+END;
+
+        return $this->dbCommand->queryAll($sql);
+    }
 }
