@@ -22,7 +22,6 @@ namespace phpList\plugin\SubscribersPlugin\Controller;
 
 use phpList\plugin\Common\Context;
 use phpList\plugin\Common\Controller;
-use phpList\plugin\Common\DAO\Attribute as AttributeDAO;
 
 class Import2 extends Controller
 {
@@ -41,8 +40,7 @@ class Import2 extends Controller
             exit(2);
         }
         $columnNames = fgetcsv($handle, 0, ',');
-        $attributes = iterator_to_array($this->dao->attributes());
-        $attributesByName = array_column($attributes, 'id', 'name');
+        $attributesByName = array_column($this->attributes, 'id', 'name');
         $emailPosition = null;
         $_SESSION['import_attribute'] = array();
         $_SESSION['systemindex'] = array();
@@ -117,10 +115,10 @@ class Import2 extends Controller
         exit;
     }
 
-    public function __construct(AttributeDAO $dao, Context $context)
+    public function __construct(array $attributes, Context $context)
     {
         parent::__construct();
-        $this->dao = $dao;
+        $this->attributes = $attributes;
         $this->context = $context;
     }
 }

@@ -88,16 +88,16 @@ class Details extends Model
     /*
      *    Public methods
      */
-    public function __construct(User $dao, DAOAttribute $attributeDAO, DAOList $listDAO)
+    //~ public function __construct(User $dao, DAOAttribute $attributeDAO, DAOList $listDAO)
+    public function __construct(User $dao, array $attributes, DAOList $listDAO)
     {
         parent::__construct('SubscribersPl_D');
         $this->access = accessLevel('users');
         $this->loginId = ($this->access == 'owner') ? $_SESSION['logindetails']['id'] : '';
 
         $this->dao = $dao;
-        $this->attributeDAO = $attributeDAO;
+        $this->attributes = $attributes;
         $this->listDAO = $listDAO;
-        $this->attributes = $this->attributeDAO->attributesById();
         $this->lists = $this->listDAO->listsForOwner($this->loginId);
 
         $this->verifySelectedAttributes();

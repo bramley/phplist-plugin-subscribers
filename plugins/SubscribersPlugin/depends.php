@@ -41,8 +41,10 @@ return [
         );
     },
     'phpList\plugin\SubscribersPlugin\Controller\Import2' => function (ContainerInterface $container) {
+        $attributeDAO = $container->get('phpList\plugin\Common\DAO\Attribute');
+
         return new Controller\Import2(
-            $container->get('phpList\plugin\Common\DAO\Attribute'),
+            $attributeDAO->attributesById(),
             $container->get('phpList\plugin\Common\Context')
         );
     },
@@ -65,9 +67,11 @@ return [
         );
     },
     'phpList\plugin\SubscribersPlugin\Model\Details' => function (ContainerInterface $container) {
+        $attributeDAO = $container->get('phpList\plugin\Common\DAO\Attribute');
+
         return new Model\Details(
             $container->get('phpList\plugin\SubscribersPlugin\DAO\User'),
-            $container->get('phpList\plugin\Common\DAO\Attribute'),
+            $attributeDAO->attributesById(20, 15),
             $container->get('phpList\plugin\Common\DAO\Lists')
         );
     },
@@ -113,10 +117,14 @@ return [
             $container->get('phpList\plugin\SubscribersPlugin\Model\History')
         );
     },
-    'report_inactive' => function (ContainerInterface $container) {
+    'phpList\plugin\SubscribersPlugin\Controller\Inactive' => function (ContainerInterface $container) {
         return new Controller\Inactive(
-            $container->get('phpList\plugin\SubscribersPlugin\DAO\Command')
+            $container->get('phpList\plugin\SubscribersPlugin\DAO\Command'),
+            $container->get('phpList\plugin\Common\Context')
         );
+    },
+    'report_inactive' => function (ContainerInterface $container) {
+        return $container->get('phpList\plugin\SubscribersPlugin\Controller\Inactive');
     },
     'report_subscriptions' => function (ContainerInterface $container) {
         return new Controller\Subscriptions(

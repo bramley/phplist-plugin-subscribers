@@ -3,7 +3,9 @@
 namespace phpList\plugin\SubscribersPlugin\Controller;
 
 use CHtml;
+use phpList\plugin\Common\Context;
 use phpList\plugin\Common\Controller;
+use phpList\plugin\Common\ExportCSV;
 use phpList\plugin\Common\IExportable;
 use phpList\plugin\Common\Listing;
 use phpList\plugin\Common\PageURL;
@@ -61,31 +63,34 @@ class Inactive extends Controller
      */
     protected function actionDefault()
     {
-        $params = [];
-
         if (isset($_POST['interval'])) {
             $interval = $_POST['interval'];
 
             if (preg_match('/^(\d+\s+(day|week|month|quarter|year))s?$/i', $interval, $matches)) {
                 $this->redirectExit(PageURL::createFromGet(['interval' => $matches[1]]));
             }
-            $this->redirectExit(PageURL::createFromGet(), ['error' => $this->i18n->get("Invalid interval value '%s'", $interval)]);
+            $this->redirectExit(PageURL::createFromGet(['interval' => null]), ['error' => $this->i18n->get("Invalid interval value '%s'", $interval)]);
         }
+        $params = [];
 
         if (isset($_SESSION[self::PLUGIN]['error'])) {
             $params['error'] = $_SESSION[self::PLUGIN]['error'];
             unset($_SESSION[self::PLUGIN]['error']);
         }
-
-        $interval = isset($_GET['interval']) ? $_GET['interval'] : '6 month';
-        $populator = new InactivePopulator($this->dao, $this->i18n, $interval);
-        $listing = new Listing($this, $populator);
-        $listing->pager->setItemsPerPage([25, 50, 100], 25);
         $toolbar = new Toolbar($this);
-        $toolbar->addExportButton(['interval' => $interval]);
-        $toolbar->addExternalHelpButton(self::HELP);
 
-        $params['listing'] = $listing->display();
+        if (isset($_GET['interval'])) {
+            $interval = $_GET['interval'];
+            $populator = new InactivePopulator($this->dao, $this->i18n, $interval);
+            $listing = new Listing($this, $populator);
+            $listing->pager->setItemsPerPage([25, 50, 100], 25);
+            $toolbar->addExportButton(['interval' => $interval]);
+            $params['listing'] = $listing->display();
+        } else {
+            $interval = '';
+            $params['listing'] = '';
+        }
+        $toolbar->addExternalHelpButton(self::HELP);
         $params['toolbar'] = $toolbar->display();
         $params['interval'] = CHtml::textField('interval', $interval, ['id' => 'interval']);
         $params['formURL'] = PageURL::createFromGet();
@@ -99,9 +104,30 @@ class Inactive extends Controller
         parent::actionExportCSV($populator);
     }
 
-    public function __construct(DAO $dao)
+    protected function actionExportCommandline()
+    {
+        global $tmpdir;
+
+        $this->context->start();
+        $options = getopt('p:m:c:i:f:');
+        $interval = isset($options['i']) ? $options['i'] : '6 month';
+        $populator = new InactivePopulator($this->dao, $this->i18n, $interval);
+        $file = isset($options['f']) ? $options['f'] : sprintf('%s/%s.csv', $tmpdir, $populator->exportFileName());
+
+        try {
+            $fh = fopen($file, 'w');
+            $exporter = new ExportCSV($populator);
+            $exporter->exportToFile($fh);
+        } catch (\ErrorException $e) {
+            $this->context->output(sprintf('Unable to open file for writing: %s', $file));
+        }
+        $this->context->finish();
+    }
+
+    public function __construct(DAO $dao, Context $context)
     {
         parent::__construct();
         $this->dao = $dao;
+        $this->context = $context;
     }
 }

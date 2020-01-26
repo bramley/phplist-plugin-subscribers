@@ -33,6 +33,7 @@ class SubscribersPlugin extends phplistPlugin
     const UNSUBSCRIBE_PAGE = 'unsubscribe';
     const UUID_PAGE = 'generateuuids';
     const IMPORT2_PAGE = 'import2';
+    const INACTIVE_REPORT_PAGE = 'inactive';
 
     /*
      *  Private variables
@@ -55,7 +56,7 @@ class SubscribersPlugin extends phplistPlugin
         'reports' => array('category' => 'subscribers'),
     );
     public $publicPages = array(self::LISTSUBSCRIBE_PAGE, self::UNSUBSCRIBE_PAGE);
-    public $commandlinePluginPages = array(self::UUID_PAGE, self::IMPORT2_PAGE);
+    public $commandlinePluginPages = array(self::UUID_PAGE, self::IMPORT2_PAGE, self::INACTIVE_REPORT_PAGE);
     public $documentationUrl = 'https://resources.phplist.com/plugin/subscribers';
 
     /*
@@ -216,9 +217,9 @@ class SubscribersPlugin extends phplistPlugin
 
         return array(
             'phpList version 3.3.2 or later' => version_compare(VERSION, '3.3.2') >= 0,
-            'Common Plugin version 3.8.0 or later installed' => (
+            'Common Plugin version 3.11.0 or later installed' => (
                 phpListPlugin::isEnabled('CommonPlugin')
-                && version_compare($plugins['CommonPlugin']->version, '3.8.0') >= 0
+                && version_compare($plugins['CommonPlugin']->version, '3.11.0') >= 0
             ),
             'PHP version 5.4.0 or greater' => version_compare(PHP_VERSION, '5.4') > 0,
         );

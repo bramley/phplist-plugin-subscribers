@@ -71,21 +71,26 @@ class Command extends User
         $sql =
             "SELECT COUNT(*)
             FROM (
-                SELECT 1
+                SELECT u.id, COUNT(u.id) AS recent_campaigns,
+                (SELECT COUNT(*)
+                FROM {$this->tables['usermessage']} um
+                WHERE um.userid = u.id and status = 'sent'
+                ) AS total_campaigns
                 FROM {$this->tables['user']} u
                 JOIN {$this->tables['usermessage']} um ON um.userid = u.id
                 WHERE um.status = 'sent' AND um.entered > DATE_SUB(CURDATE(), INTERVAL $interval)
                 AND u.confirmed AND !u.blacklisted
                 GROUP BY u.id
                 HAVING MAX(um.viewed) IS NULL
+                AND recent_campaigns < total_campaigns
             ) AS t1";
 
         return $this->dbCommand->queryOne($sql);
     }
 
-    public function inactiveSubscribersByInterval($interval, $start = null, $limit = null)
+    public function inactiveSubscribersByInterval($interval, $start = null, $maximum = null)
     {
-        $limit = is_null($start) ? '' : "LIMIT $start, $limit";
+        $limit = is_null($start) ? '' : "LIMIT $start, $maximum";
         $sql =
             "SELECT u.id, email, COUNT(u.id) AS recent_campaigns,
                 (SELECT COUNT(*)
@@ -107,6 +112,7 @@ class Command extends User
             AND u.confirmed AND !u.blacklisted
             GROUP BY u.id
             HAVING MAX(um.viewed) IS NULL
+            AND recent_campaigns < total_campaigns
             ORDER BY lastview, email
             $limit
             ";

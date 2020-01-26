@@ -1,5 +1,5 @@
 <?php
-/**
+/*
  * SubscribersPlugin for phplist.
  *
  * This file is a part of SubscribersPlugin.
@@ -20,26 +20,6 @@
  * @license   http://www.gnu.org/licenses/gpl.html GNU General Public License, Version 3
  */
 
-/**
- * This is the HTML template for the plugin page.
- *
- * @category  phplist
- */
+namespace phpList\plugin\SubscribersPlugin;
 
-/**
- * Available fields
- * - $form: optional raw HTML for attribute search/select form
- * - $listing: raw HTML output of Listing.
- */
-?>
-<div>
-    <hr/>
-<?php echo $toolbar; ?>
-    <div style='padding-top: 10px;'>
-<?php echo $form; ?>
-    </div>
-    <div style='padding-top: 10px;'>
-<?php echo $listing; ?>
-    </div>
-        <p><a href='#top'>[<?php echo $this->i18n->get('top') ?>]</a></p>
-</div>
+\phpList\plugin\Common\Main::run(new ControllerFactory(), 'exportCommandline');
