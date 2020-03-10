@@ -10,8 +10,8 @@ use phpList\plugin\Common\IExportable;
 use phpList\plugin\Common\Listing;
 use phpList\plugin\Common\PageURL;
 use phpList\plugin\Common\Toolbar;
-use phpList\plugin\SubscribersPlugin\InactivePopulator;
 use phpList\plugin\SubscribersPlugin\DAO\Command as DAO;
+use phpList\plugin\SubscribersPlugin\InactivePopulator;
 
 /**
  * SubscribersPlugin for phplist.

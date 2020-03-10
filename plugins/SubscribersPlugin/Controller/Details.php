@@ -3,9 +3,9 @@
 namespace phpList\plugin\SubscribersPlugin\Controller;
 
 use phpList\plugin\Common\Controller;
-use phpList\plugin\Common\IPopulator;
 use phpList\plugin\Common\IExportable;
 use phpList\plugin\Common\ImageTag;
+use phpList\plugin\Common\IPopulator;
 use phpList\plugin\Common\Listing;
 use phpList\plugin\Common\PageURL;
 use phpList\plugin\Common\Toolbar;

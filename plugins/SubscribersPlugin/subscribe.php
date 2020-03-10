@@ -2,8 +2,8 @@
 
 namespace phpList\plugin\SubscribersPlugin;
 
-use phpList\plugin\Common\DB;
 use phpList\plugin\Common\DAO\Lists;
+use phpList\plugin\Common\DB;
 
 function displayResultPage($result, $uid = '')
 {
