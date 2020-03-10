@@ -228,7 +228,13 @@ END;
     {
         $range = is_null($start) ? '' : "LIMIT $start, $limit";
         $sql = <<<END
-            SELECT u.id, u.email, ub.added, ubd.data
+            SELECT u.id, u.email, ub.added, ubd.data,
+            (SELECT GROUP_CONCAT(l.name)
+                FROM {$this->tables['list']} l
+                JOIN {$this->tables['listuser']} lu ON lu.listid = l.id
+                WHERE u.id = lu.userid
+                GROUP BY u.id
+            ) AS lists
             FROM {$this->tables['user']} u
             JOIN {$this->tables['user_blacklist']} ub ON ub.email = u.email
             JOIN {$this->tables['user_blacklist_data']} ubd ON ubd.email = ub.email AND ubd.name = 'reason'

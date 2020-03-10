@@ -46,6 +46,7 @@ class Unsubscribereason extends AbstractReport
             return [
                 'Date added',
                 'Reason',
+                'Lists',
             ];
         };
     }
@@ -56,6 +57,7 @@ class Unsubscribereason extends AbstractReport
             return [
                 $row['added'],
                 $row['data'],
+                $row['lists'],
             ];
         };
     }
