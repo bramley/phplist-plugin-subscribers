@@ -27,23 +27,22 @@ class Domainsubscribers extends AbstractReport
 {
     public function __construct()
     {
+        parent::__construct();
         $this->domain = $_GET['domain'];
     }
 
     public function iterator($dao)
     {
-        $domain = $_GET['domain'];
-
         return $dao->domainSubscribers($this->domain);
     }
 
     public function title()
     {
-        return sprintf('Subscribers on domain %s', $this->domain);
+        return $this->i18n->get('Subscribers on domain %s', $this->domain);
     }
 
     public function noSubscribersWarning()
     {
-        return sprintf('Domain %s does not have any subscribers', $this->domain);
+        return $this->i18n->get('Domain %s does not have any subscribers', $this->domain);
     }
 }

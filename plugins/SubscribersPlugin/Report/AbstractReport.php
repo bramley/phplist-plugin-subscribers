@@ -20,8 +20,17 @@
 
 namespace phpList\plugin\SubscribersPlugin\Report;
 
+use phpList\plugin\Common\I18n;
+
 abstract class AbstractReport
 {
+    protected $i18n;
+
+    public function __construct()
+    {
+        $this->i18n = I18N::instance();
+    }
+
     /**
      * Implemented by a subclass to provide an iterator of the subscriber query result.
      *

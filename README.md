@@ -48,6 +48,7 @@ This plugin is free but if you install and find it useful then a donation to sup
 ## Version history ##
 
     version     Description
+    2.23.0+20200315 Add Dutch translations, thanks to Peter Buijs
     2.22.0+20200310 Include lists on the unsubscribe reason report
     2.21.0+20200306 Add page to run the inactive subscribers report from the command line
     2.20.0+20190521 Add report of email domains and report of subscribers for a specific domain

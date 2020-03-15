@@ -48,8 +48,8 @@ class Domains extends Controller implements IExportable
          */
         $domains = $this->dao->domains();
         $populateCallback = function ($w, $start, $limit) use ($domains) {
-            $w->setTitle(s('Domain subscriber counts'));
-            $w->setElementHeading(s('Domain'));
+            $w->setTitle($this->i18n->get('Domain subscriber counts'));
+            $w->setElementHeading($this->i18n->get('Domain'));
 
             foreach (new LimitIterator($domains, $start, $limit) as $row) {
                 $key = $row['domain'];

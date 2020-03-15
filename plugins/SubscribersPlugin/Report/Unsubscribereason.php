@@ -32,21 +32,21 @@ class Unsubscribereason extends AbstractReport
 
     public function title()
     {
-        return 'Unsubscribe reasons';
+        return $this->i18n->get('Unsubscribe reasons');
     }
 
     public function noSubscribersWarning()
     {
-        return 'No unsubscribe reasons found';
+        return $this->i18n->get('No unsubscribe reasons found');
     }
 
     public function columnCallback()
     {
         return function () {
             return [
-                'Date added',
-                'Reason',
-                'Lists',
+                $this->i18n->get('date'),
+                $this->i18n->get('reason'),
+                $this->i18n->get('lists'),
             ];
         };
     }

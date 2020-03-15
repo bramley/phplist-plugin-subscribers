@@ -32,11 +32,11 @@ class Nolist extends AbstractReport
 
     public function title()
     {
-        return 'Subscribers who do not belong to a list';
+        return $this->i18n->get('Subscribers who do not belong to a list');
     }
 
     public function noSubscribersWarning()
     {
-        return 'All subscribers belong to at least one list';
+        return $this->i18n->get('All subscribers belong to at least one list');
     }
 }

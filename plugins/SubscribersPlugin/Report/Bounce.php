@@ -32,14 +32,14 @@ class Bounce extends AbstractReport
 
     public function title()
     {
-        return 'Bounce count';
+        return $this->i18n->get('Bounce count');
     }
 
     public function columnCallback()
     {
         return function () {
             return [
-                'Bounce count',
+                $this->i18n->get('Bounce count'),
             ];
         };
     }
@@ -55,6 +55,6 @@ class Bounce extends AbstractReport
 
     public function noSubscribersWarning()
     {
-        return 'No subscribers found with bounce count > 0';
+        return $this->i18n->get('No subscribers found with bounce count > 0');
     }
 }

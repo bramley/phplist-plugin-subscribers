@@ -95,10 +95,10 @@ class Subscriptions extends Controller implements IPopulator, IExportable
 
             $data[] = array(
                 'month' => $monthLabel,
-                $this->i18n->get('Active') => (int) $row['active'],
-                $this->i18n->get('Blacklisted') => (int) $row['blacklisted'],
-                $this->i18n->get('Unconfirmed') => (int) $row['unconfirmed'],
-                $this->i18n->get('Unsubscriptions') => (int) $row['unsubscriptions'],
+                $this->i18n->get('active') => (int) $row['active'],
+                $this->i18n->get('blacklisted') => (int) $row['blacklisted'],
+                $this->i18n->get('unconfirmed') => (int) $row['unconfirmed'],
+                $this->i18n->get('unsubscriptions') => (int) $row['unsubscriptions'],
             );
 
             $currentYear = $row['year'];
@@ -110,7 +110,7 @@ class Subscriptions extends Controller implements IPopulator, IExportable
             'height' => self::IMAGE_HEIGHT,
             'axisTitlesPosition' => 'out',
             'vAxis' => array('format' => '#', 'title' => $this->i18n->get('Subscribers')),
-            'hAxis' => array('title' => $this->i18n->get('Period'), 'textStyle' => array('fontSize' => 9)),
+            'hAxis' => array('title' => $this->i18n->get('period'), 'textStyle' => array('fontSize' => 9)),
             'bar' => array('groupWidth' => '90%'),
             'seriesType' => 'bars',
             'series' => array(3 => array('type' => 'line')),

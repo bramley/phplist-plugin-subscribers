@@ -97,7 +97,7 @@ class History extends Controller implements IPopulator, IExportable
         /*
          * Populates the webbler list with event details
          */
-        $w->setTitle($this->i18n->get('Subscriber History'));
+        $w->setTitle($this->i18n->get('Subscriber history'));
         $w->setElementHeading($this->i18n->get('Event'));
 
         foreach ($this->model->listEvents($start, $limit) as $row) {

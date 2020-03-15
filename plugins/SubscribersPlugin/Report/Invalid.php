@@ -47,11 +47,11 @@ class Invalid extends AbstractReport
 
     public function title()
     {
-        return 'Subscribers with an invalid email address';
+        return $this->i18n->get('Subscribers with an invalid email address');
     }
 
     public function noSubscribersWarning()
     {
-        return 'All subscribers have a valid email address';
+        return $this->i18n->get('All subscribers have a valid email address');
     }
 }

@@ -1,3 +1,7 @@
+version 2.23.0+20200315
+      Revise translations.
+      Add Dutch translations, thanks to Peter Buijs.
+
 version 2.22.0+20200310
       Include lists on the unsubscribe reason report
 

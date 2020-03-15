@@ -34,8 +34,6 @@ $lan = array(
     'plugin_title' => 'Subscribers Plugin',
 /*  Menu items */
     'Advanced search' => 'Advanced search',
-    'Subscriber History' => 'Subscriber history',
-    'Subscriptions' => 'Subscriptions',
     'Subscriber commands' => 'Subscriber commands',
     'Subscriber reports' => 'Subscriber reports',
 /*  Advanced Search page */
@@ -47,6 +45,7 @@ $lan = array(
     'not confirmed' => 'not confirmed',
     'blacklisted_heading' => 'Bl',
     'User is blacklisted' => 'User is blacklisted',
+    'Subs page' => 'Subs page',
     'Campaigns' => 'Campaigns',
     'Campaigns sent' => 'Campaigns sent',
     'Campaigns opened' => 'Campaigns opened',
@@ -75,12 +74,16 @@ $lan = array(
 /*  Action page */
     'Apply command to a group of subscribers' => 'Apply command to a group of subscribers',
     'Action for each subscriber' => 'Action for each subscriber',
-    'Resend confirmation request' => 'Resend confirmation request',
+    'Confirm' => 'Confirm',
     'Unconfirm' => 'Unconfirm',
     'Blacklist' => 'Blacklist',
     'Unblacklist' => 'Remove from blacklist',
     'Delete' => 'Delete',
     'Remove from list' => 'Remove from list',
+    'Remove from all subscribed lists' => 'Remove from all subscribed lists',
+    'Resend confirmation request' => 'Resend confirmation request',
+    'Change subscribe page' => 'Change subscribe page',
+    'Reset bounce count' => 'Reset bounce count',
     'Copy/paste a list of email addresses, then click the Process button' => 'Copy/paste a list of email addresses, then click the Process button',
     'Process' => 'Process',
     'Or select a file of email addresses to upload, then click the Upload button' => 'Or select a file of email addresses to upload, then click the Upload button',
@@ -130,10 +133,14 @@ END
     ,
     'Number of subscribers to be processed' => 'Number of subscribers to be processed',
 /* Reports */
-    'Available reports' => 'Available reports',
+    'Subscriber history' => 'Subscriber history',
+    'Subscriptions' => 'Subscriptions',
     'Subscribers with an invalid email address' => 'Subscribers with an invalid email address',
     'Inactive subscribers' => 'Inactive subscribers',
     'Subscribers who do not belong to a list' => 'Subscribers who do not belong to a list',
+    'Unsubscribe reasons' => 'Unsubscribe reasons',
+    'Bounce count' => 'Bounce count',
+    'Domain subscriber counts' => 'Domain subscriber counts',
     'Run' => 'Run',
 /* Invalid subscribers */
     'All subscribers have a valid email address' => 'All subscribers have a valid email address',
@@ -147,4 +154,9 @@ END
     "Invalid interval value '%s'" => "Invalid interval value '%s'",
 /* Subscribers who do not belong to a list */
     'All subscribers belong to at least one list' => 'All subscribers belong to at least one list',
+/* Unsubscribe reasons */
+    'reason' => 'Reason',
+/* Domain subscriber counts */
+    'Subscribers on domain %s' => 'Subscribers on domain %s',
+    'Domain %s does not have any subscribers' => 'Domain %s does not have any subscribers',
 );
