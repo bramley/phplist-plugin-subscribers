@@ -24,6 +24,9 @@ use phpList\plugin\Common\I18n;
 
 abstract class AbstractReport
 {
+    /** @var bool whether to display a refresh button */
+    public $showRefresh = false;
+
     protected $i18n;
 
     public function __construct()
@@ -39,6 +42,13 @@ abstract class AbstractReport
      * @return Iterator iterator that provides the query results. Also must be Countable.
      */
     abstract public function getIterator($dao);
+
+    /**
+     * A report subclass can override this method for processing to allow its data to be refreshed.
+     */
+    public function refresh()
+    {
+    }
 
     /**
      * This method can be overridden to provide a callback that returns additional columns for the report listing.

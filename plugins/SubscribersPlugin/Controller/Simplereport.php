@@ -23,6 +23,8 @@ namespace phpList\plugin\SubscribersPlugin\Controller;
 use phpList\plugin\Common\Controller;
 use phpList\plugin\Common\IExportable;
 use phpList\plugin\Common\Listing;
+use phpList\plugin\Common\PageLink;
+use phpList\plugin\Common\PageURL;
 use phpList\plugin\Common\Toolbar;
 use phpList\plugin\SubscribersPlugin\DAO\Command as DAO;
 use phpList\plugin\SubscribersPlugin\ReportFactory;
@@ -49,10 +51,27 @@ class Simplereport extends Controller
         $params['listing'] = $listing->display();
         $params['toolbar'] = $toolbar->display();
 
+        if ($this->report->showRefresh) {
+            $url = PageURL::createFromGet(['action' => 'refresh']);
+            $params['refresh'] = new PageLink($url, 'Refresh', ['class' => 'button']);
+        }
+
         if (count($this->iterator) == 0) {
             $params['warning'] = $this->report->noSubscribersWarning();
         }
         echo $this->render(dirname(__FILE__) . self::TEMPLATE, $params);
+    }
+
+    protected function actionRefresh()
+    {
+        $this->report->refresh();
+        $get = $_GET;
+        unset($get['action']);
+        $redirect = http_build_query($get);
+        ob_end_clean();
+        header('Location: ' . './?' . $redirect);
+
+        exit;
     }
 
     protected function actionExportCSV(IExportable $exportable = null)

@@ -1,3 +1,8 @@
+version 2.24.0+20200407
+      Add report of consecutive bounces.
+      Rename method
+      Provide way to refresh the data for the Consecutive bounces report.
+
 version 2.23.0+20200315
       Revise translations.
       Add Dutch translations, thanks to Peter Buijs.

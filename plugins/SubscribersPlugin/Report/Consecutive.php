@@ -27,6 +27,8 @@ use ArrayIterator;
  */
 class Consecutive extends AbstractReport
 {
+    public $showRefresh = true;
+
     public function getIterator($dao)
     {
         if (!isset($_SESSION['consecutive_bounces'])) {
@@ -36,6 +38,11 @@ class Consecutive extends AbstractReport
         return new ArrayIterator($_SESSION['consecutive_bounces']);
     }
 
+    public function refresh()
+    {
+        unset($_SESSION['consecutive_bounces']);
+    }
+
     public function title()
     {
         return $this->i18n->get('Consecutive bounces');
@@ -43,7 +50,7 @@ class Consecutive extends AbstractReport
 
     public function noSubscribersWarning()
     {
-        return $this->i18n->get('No subscribers have bounces');
+        return $this->i18n->get('No subscribers have consecutive bounces');
     }
 
     public function columnCallback()

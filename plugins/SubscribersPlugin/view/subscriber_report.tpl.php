@@ -23,6 +23,9 @@
     <div class="note alert alert-warning"><?= $warning; ?></div>
 <?php endif; ?>
 <?= $toolbar; ?>
+<?php if (isset($refresh)) : ?>
+    <div><?= $refresh; ?></div>
+<?php endif; ?>
     <div style='padding-top: 10px;' >
 <?= $listing ?>
     </div>
