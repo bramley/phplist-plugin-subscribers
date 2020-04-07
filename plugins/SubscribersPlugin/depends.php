@@ -147,4 +147,7 @@ return [
     'report_unsubscribereason' => function (ContainerInterface $container) {
         return $container->get('phpList\plugin\SubscribersPlugin\Controller\Simplereport');
     },
+    'report_consecutive' => function (ContainerInterface $container) {
+        return $container->get('phpList\plugin\SubscribersPlugin\Controller\Simplereport');
+    },
 ];
