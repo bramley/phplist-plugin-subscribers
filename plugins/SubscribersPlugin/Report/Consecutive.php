@@ -27,7 +27,7 @@ use ArrayIterator;
  */
 class Consecutive extends AbstractReport
 {
-    public function iterator($dao)
+    public function getIterator($dao)
     {
         if (!isset($_SESSION['consecutive_bounces'])) {
             $_SESSION['consecutive_bounces'] = iterator_to_array(consecutiveBouncesGenerator());

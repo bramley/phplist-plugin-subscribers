@@ -65,7 +65,7 @@ class Simplereport extends Controller
         parent::__construct();
 
         $this->report = $factory->create($reportId);
-        $this->iterator = $this->report->iterator($dao);
+        $this->iterator = $this->report->getIterator($dao);
         $this->populator = new SubscriberPopulator(
             $this->i18n,
             $this->iterator,

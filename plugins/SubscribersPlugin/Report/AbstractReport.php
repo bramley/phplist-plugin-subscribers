@@ -38,7 +38,7 @@ abstract class AbstractReport
      *
      * @return Iterator iterator that provides the query results. Also must be Countable.
      */
-    abstract public function iterator($dao);
+    abstract public function getIterator($dao);
 
     /**
      * This method can be overridden to provide a callback that returns additional columns for the report listing.

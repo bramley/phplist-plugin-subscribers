@@ -31,7 +31,7 @@ class Domainsubscribers extends AbstractReport
         $this->domain = $_GET['domain'];
     }
 
-    public function iterator($dao)
+    public function getIterator($dao)
     {
         return $dao->domainSubscribers($this->domain);
     }

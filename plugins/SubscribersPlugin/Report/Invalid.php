@@ -40,7 +40,7 @@ class Invalid extends AbstractReport
         return new ArrayIterator($invalid);
     }
 
-    public function iterator($dao)
+    public function getIterator($dao)
     {
         return $this->invalidSubscribers($dao);
     }

@@ -25,7 +25,7 @@ namespace phpList\plugin\SubscribersPlugin\Report;
  */
 class Nolist extends AbstractReport
 {
-    public function iterator($dao)
+    public function getIterator($dao)
     {
         return $dao->subscribersNoList();
     }
