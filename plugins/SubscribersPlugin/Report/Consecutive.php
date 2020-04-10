@@ -29,10 +29,26 @@ class Consecutive extends AbstractReport
 {
     public $showRefresh = true;
 
+    /**
+     * Provide an iterator of consecutive bounces in descending count order.
+     *
+     * @param phpList\plugin\SubscribersPlugin\DAO\Command $dao
+     *
+     * @return ArrayIterator
+     */
     public function getIterator($dao)
     {
         if (!isset($_SESSION['consecutive_bounces'])) {
-            $_SESSION['consecutive_bounces'] = iterator_to_array(consecutiveBouncesGenerator());
+            $rows = iterator_to_array(consecutiveBouncesGenerator());
+            usort(
+                $rows,
+                function ($a, $b) {
+                    $difference = $b['consecutive'] - $a['consecutive'];
+
+                    return $difference == 0 ? strcasecmp($a['email'], $b['email']) : $difference;
+                }
+            );
+            $_SESSION['consecutive_bounces'] = $rows;
         }
 
         return new ArrayIterator($_SESSION['consecutive_bounces']);

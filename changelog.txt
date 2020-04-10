@@ -1,3 +1,6 @@
+version 2.24.1+20200410
+      Order the consecutive bounces report by the number of bounces descending.
+
 version 2.24.0+20200407
       Add report of consecutive bounces.
       Rename method
