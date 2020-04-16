@@ -1,3 +1,6 @@
+version 2.24.2+20200416
+      Use core phplist functions to format dates so that the date format configuration setting will be applied.
+
 version 2.24.1+20200410
       Order the consecutive bounces report by the number of bounces descending.
 

@@ -105,7 +105,7 @@ class History extends Controller implements IPopulator, IExportable
             $w->addColumnEmail($row['id'], $this->i18n->get('Subscriber'), $row['email'],
                 new PageURL('user', array('id' => $row['userid']))
             );
-            $w->addColumn($row['id'], $this->i18n->get('date'), $row['date']);
+            $w->addColumn($row['id'], $this->i18n->get('date'), formatDateTime($row['date']));
             $w->addColumn($row['id'], $this->i18n->get('summary'), $row['summary']);
             // The detail column in user_history already contains html encoded text, so need to decode twice
             $detail = htmlspecialchars_decode(trim($row['detail']));

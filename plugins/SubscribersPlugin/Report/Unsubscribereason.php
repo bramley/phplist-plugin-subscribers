@@ -55,7 +55,7 @@ class Unsubscribereason extends AbstractReport
     {
         return function ($row) {
             return [
-                $row['added'],
+                formatDateTime($row['added']),
                 $row['data'],
                 $row['lists'],
             ];

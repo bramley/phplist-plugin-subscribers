@@ -65,7 +65,7 @@ class InactivePopulator implements IPopulator, IExportable
                 $this->i18n->get('Number of campaigns'),
                 sprintf('%d | %d', $subscriber['recent_campaigns'], $subscriber['total_campaigns'])
             );
-            $w->addColumnHtml($key, $this->i18n->get('Last view'), formatDate($subscriber['lastview'], true));
+            $w->addColumnHtml($key, $this->i18n->get('Last view'), formatDate($subscriber['lastview']));
         }
     }
 
