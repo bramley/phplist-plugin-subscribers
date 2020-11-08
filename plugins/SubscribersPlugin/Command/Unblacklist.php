@@ -27,7 +27,7 @@ class Unblacklist extends Base
 {
     public function accept(array $user)
     {
-        return $user['blacklisted'] == 1;
+        return $user['blacklisted'] == 1 || isBlackListed($user['email']);
     }
 
     public function process(array $user)
