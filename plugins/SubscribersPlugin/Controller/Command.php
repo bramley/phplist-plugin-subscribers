@@ -155,11 +155,13 @@ class Command extends Controller
     {
         $emails = array_map('trim', $emails);
 
-        return array_filter(
-            $emails,
-            function ($item) {
-                return strpos($item, '@') !== false;
-            }
+        return array_unique(
+            array_filter(
+                $emails,
+                function ($item) {
+                    return strpos($item, '@') !== false;
+                }
+            )
         );
     }
 
