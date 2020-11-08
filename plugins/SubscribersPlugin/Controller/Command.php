@@ -98,13 +98,13 @@ class Command extends Controller
      * Allows the command to decide whether to accept for processing each of the
      * entered subscriber email addresses.
      *
-     * @param array $emails email addresses
+     * @param phpList\plugin\SubscribersPlugin\Command\Base $command instance of a command
+     * @param array                                         $emails  email addresses
      *
      * @return array the subscribers who have been accepted
      */
-    private function acceptEmails(array $emails)
+    private function acceptEmails($command, array $emails)
     {
-        $command = $this->factory->createCommand($this->model->commandid, $this->model->additional);
         $accepted = array_filter(
             $emails,
             function ($email) use ($command) {
@@ -251,19 +251,25 @@ class Command extends Controller
             if ($this->model->commandid == 0) {
                 $error = $this->i18n->get('error_action_not_selected');
             } else {
-                $acceptedEmails = $this->acceptEmails($emails);
+                try {
+                    $command = $this->factory->createCommand($this->model->commandid, $this->model->additional);
+                    $command->validate();
+                    $acceptedEmails = $this->acceptEmails($command, $emails);
 
-                if (count($acceptedEmails) > 0) {
-                    return [
-                        new PageURL(null, ['action' => 'displayUsers']),
-                        [
-                            'acceptedEmails' => $acceptedEmails,
-                            'commandid' => $this->model->commandid,
-                            'additional' => $this->model->additional,
-                        ],
-                    ];
+                    if (count($acceptedEmails) > 0) {
+                        return [
+                            new PageURL(null, ['action' => 'displayUsers']),
+                            [
+                                'acceptedEmails' => $acceptedEmails,
+                                'commandid' => $this->model->commandid,
+                                'additional' => $this->model->additional,
+                            ],
+                        ];
+                    }
+                    $error = $this->i18n->get('error_no_acceptable');
+                } catch (\Exception $e) {
+                    $error = $e->getMessage();
                 }
-                $error = $this->i18n->get('error_no_acceptable');
             }
         }
 

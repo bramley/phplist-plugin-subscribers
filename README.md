@@ -48,6 +48,8 @@ This plugin is free but if you install and find it useful then a donation to sup
 ## Version history ##
 
     version     Description
+    2.25.0+20201115 Add command to move subscribers between lists
+                    Copy search results to the Command page
     2.24.2+20200416 Display dates using the date format configuration
     2.24.1+20200410 Order the consecutive bounces report by the number of bounces descending
     2.24.0+20200407 Add report of consecutive bounces

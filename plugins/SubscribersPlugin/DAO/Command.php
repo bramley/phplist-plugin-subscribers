@@ -179,6 +179,30 @@ END;
         return $this->dbCommand->queryAffectedRows($sql);
     }
 
+    public function moveBetweenLists($userId, $fromListId, $toListId)
+    {
+        $sql = <<<END
+            DELETE
+            FROM {$this->tables['listuser']}
+            WHERE userid = $userId AND listid = $fromListId
+END;
+        $removed = $this->dbCommand->queryAffectedRows($sql);
+
+        $sql = <<<END
+            INSERT INTO {$this->tables['listuser']}
+            (listid, userid)
+            SELECT $toListId, $userId
+            WHERE NOT EXISTS (
+                SELECT *
+                FROM {$this->tables['listuser']}
+                WHERE listid = $toListId AND userid = $userId
+            )
+END;
+        $added = $this->dbCommand->queryAffectedRows($sql);
+
+        return [$removed, $added];
+    }
+
     public function subscribePages()
     {
         $sql =

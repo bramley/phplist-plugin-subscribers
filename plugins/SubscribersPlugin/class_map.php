@@ -7,6 +7,7 @@ return array(
     'phpList\plugin\SubscribersPlugin\Command\Confirm' => $base . '/SubscribersPlugin/Command/Confirm.php',
     'phpList\plugin\SubscribersPlugin\Command\Delete' => $base . '/SubscribersPlugin/Command/Delete.php',
     'phpList\plugin\SubscribersPlugin\Command\Factory' => $base . '/SubscribersPlugin/Command/Factory.php',
+    'phpList\plugin\SubscribersPlugin\Command\Move' => $base . '/SubscribersPlugin/Command/Move.php',
     'phpList\plugin\SubscribersPlugin\Command\Remove' => $base . '/SubscribersPlugin/Command/Remove.php',
     'phpList\plugin\SubscribersPlugin\Command\RemoveAll' => $base . '/SubscribersPlugin/Command/RemoveAll.php',
     'phpList\plugin\SubscribersPlugin\Command\Resend' => $base . '/SubscribersPlugin/Command/Resend.php',

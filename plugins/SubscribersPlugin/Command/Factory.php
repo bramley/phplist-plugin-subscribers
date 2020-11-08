@@ -35,6 +35,7 @@ class Factory
     const COMMAND_RESET_BOUNCE_COUNT = 8;
     const COMMAND_CONFIRM = 9;
     const COMMAND_REMOVE_All = 10;
+    const COMMAND_MOVE = 11;
 
     /**
      * Constructor.
@@ -89,6 +90,9 @@ class Factory
             case self::COMMAND_CONFIRM:
                 $command = new Confirm($commandId, $additionalFields, $this->dao, $this->i18n);
                 break;
+            case self::COMMAND_MOVE:
+                $command = new Move($commandId, $additionalFields, $this->dao, $this->i18n);
+                break;
             default:
                 throw new \Exception("Unrecognised command id - $commandId");
         }
@@ -112,6 +116,7 @@ class Factory
             self::COMMAND_BLACKLIST => $this->i18n->get('Blacklist'),
             self::COMMAND_UNBLACKLIST => $this->i18n->get('Unblacklist'),
             self::COMMAND_DELETE => $this->i18n->get('Delete'),
+            self::COMMAND_MOVE => $this->i18n->get('Move between lists'),
             self::COMMAND_REMOVE => $this->i18n->get('Remove from list'),
             self::COMMAND_REMOVE_All => $this->i18n->get('Remove from all subscribed lists'),
             self::COMMAND_RESEND_CONFIRMATION_REQUEST => $this->i18n->get('Resend confirmation request'),

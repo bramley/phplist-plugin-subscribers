@@ -47,6 +47,15 @@ abstract class Base
     }
 
     /**
+     * Allow a command to validate its parameters.
+     *
+     * @throws Exception if the parameters are not valid
+     */
+    public function validate()
+    {
+    }
+
+    /**
      * Decide whether to accept a subscriber for processing by the command.
      *
      * @param array $user user details

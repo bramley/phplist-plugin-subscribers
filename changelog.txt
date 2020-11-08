@@ -1,3 +1,10 @@
+version 2.25.0+20201115
+      For commands remove duplicate email addresses
+      Allow unblacklisting an email address
+      Copy search results to the Command page
+      Remove default action. Validate that an action has been selected.
+      Add command to move subscribers between lists
+
 version 2.24.2+20200416
       Use core phplist functions to format dates so that the date format configuration setting will be applied.
 
