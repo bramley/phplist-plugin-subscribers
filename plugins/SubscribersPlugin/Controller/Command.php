@@ -157,7 +157,7 @@ class Command extends Controller
 
         return array_unique(
             array_filter(
-                $emails,
+            $emails,
                 function ($item) {
                     return strpos($item, '@') !== false;
                 }
@@ -248,19 +248,23 @@ class Command extends Controller
         }
 
         if ($error === '') {
-            $acceptedEmails = $this->acceptEmails($emails);
+            if ($this->model->commandid == 0) {
+                $error = $this->i18n->get('error_action_not_selected');
+            } else {
+                $acceptedEmails = $this->acceptEmails($emails);
 
-            if (count($acceptedEmails) > 0) {
-                return [
-                    new PageURL(null, ['action' => 'displayUsers']),
-                    [
-                        'acceptedEmails' => $acceptedEmails,
-                        'commandid' => $this->model->commandid,
-                        'additional' => $this->model->additional,
-                    ],
-                ];
+                if (count($acceptedEmails) > 0) {
+                    return [
+                        new PageURL(null, ['action' => 'displayUsers']),
+                        [
+                            'acceptedEmails' => $acceptedEmails,
+                            'commandid' => $this->model->commandid,
+                            'additional' => $this->model->additional,
+                        ],
+                    ];
+                }
+                $error = $this->i18n->get('error_no_acceptable');
             }
-            $error = $this->i18n->get('error_no_acceptable');
         }
 
         return [

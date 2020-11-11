@@ -62,9 +62,7 @@ return [
         return new ReportFactory();
     },
     'phpList\plugin\SubscribersPlugin\Model\Command' => function (ContainerInterface $container) {
-        return new Model\Command(
-            Command\Factory::COMMAND_CONFIRM
-        );
+        return new Model\Command();
     },
     'phpList\plugin\SubscribersPlugin\Model\Details' => function (ContainerInterface $container) {
         $attributeDAO = $container->get('phpList\plugin\Common\DAO\Attribute');
