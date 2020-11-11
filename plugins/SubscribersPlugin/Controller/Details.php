@@ -7,6 +7,7 @@ use phpList\plugin\Common\IExportable;
 use phpList\plugin\Common\ImageTag;
 use phpList\plugin\Common\IPopulator;
 use phpList\plugin\Common\Listing;
+use phpList\plugin\Common\PageLink;
 use phpList\plugin\Common\PageURL;
 use phpList\plugin\Common\Toolbar;
 use phpList\plugin\Common\Widget;
@@ -64,13 +65,32 @@ class Details extends Controller implements IPopulator, IExportable
         $toolbar = new Toolbar($this);
         $toolbar->addExportButton();
         $toolbar->addExternalHelpButton(self::HELP);
-        $listing = new Listing($this, $this);
-        $params = array(
+        $listing = new Listing($this);
+        $commandLink = new PageLink(
+            PageURL::createFromGet(['action' => 'command']),
+            $this->i18n->get('Copy results to command'),
+            ['class' => 'button']
+        );
+        $params = [
             'toolbar' => $toolbar->display(),
             'form' => Widget::attributeForm($this, $this->model),
             'listing' => $listing->display(),
-        );
+            'command_link' => $commandLink,
+        ];
         echo $this->render(dirname(__FILE__) . self::TEMPLATE, $params);
+    }
+
+    protected function actionCommand()
+    {
+        $limit = 1000;
+        $subscribers = new \LimitIterator($this->model->users(), 0, $limit);
+        $emails = '';
+
+        foreach ($subscribers as $subscriber) {
+            $emails .= $subscriber['email'] . "\n";
+        }
+        $_SESSION['SubscribersPlugin']['emails'] = $emails;
+        header('Location: ' . new PageURL('command', ['pi' => $_GET['pi']]));
     }
 
     /*
@@ -146,7 +166,6 @@ class Details extends Controller implements IPopulator, IExportable
          */
         $selectedAttrs = $this->model->selectedAttrs;
         $attributes = $this->model->attributes;
-        $w->setTitle($this->i18n->get('Subscribers'));
         $w->setElementHeading($this->i18n->get('Subscriber'));
 
         foreach ($this->model->users($start, $limit) as $row) {

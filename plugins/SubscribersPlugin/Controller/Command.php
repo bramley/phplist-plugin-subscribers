@@ -331,6 +331,7 @@ class Command extends Controller
         $params['toolbar'] = $this->toolbar->display();
         $params['formURL'] = new PageURL();
         $params['commandList'] = $this->commandRadioButtons(self::HTML_ENABLED);
+        $params['emails'] = $this->model->emails;
         echo $this->render(__DIR__ . self::TEMPLATE, $params);
     }
 

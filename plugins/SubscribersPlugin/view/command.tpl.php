@@ -55,7 +55,7 @@ input[type="text"], select {
                     <div class="note">
 <?= $this->i18n->get('Copy/paste a list of email addresses, then click the Process button'); ?>
                     </div>
-                    <textarea name='emails' rows='5' cols='30' ></textarea>
+                    <textarea name='emails' rows='5' cols='30' ><?= $emails; ?></textarea>
                     <button type="submit" name="submit" value='Process'><?= $this->i18n->get('Process'); ?></button>
                     <div class="note">
 <?= $this->i18n->get('Or select a file of email addresses to upload, then click the Upload button'); ?>

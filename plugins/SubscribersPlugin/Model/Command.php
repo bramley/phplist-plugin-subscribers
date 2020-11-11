@@ -30,7 +30,7 @@ class Command extends Model
     protected $properties = array(
         'commandid' => null,
         'file' => null,
-        'emails' => null,
+        'emails' => '',
         'pattern' => null,
         'acceptedEmails' => null,
         'additional' => [],

@@ -38,8 +38,12 @@
     <div style='padding-top: 10px;'>
 <?php echo $form; ?>
     </div>
+    <div style='text-align: right;'>
+<?php echo $command_link; ?>
+    </div>
     <div style='padding-top: 10px;'>
 <?php echo $listing; ?>
+<?php echo $command_link; ?>
     </div>
         <p><a href='#top'>[<?php echo $this->i18n->get('top') ?>]</a></p>
 </div>
