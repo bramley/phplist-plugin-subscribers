@@ -14,7 +14,7 @@
  * GNU General Public License for more details.
  *
  * @author    Duncan Cameron
- * @copyright 2011-2017 Duncan Cameron
+ * @copyright 2011-2020 Duncan Cameron
  * @license   http://www.gnu.org/licenses/gpl.html GNU General Public License, Version 3
  */
 
@@ -57,11 +57,7 @@ class Command extends Controller
      */
     private function redirectExit($redirect, array $session = [])
     {
-        if (isset($_SESSION[self::PLUGIN])) {
-            $_SESSION[self::PLUGIN] = array_merge($_SESSION[self::PLUGIN], $session);
-        } else {
-            $_SESSION[self::PLUGIN] = $session;
-        }
+        $_SESSION[self::PLUGIN] = $session;
         header('Location: ' . $redirect);
         exit;
     }
@@ -210,6 +206,10 @@ class Command extends Controller
      */
     private function handlePost()
     {
+        $session = [
+            'commandid' => $this->model->commandid,
+            'additional' => $this->model->additional,
+        ];
         $error = '';
 
         switch ($_POST['submit']) {
@@ -221,6 +221,8 @@ class Command extends Controller
                 }
                 break;
             case 'Process':
+                $session['emails'] = $this->model->emails;
+
                 if ($this->model->emails == '') {
                     $error = $this->i18n->get('emails not entered');
                     break;
@@ -232,6 +234,8 @@ class Command extends Controller
                 }
                 break;
             case 'Match':
+                $session['pattern'] = $this->model->pattern;
+
                 if ($this->model->pattern == '') {
                     $error = $this->i18n->get('error_match_not_entered');
                     break;
@@ -257,14 +261,9 @@ class Command extends Controller
                     $acceptedEmails = $this->acceptEmails($command, $emails);
 
                     if (count($acceptedEmails) > 0) {
-                        return [
-                            new PageURL(null, ['action' => 'displayUsers']),
-                            [
-                                'acceptedEmails' => $acceptedEmails,
-                                'commandid' => $this->model->commandid,
-                                'additional' => $this->model->additional,
-                            ],
-                        ];
+                        $session['acceptedEmails'] = $acceptedEmails;
+
+                        return [new PageURL(null, ['action' => 'displayUsers']), $session];
                     }
                     $error = $this->i18n->get('error_no_acceptable');
                 } catch (\Exception $e) {
@@ -272,15 +271,9 @@ class Command extends Controller
                 }
             }
         }
+        $session['error'] = $error;
 
-        return [
-            new PageURL(),
-            [
-                'error' => $error,
-                'commandid' => $this->model->commandid,
-                'additional' => $this->model->additional,
-            ],
-        ];
+        return [new PageURL(), $session];
     }
 
     /**
@@ -342,6 +335,7 @@ class Command extends Controller
         $params['formURL'] = new PageURL();
         $params['commandList'] = $this->commandRadioButtons(self::HTML_ENABLED);
         $params['emails'] = $this->model->emails;
+        $params['pattern'] = $this->model->pattern;
         echo $this->render(__DIR__ . self::TEMPLATE, $params);
     }
 

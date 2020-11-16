@@ -1,9 +1,4 @@
 <?php
-
-namespace phpList\plugin\SubscribersPlugin\Model;
-
-use phpList\plugin\Common\Model;
-
 /**
  * SubscribersPlugin for phplist.
  *
@@ -19,9 +14,14 @@ use phpList\plugin\Common\Model;
  * GNU General Public License for more details.
  *
  * @author    Duncan Cameron
- * @copyright 2011-2017 Duncan Cameron
+ * @copyright 2011-2020 Duncan Cameron
  * @license   http://www.gnu.org/licenses/gpl.html GNU General Public License, Version 3
  */
+
+namespace phpList\plugin\SubscribersPlugin\Model;
+
+use phpList\plugin\Common\Model;
+
 class Command extends Model
 {
     /*
@@ -31,7 +31,7 @@ class Command extends Model
         'commandid' => 0,
         'file' => null,
         'emails' => '',
-        'pattern' => null,
+        'pattern' => '',
         'acceptedEmails' => null,
         'additional' => [],
     );

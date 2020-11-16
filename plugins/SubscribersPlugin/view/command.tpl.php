@@ -14,7 +14,7 @@
  * GNU General Public License for more details.
  *
  * @author    Duncan Cameron
- * @copyright 2011-2017 Duncan Cameron
+ * @copyright 2011-2020 Duncan Cameron
  * @license   http://www.gnu.org/licenses/gpl.html GNU General Public License, Version 3
  */
 ?>
@@ -65,7 +65,7 @@ input[type="text"], select {
                     <div class="note">
 <?= $this->i18n->get('Or enter a partial email address to be matched, then click the Match button'); ?>
                     </div>
-                    <input type='text' name='pattern' size='16' value="" />
+                    <input type='text' name='pattern' size='16' value="<?= $pattern; ?>" />
                     <button type="submit" name="submit" value='Match'><?= $this->i18n->get('Match'); ?></button>
                 </form>
             </div>

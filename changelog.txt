@@ -1,3 +1,6 @@
+version 2.25.1+20201116
+      Avoid clearing the entered emails or pattern when navigating back to the first page
+
 version 2.25.0+20201115
       For commands remove duplicate email addresses
       Allow unblacklisting an email address
