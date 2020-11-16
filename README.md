@@ -48,6 +48,7 @@ This plugin is free but if you install and find it useful then a donation to sup
 ## Version history ##
 
     version     Description
+    2.26.0+20201116 Add command to add subscribers to a list
     2.25.1+20201116 Avoid clearing the entered emails or pattern when navigating back to the first page
     2.25.0+20201115 Add command to move subscribers between lists
                     Copy search results to the Command page

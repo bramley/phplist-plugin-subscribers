@@ -157,6 +157,17 @@ END;
         return $this->dbCommand->queryOne($sql);
     }
 
+    public function addToList($userId, $listId)
+    {
+        $sql =
+            "INSERT INTO {$this->tables['listuser']}
+            (userid, listid, entered)
+            VALUES($userId, $listId, now())
+            ";
+
+        return $this->dbCommand->queryAffectedRows($sql);
+    }
+
     public function removeFromAllLists($userId)
     {
         $sql =

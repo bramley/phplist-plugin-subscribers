@@ -2,6 +2,7 @@
 
 return array(
     'phpList\plugin\SubscribersPlugin\CbgConverter' => $base . '/SubscribersPlugin/CbgConverter.php',
+    'phpList\plugin\SubscribersPlugin\Command\Add' => $base . '/SubscribersPlugin/Command/Add.php',
     'phpList\plugin\SubscribersPlugin\Command\Base' => $base . '/SubscribersPlugin/Command/Base.php',
     'phpList\plugin\SubscribersPlugin\Command\Blacklist' => $base . '/SubscribersPlugin/Command/Blacklist.php',
     'phpList\plugin\SubscribersPlugin\Command\Confirm' => $base . '/SubscribersPlugin/Command/Confirm.php',

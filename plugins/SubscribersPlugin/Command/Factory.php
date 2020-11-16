@@ -36,6 +36,7 @@ class Factory
     const COMMAND_CONFIRM = 9;
     const COMMAND_REMOVE_All = 10;
     const COMMAND_MOVE = 11;
+    const COMMAND_ADD = 12;
 
     /**
      * Constructor.
@@ -93,6 +94,9 @@ class Factory
             case self::COMMAND_MOVE:
                 $command = new Move($commandId, $additionalFields, $this->dao, $this->i18n);
                 break;
+            case self::COMMAND_ADD:
+                $command = new Add($commandId, $additionalFields, $this->dao, $this->i18n);
+                break;
             default:
                 throw new \Exception("Unrecognised command id - $commandId");
         }
@@ -116,6 +120,7 @@ class Factory
             self::COMMAND_BLACKLIST => $this->i18n->get('Blacklist'),
             self::COMMAND_UNBLACKLIST => $this->i18n->get('Unblacklist'),
             self::COMMAND_DELETE => $this->i18n->get('Delete'),
+            self::COMMAND_ADD => $this->i18n->get('Add to list'),
             self::COMMAND_MOVE => $this->i18n->get('Move between lists'),
             self::COMMAND_REMOVE => $this->i18n->get('Remove from list'),
             self::COMMAND_REMOVE_All => $this->i18n->get('Remove from all subscribed lists'),
