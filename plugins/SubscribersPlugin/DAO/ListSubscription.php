@@ -1,9 +1,4 @@
 <?php
-
-namespace phpList\plugin\SubscribersPlugin\DAO;
-
-use phpList\plugin\Common\DAO\User;
-
 /**
  * SubscribersPlugin for phplist.
  *
@@ -19,15 +14,24 @@ use phpList\plugin\Common\DAO\User;
  * GNU General Public License for more details.
  *
  * @author    Duncan Cameron
- * @copyright 2017 Duncan Cameron
+ * @copyright 2017-2020 Duncan Cameron
  * @license   http://www.gnu.org/licenses/gpl.html GNU General Public License, Version 3
  */
+
+namespace phpList\plugin\SubscribersPlugin\DAO;
+
+use phpList\plugin\Common\DAO as CommonDAO;
+use phpList\plugin\Common\DAO\ListsTrait;
+use phpList\plugin\Common\DAO\UserTrait;
 
 /**
  * DAO class that provides database access for the unsubscribe function.
  */
-class Unsubscribe extends User
+class ListSubscription extends CommonDAO
 {
+    use ListsTrait;
+    use UserTrait;
+
     public function listsForSubscriberMessage($userId, $mId)
     {
         $query = <<<END

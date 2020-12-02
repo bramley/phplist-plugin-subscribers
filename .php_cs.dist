@@ -20,6 +20,7 @@ return PhpCsFixer\Config::create()
             'imports_order' => ['class', 'function', 'const']
         ],
         'blank_line_after_namespace' => true,
+        'no_multiline_whitespace_around_double_arrow' => null,
     ])
     ->setFinder($finder)
 ;

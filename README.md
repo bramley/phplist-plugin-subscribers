@@ -15,13 +15,10 @@ The plugin also provides a placeholder [LISTUNSUBSCRIBE] to remove a subscriber 
 
 ### Dependencies ###
 
-This plugin requires phplist 3.3.2 or later and php version 5.4 or later.
+This plugin requires phplist 3.3.2 or later and php version 5.6 or later.
 
-It also requires the Common Plugin version 3.8.0 or later to be installed. You should install or upgrade to the latest version. See <https://github.com/bramley/phplist-plugin-common>
-
-### Set the plugin directory ###
-You can use a directory outside of the web root by changing the definition of `PLUGIN_ROOTDIR` in config.php.
-The benefit of this is that plugins will not be affected when you upgrade phplist.
+It also requires the Common Plugin version 3.14.2 or later to be installed.
+phplist now includes Common Plugin so you should need only to enable it on the Manage Plugins page.
 
 ### Install through phplist ###
 Install on the Plugins page (menu Config > Manage Plugins) using the package URL `https://github.com/bramley/phplist-plugin-subscribers/archive/master.zip`.
@@ -48,6 +45,7 @@ This plugin is free but if you install and find it useful then a donation to sup
 ## Version history ##
 
     version     Description
+    2.27.0+20201202 Support translation of front-end texts
     2.26.0+20201116 Add command to add subscribers to a list
     2.25.1+20201116 Avoid clearing the entered emails or pattern when navigating back to the first page
     2.25.0+20201115 Add command to move subscribers between lists

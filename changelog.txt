@@ -1,3 +1,6 @@
+version 2.27.0+20201202
+      Rework list subscribe and list unsubscribe processing to support translations
+
 version 2.26.0+20201116
       Add command to add subscribers to a list
 
