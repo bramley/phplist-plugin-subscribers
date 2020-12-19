@@ -1,3 +1,6 @@
+version 2.28.0+20201219
+      Copy report results to the command page
+
 version 2.27.0+20201202
       Rework list subscribe and list unsubscribe processing to support translations
 

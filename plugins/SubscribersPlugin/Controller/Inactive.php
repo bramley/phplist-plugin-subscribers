@@ -8,6 +8,7 @@ use phpList\plugin\Common\Controller;
 use phpList\plugin\Common\ExportCSV;
 use phpList\plugin\Common\IExportable;
 use phpList\plugin\Common\Listing;
+use phpList\plugin\Common\PageLink;
 use phpList\plugin\Common\PageURL;
 use phpList\plugin\Common\Toolbar;
 use phpList\plugin\SubscribersPlugin\DAO\Command as DAO;
@@ -86,9 +87,16 @@ class Inactive extends Controller
             $listing->pager->setItemsPerPage([25, 50, 100], 25);
             $toolbar->addExportButton(['interval' => $interval]);
             $params['listing'] = $listing->display();
+            $commandLink = new PageLink(
+                PageURL::createFromGet(['action' => 'command', 'interval' => $interval]),
+                $this->i18n->get('Copy results to command'),
+                ['class' => 'button']
+            );
+            $params['command_link'] = $commandLink;
         } else {
             $interval = '';
             $params['listing'] = '';
+            $params['command_link'] = '';
         }
         $toolbar->addExternalHelpButton(self::HELP);
         $params['toolbar'] = $toolbar->display();
@@ -122,6 +130,18 @@ class Inactive extends Controller
             $this->context->output(sprintf('Unable to open file for writing: %s', $file));
         }
         $this->context->finish();
+    }
+
+    protected function actionCommand()
+    {
+        $populator = new InactivePopulator($this->dao, $this->i18n, $_GET['interval']);
+        $emails = '';
+
+        foreach ($populator->exportRows() as $row) {
+            $emails .= $row['email'] . "\n";
+        }
+        $_SESSION['SubscribersPlugin']['emails'] = $emails;
+        header('Location: ' . new PageURL('command', ['pi' => $_GET['pi']]));
     }
 
     public function __construct(DAO $dao, Context $context)

@@ -46,10 +46,16 @@ class Simplereport extends Controller
         $toolbar = new Toolbar($this);
         $toolbar->addExportButton();
         $toolbar->addExternalHelpButton(self::HELP);
+        $commandLink = new PageLink(
+            PageURL::createFromGet(['action' => 'command']),
+            $this->i18n->get('Copy results to command'),
+            ['class' => 'button']
+        );
 
         $params = [];
         $params['listing'] = $listing->display();
         $params['toolbar'] = $toolbar->display();
+        $params['command_link'] = $commandLink;
 
         if ($this->report->showRefresh) {
             $url = PageURL::createFromGet(['action' => 'refresh']);
@@ -77,6 +83,17 @@ class Simplereport extends Controller
     protected function actionExportCSV(IExportable $exportable = null)
     {
         parent::actionExportCSV($this->populator);
+    }
+
+    protected function actionCommand()
+    {
+        $emails = '';
+
+        foreach ($this->iterator as $row) {
+            $emails .= $row['email'] . "\n";
+        }
+        $_SESSION['SubscribersPlugin']['emails'] = $emails;
+        header('Location: ' . new PageURL('command', ['pi' => $_GET['pi']]));
     }
 
     public function __construct($reportId, ReportFactory $factory, DAO $dao)

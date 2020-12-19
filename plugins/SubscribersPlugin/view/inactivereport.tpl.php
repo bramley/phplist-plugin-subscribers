@@ -49,7 +49,9 @@ form {
             </div>
         </div>
     </div>
+    <div style='text-align: right;'><?= $command_link; ?></div>
     <div style='padding-top: 10px;' >
 <?= $listing ?>
     </div>
+<?= $command_link; ?>
 </div>
