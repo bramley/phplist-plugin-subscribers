@@ -45,6 +45,7 @@ This plugin is free but if you install and find it useful then a donation to sup
 ## Version history ##
 
     version     Description
+    2.29.0+20201224 Run inactive report from the command line
     2.28.0+20201219 Copy report results to the command page
     2.27.0+20201202 Support translation of front-end texts
     2.26.0+20201116 Add command to add subscribers to a list

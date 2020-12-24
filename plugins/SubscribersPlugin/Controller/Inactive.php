@@ -41,6 +41,7 @@ class Inactive extends Controller
     const PLUGIN = 'SubscribersPlugin';
     const TEMPLATE = '/../view/inactivereport.tpl.php';
     const HELP = 'https://resources.phplist.com/plugin/subscribers?&#subscriber_reports';
+    const INTERVAL_REGEXP = '/^(\d+\s+(day|week|month|quarter|year))s?$/i';
     /*
      *  Private variables
      */
@@ -67,7 +68,7 @@ class Inactive extends Controller
         if (isset($_POST['interval'])) {
             $interval = $_POST['interval'];
 
-            if (preg_match('/^(\d+\s+(day|week|month|quarter|year))s?$/i', $interval, $matches)) {
+            if (preg_match(self::INTERVAL_REGEXP, $interval, $matches)) {
                 $this->redirectExit(PageURL::createFromGet(['interval' => $matches[1]]));
             }
             $this->redirectExit(PageURL::createFromGet(['interval' => null]), ['error' => $this->i18n->get("Invalid interval value '%s'", $interval)]);
@@ -112,26 +113,79 @@ class Inactive extends Controller
         parent::actionExportCSV($populator);
     }
 
-    protected function actionExportCommandline()
+    /**
+     * Handle the report query being run from the command line.
+     * Supports exporting the report results to a file, and blacklisting or deleting inactive subscribers.
+     */
+    protected function actionCommandline()
     {
         global $tmpdir;
 
         $this->context->start();
-        $options = getopt('p:m:c:i:f:');
-        $interval = isset($options['i']) ? $options['i'] : '6 month';
-        $populator = new InactivePopulator($this->dao, $this->i18n, $interval);
-        $file = isset($options['f']) ? $options['f'] : sprintf('%s/%s.csv', $tmpdir, $populator->exportFileName());
+        $options = getopt('p:m:c:i:f:a:');
+        $action = isset($options['a']) ? $options['a'] : 'export';
 
-        try {
-            $fh = fopen($file, 'w');
-            $exporter = new ExportCSV($populator);
-            $exporter->exportToFile($fh);
-        } catch (\ErrorException $e) {
-            $this->context->output(sprintf('Unable to open file for writing: %s', $file));
+        if (isset($options['i'])) {
+            if (!preg_match(self::INTERVAL_REGEXP, $options['i'], $matches)) {
+                $this->context->output(sprintf('Invalid interval value: %s', $options['i']));
+                $this->context->finish();
+
+                return;
+            }
+            $interval = $matches[1];
+        } else {
+            $interval = '6 month';
+        }
+        $populator = new InactivePopulator($this->dao, $this->i18n, $interval);
+
+        switch ($action) {
+            case 'export':
+                $file = isset($options['f']) ? ($options['f']) : sprintf('%s/%s.csv', $tmpdir, $populator->exportFileName());
+
+                try {
+                    $fh = fopen($file, 'w');
+                    $exporter = new ExportCSV($populator);
+                    $exporter->exportToFile($fh);
+                } catch (\ErrorException $e) {
+                    $this->context->output(sprintf('Unable to open file for writing: %s', $file));
+                }
+                break;
+            case 'blacklist':
+                $users = $populator->exportRows();
+                $total = count($users);
+
+                if ($total > 0) {
+                    foreach ($users as $user) {
+                        addUserToBlackList($user['email'], 'inactive subscriber blacklisted');
+                    }
+                    $this->context->output($this->i18n->get('Found %d inactive subscribers to blacklist', $total));
+                } else {
+                    $this->context->output($this->i18n->get('No inactive subscribers found'));
+                }
+                break;
+            case 'delete':
+                $users = $populator->exportRows();
+                $total = count($users);
+
+                if ($total > 0) {
+                    foreach ($users as $user) {
+                        deleteUser($user['id']);
+                        $this->logEvent(sprintf('Subscriber %s deleted', $user['email']));
+                    }
+                    $this->context->output($this->i18n->get('Found %d inactive subscribers to delete', $total));
+                } else {
+                    $this->context->output($this->i18n->get('No inactive subscribers found'));
+                }
+                break;
+            default:
+                $this->context->output($this->i18n->get('Unrecognised action: %s', $action));
         }
         $this->context->finish();
     }
 
+    /**
+     * Redirect to the command page passing the report results in the session.
+     */
     protected function actionCommand()
     {
         $populator = new InactivePopulator($this->dao, $this->i18n, $_GET['interval']);

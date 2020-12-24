@@ -1,3 +1,6 @@
+version 2.29.0+20201224
+      Add command line functions to export the report, blacklist or delete the inactive subscribers
+
 version 2.28.0+20201219
       Copy report results to the command page
 

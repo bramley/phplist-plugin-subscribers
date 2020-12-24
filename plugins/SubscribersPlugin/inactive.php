@@ -22,4 +22,4 @@
 
 namespace phpList\plugin\SubscribersPlugin;
 
-\phpList\plugin\Common\Main::run(new ControllerFactory(), 'exportCommandline');
+\phpList\plugin\Common\Main::run(new ControllerFactory(), 'commandline');
