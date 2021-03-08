@@ -1,3 +1,6 @@
+version 2.29.1+20210308
+      Remove leading/trailing spaces from the entered search value.
+
 version 2.29.0+20201224
       Add command line functions to export the report, blacklist or delete the inactive subscribers
 

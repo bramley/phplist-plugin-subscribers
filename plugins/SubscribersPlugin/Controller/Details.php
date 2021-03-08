@@ -56,6 +56,7 @@ class Details extends Controller implements IPopulator, IExportable
     {
         if (isset($_POST['SearchForm'])) {
             $this->normalise($_POST['SearchForm']);
+            $_POST['SearchForm']['searchTerm'] = trim($_POST['SearchForm']['searchTerm']);
             $this->model->setProperties($_POST['SearchForm'], true);
             $redirect = new PageURL();
             header("Location: $redirect");
