@@ -26,9 +26,15 @@
 <?php if (isset($refresh)) : ?>
     <div><?= $refresh; ?></div>
 <?php endif; ?>
-    <div style='padding-top: 10px; text-align: right;'><?= $command_link; ?></div>
+    <div style='padding-top: 10px; text-align: right;'>
+<?php if (isset($command_link)) : ?>
+    <?= $command_link; ?>
+<?php endif; ?>
+    </div>
     <div style='padding-top: 10px;' >
 <?= $listing ?>
     </div>
+<?php if (isset($command_link)) : ?>
     <div><?= $command_link; ?></div>
+<?php endif; ?>
 </div>
