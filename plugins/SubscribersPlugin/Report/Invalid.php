@@ -27,6 +27,8 @@ use ArrayIterator;
  */
 class Invalid extends AbstractReport
 {
+    public $showConfirmedColumn = true;
+
     private function invalidSubscribers($dao)
     {
         $invalid = [];

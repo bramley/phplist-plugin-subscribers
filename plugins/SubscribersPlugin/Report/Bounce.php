@@ -25,6 +25,8 @@ namespace phpList\plugin\SubscribersPlugin\Report;
  */
 class Bounce extends AbstractReport
 {
+    public $showConfirmedColumn = true;
+
     public function getIterator($dao)
     {
         return $dao->hasBounced();

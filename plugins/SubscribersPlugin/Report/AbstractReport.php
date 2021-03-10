@@ -26,6 +26,8 @@ abstract class AbstractReport
 {
     /** @var bool whether to display a refresh button */
     public $showRefresh = false;
+    /** @var bool whether to display the confirmed and blacklisted columns */
+    public $showConfirmedColumn = false;
 
     protected $i18n;
 

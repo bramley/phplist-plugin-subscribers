@@ -29,22 +29,26 @@ class SubscriberPopulator implements IPopulator, IExportable
     private $i18n;
     private $subscriberIterator;
     private $title;
+    private $showConfirmedColumn;
     private $columnCallback;
+    private $valuesCallback;
 
     /**
      * Constructor.
      *
-     * @param I18n     $i18n               language selector
-     * @param Iterator $subscriberIterator provides the subscribers to be listed
-     * @param string   $title              title for the listing or file name for exporting
-     * @param callable $columnCallback     function to provide names of additional columns
-     * @param callable $valuesCallback     function to provide values of additional columns
+     * @param I18n     $i18n                language selector
+     * @param Iterator $subscriberIterator  provides the subscribers to be listed
+     * @param string   $title               title for the listing or file name for exporting
+     * @param bool     $showConfirmedColumn whether to display the confirmed and blacklisted columns
+     * @param callable $columnCallback      function to provide names of additional columns
+     * @param callable $valuesCallback      function to provide values of additional columns
      */
-    public function __construct(I18n $i18n, Iterator $subscriberIterator, $title, $columnCallback = null, $valuesCallback = null)
+    public function __construct(I18n $i18n, Iterator $subscriberIterator, $title, $showConfirmedColumn, $columnCallback = null, $valuesCallback = null)
     {
         $this->i18n = $i18n;
         $this->subscriberIterator = $subscriberIterator;
         $this->title = $title;
+        $this->showConfirmedColumn = $showConfirmedColumn;
         $this->columnCallback = $columnCallback;
         $this->valuesCallback = $valuesCallback;
     }
@@ -76,14 +80,11 @@ class SubscriberPopulator implements IPopulator, IExportable
                 }
             }
 
-            if (isset($row['confirmed'])) {
+            if ($this->showConfirmedColumn) {
                 $value = $row['confirmed']
                     ? ''
                     : new ImageTag('no.png', $this->i18n->get('not confirmed'));
                 $w->addColumnHtml($key, $this->i18n->get('confirmed_heading'), $value);
-            }
-
-            if (isset($row['blacklisted'])) {
                 $value = $row['blacklisted']
                     ? new ImageTag('user.png', $this->i18n->get('User is blacklisted'))
                     : '';
@@ -123,8 +124,10 @@ class SubscriberPopulator implements IPopulator, IExportable
             $columnCallback = $this->columnCallback;
             $fields = array_merge($fields, $columnCallback());
         }
-        $fields[] = $this->i18n->get('confirmed');
-        $fields[] = $this->i18n->get('blacklisted');
+        if ($this->showConfirmedColumn) {
+            $fields[] = $this->i18n->get('confirmed');
+            $fields[] = $this->i18n->get('blacklisted');
+        }
 
         return $fields;
     }
@@ -138,11 +141,8 @@ class SubscriberPopulator implements IPopulator, IExportable
             $values = array_merge($values, $valuesCallback($row));
         }
 
-        if (isset($row['confirmed'])) {
+        if ($this->showConfirmedColumn) {
             $values[] = $row['confirmed'];
-        }
-
-        if (isset($row['blacklisted'])) {
             $values[] = $row['blacklisted'];
         }
 

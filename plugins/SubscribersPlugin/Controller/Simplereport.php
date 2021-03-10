@@ -106,6 +106,7 @@ class Simplereport extends Controller
             $this->i18n,
             $this->iterator,
             $this->report->title(),
+            $this->report->showConfirmedColumn,
             $this->report->columnCallback(),
             $this->report->valuesCallback()
         );
