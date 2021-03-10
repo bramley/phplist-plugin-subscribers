@@ -45,6 +45,7 @@ This plugin is free but if you install and find it useful then a donation to sup
 ## Version history ##
 
     version     Description
+    2.30.0+20210310 Add report to show subscribers who have not confirmed
     2.29.1+20210308 Remove leading/trailing spaces from the entered search value
     2.29.0+20201224 Run inactive report from the command line
     2.28.0+20201219 Copy report results to the command page

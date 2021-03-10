@@ -44,6 +44,7 @@ return array(
     'phpList\plugin\SubscribersPlugin\Report\Domainsubscribers' => $base . '/SubscribersPlugin/Report/Domainsubscribers.php',
     'phpList\plugin\SubscribersPlugin\Report\Invalid' => $base . '/SubscribersPlugin/Report/Invalid.php',
     'phpList\plugin\SubscribersPlugin\Report\Nolist' => $base . '/SubscribersPlugin/Report/Nolist.php',
+    'phpList\plugin\SubscribersPlugin\Report\Notconfirmed' => $base . '/SubscribersPlugin/Report/Notconfirmed.php',
     'phpList\plugin\SubscribersPlugin\Report\Unsubscribereason' => $base . '/SubscribersPlugin/Report/Unsubscribereason.php',
     'phpList\plugin\SubscribersPlugin\SubscriberPopulator' => $base . '/SubscribersPlugin/SubscriberPopulator.php',
 );

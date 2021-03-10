@@ -1,3 +1,8 @@
+version 2.30.0+20210310
+      Fix php undefined variable notice
+      Add simple report attribute for whether to display confirmed and blacklisted columns
+      Add report to show subscribers who have not confirmed
+
 version 2.29.1+20210308
       Remove leading/trailing spaces from the entered search value.
 

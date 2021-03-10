@@ -32,6 +32,7 @@ class ReportFactory
         'bounce' => ['params' => ['report' => 'bounce'], 'caption' => 'Bounce count'],
         'consecutive' => ['params' => ['report' => 'consecutive'], 'caption' => 'Consecutive bounces'],
         'domains' => ['params' => ['report' => 'domains'], 'caption' => 'Domain subscriber counts'],
+        'notconfirmed' => ['params' => ['report' => 'notconfirmed'], 'caption' => 'Subscribers who have not confirmed'],
     ];
 
     public function listReports()

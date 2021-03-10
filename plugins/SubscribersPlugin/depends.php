@@ -148,4 +148,7 @@ return [
     'report_consecutive' => function (ContainerInterface $container) {
         return $container->get('phpList\plugin\SubscribersPlugin\Controller\Simplereport');
     },
+    'report_notconfirmed' => function (ContainerInterface $container) {
+        return $container->get('phpList\plugin\SubscribersPlugin\Controller\Simplereport');
+    },
 ];
