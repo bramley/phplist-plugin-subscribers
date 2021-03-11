@@ -19,7 +19,7 @@
  */
 ?>
 <div>
-<?php if (isset($warning)) : ?>
+<?php if (!empty($warning)) : ?>
     <div class="note alert alert-warning"><?= $warning; ?></div>
 <?php endif; ?>
 <?= $toolbar; ?>
