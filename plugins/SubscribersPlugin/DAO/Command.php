@@ -203,6 +203,7 @@ END;
             INSERT INTO {$this->tables['listuser']}
             (listid, userid)
             SELECT $toListId, $userId
+            FROM DUAL
             WHERE NOT EXISTS (
                 SELECT *
                 FROM {$this->tables['listuser']}
