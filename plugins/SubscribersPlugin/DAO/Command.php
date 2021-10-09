@@ -326,7 +326,7 @@ END;
     }
 
     /**
-     * Find subscribers who have subscribed but not confirmed within the past N days.
+     * Find subscribers who have subscribed but not confirmed.
      * Choose those who have only Subscription or Re-Subscription records in the user history.
      *
      * @return DBResultIterator
@@ -334,22 +334,31 @@ END;
     public function notConfirmed()
     {
         $sql = <<<END
--- users with only subscription in user history
-    SELECT *
-    FROM (
-        -- group user history into subscription and non-subscriptions
-        SELECT id, email, subscription, MAX(date) AS date
-        FROM (
-            -- find user history rows within the period
-            SELECT u.id, email, IF(summary = 'Subscription' OR summary = 'Re-Subscription', 1, 0) AS subscription, uh.date
+            SELECT id, email, entered AS date
             FROM {$this->tables['user']} u
-            JOIN {$this->tables['user_history']} uh ON u.id = uh.userid
-            WHERE u.confirmed = 0 AND u.blacklisted = 0
-        ) AS t2
-        GROUP BY id, subscription
-    ) AS t
-    GROUP BY id
-    HAVING count(*) = 1 AND subscription = 1
+            WHERE id IN (
+                -- users with only subscription in user history
+                SELECT id
+                FROM (
+                    -- select users who have only one result row, either only subscriptions or only non-subscriptions
+                    SELECT id, MAX(subscription) AS subscription
+                    FROM (
+                        -- group user history into subscription and non-subscriptions, results in either one or two rows
+                        SELECT id, subscription
+                        FROM (
+                            -- find user history rows within the period
+                            SELECT u.id, IF(summary = 'Subscription' OR summary = 'Re-Subscription', 1, 0) AS subscription
+                            FROM {$this->tables['user']} u
+                            JOIN {$this->tables['user_history']} uh ON u.id = uh.userid
+                            WHERE u.confirmed = 0 AND u.blacklisted = 0
+                        ) AS t
+                        GROUP BY id, subscription
+                    ) AS t2
+                    GROUP BY id
+                    HAVING COUNT(*) = 1
+                ) AS t3
+                WHERE subscription = 1
+            )
 END;
 
         return $this->dbCommand->queryAll($sql);

@@ -45,6 +45,7 @@ This plugin is free but if you install and find it useful then a donation to sup
 ## Version history ##
 
     version     Description
+    2.30.3+20211009 Rework not confirmed report query to be compatible with ONLY_FULL_GROUP_BY
     2.30.2+20210429 Include table name in query that has fixed values
     2.30.1+20210311 Avoid displaying empty note on simple subscriber report
     2.30.0+20210310 Add report to show subscribers who have not confirmed

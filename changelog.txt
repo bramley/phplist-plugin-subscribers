@@ -1,3 +1,6 @@
+version 2.30.3+20211009
+      Rework not confirmed report query to be compatible with ONLY_FULL_GROUP_BY.
+
 version 2.30.2+20210429
       Include table name in query that has fixed values
 
