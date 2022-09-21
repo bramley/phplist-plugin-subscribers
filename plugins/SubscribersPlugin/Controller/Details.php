@@ -84,7 +84,7 @@ class Details extends Controller implements IPopulator, IExportable
     protected function actionCommand()
     {
         $limit = 1000;
-        $subscribers = new \LimitIterator($this->model->users(), 0, $limit);
+        $subscribers = $this->model->users(0, $limit);
         $emails = '';
 
         foreach ($subscribers as $subscriber) {
