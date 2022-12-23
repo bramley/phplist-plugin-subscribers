@@ -2,7 +2,10 @@
 
 namespace phpList\plugin\SubscribersPlugin\DAO;
 
-use phpList\plugin\Common\DAO\User;
+use phpList\plugin\Common\DAO;
+use phpList\plugin\Common\DAO\AttributeTrait;
+use phpList\plugin\Common\DAO\ListsTrait;
+use phpList\plugin\Common\DAO\UserTrait;
 
 /**
  * SubscribersPlugin for phplist.
@@ -22,24 +25,20 @@ use phpList\plugin\Common\DAO\User;
  * @copyright 2011-2017 Duncan Cameron
  * @license   http://www.gnu.org/licenses/gpl.html GNU General Public License, Version 3
  */
-class Command extends User
+class Command extends DAO
 {
-    private $listDAO;
+    use AttributeTrait;
+    use ListsTrait;
+    use UserTrait;
 
-    public function __construct($db, $listDAO)
+    public function __construct($db)
     {
         parent::__construct($db);
-        $this->listDAO = $listDAO;
-    }
-
-    public function listsForOwner($loginid)
-    {
-        return $this->listDAO->listsForOwner($loginid);
     }
 
     public function listName($listId)
     {
-        $list = $this->listDAO->listById($listId);
+        $list = $this->listById($listId);
 
         return $list['name'];
     }
@@ -362,5 +361,16 @@ END;
 END;
 
         return $this->dbCommand->queryAll($sql);
+    }
+
+    public function subscriberHasAttributeValue($userId, $attributeId)
+    {
+        $sql = <<<END
+            SELECT 1
+            FROM {$this->tables['user_attribute']}
+            WHERE userid = $userId AND attributeid = $attributeId AND COALESCE(value, '') != ''
+END;
+
+        return $this->dbCommand->queryOne($sql);
     }
 }

@@ -85,8 +85,7 @@ return [
     },
     'phpList\plugin\SubscribersPlugin\DAO\Command' => function (ContainerInterface $container) {
         return new DAO\Command(
-            $container->get('phpList\plugin\Common\DB'),
-            $container->get('phpList\plugin\Common\DAO\Lists')
+            $container->get('phpList\plugin\Common\DB')
         );
     },
     'phpList\plugin\SubscribersPlugin\DAO\Event' => function (ContainerInterface $container) {

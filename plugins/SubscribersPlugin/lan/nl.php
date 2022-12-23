@@ -123,6 +123,7 @@ $lan = array(
     'result_resent' => 'Bevestigings verzoek opnieuw verzonden: %d',
     'result_subscribe_page_changed' => 'Inschrijf pagina veranderd: %d',
     'result_bounce_count' => 'Teruggekaatst teller op nul gezet: %d',
+    'result_empty_attribute' => 'Attribute "%s" emptied for %d subscribers',
     'Subscriber' => 'Abonnee',
     'Text to prepend to the confirmation request email' => 'Tekst voor de email voor bevestiging',
     'resend_prepend' => <<<'END'

@@ -37,6 +37,7 @@ class Factory
     const COMMAND_REMOVE_All = 10;
     const COMMAND_MOVE = 11;
     const COMMAND_ADD = 12;
+    const COMMAND_EMPTY_ATTRIBUTE = 13;
 
     /**
      * Constructor.
@@ -97,6 +98,9 @@ class Factory
             case self::COMMAND_ADD:
                 $command = new Add($commandId, $additionalFields, $this->dao, $this->i18n);
                 break;
+            case self::COMMAND_EMPTY_ATTRIBUTE:
+                $command = new EmptyAttribute($commandId, $additionalFields, $this->dao, $this->i18n);
+                break;
             default:
                 throw new \Exception("Unrecognised command id - $commandId");
         }
@@ -127,6 +131,7 @@ class Factory
             self::COMMAND_RESEND_CONFIRMATION_REQUEST => $this->i18n->get('Resend confirmation request'),
             self::COMMAND_CHANGE_SUBSCRIBE_PAGE => $this->i18n->get('Change subscribe page'),
             self::COMMAND_RESET_BOUNCE_COUNT => $this->i18n->get('Reset bounce count'),
+            self::COMMAND_EMPTY_ATTRIBUTE => $this->i18n->get('Empty attribute value'),
         ];
 
         foreach ($commandList as $commandId => &$caption) {
