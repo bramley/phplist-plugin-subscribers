@@ -25,7 +25,7 @@ class CbgConverter extends \IteratorIterator implements \Countable
     /** @var phpList\plugin\SubscribersPlugin\DAO\User DAO */
     private $dao;
 
-    public function __construct(\Iterator $iterator, array $cbgAttributes, \phpList\plugin\SubscribersPlugin\DAO\User $dao)
+    public function __construct(\Iterator $iterator, array $cbgAttributes, DAO\User $dao)
     {
         parent::__construct($iterator);
         $this->cbgAttributes = $cbgAttributes;

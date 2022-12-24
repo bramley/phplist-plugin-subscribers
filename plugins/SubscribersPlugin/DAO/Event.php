@@ -34,9 +34,6 @@ class Event extends DAO
 {
     public function listEvents($type, $param, $start, $limit)
     {
-        /*
-         *
-         */
         $param = sql_escape($param);
         $limit = is_null($start) ? '' : "LIMIT $start, $limit";
 

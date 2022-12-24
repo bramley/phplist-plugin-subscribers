@@ -1,12 +1,13 @@
 <?php
 
-return array(
+return [
     'phpList\plugin\SubscribersPlugin\CbgConverter' => $base . '/SubscribersPlugin/CbgConverter.php',
     'phpList\plugin\SubscribersPlugin\Command\Add' => $base . '/SubscribersPlugin/Command/Add.php',
     'phpList\plugin\SubscribersPlugin\Command\Base' => $base . '/SubscribersPlugin/Command/Base.php',
     'phpList\plugin\SubscribersPlugin\Command\Blacklist' => $base . '/SubscribersPlugin/Command/Blacklist.php',
     'phpList\plugin\SubscribersPlugin\Command\Confirm' => $base . '/SubscribersPlugin/Command/Confirm.php',
     'phpList\plugin\SubscribersPlugin\Command\Delete' => $base . '/SubscribersPlugin/Command/Delete.php',
+    'phpList\plugin\SubscribersPlugin\Command\EmptyAttribute' => $base . '/SubscribersPlugin/Command/EmptyAttribute.php',
     'phpList\plugin\SubscribersPlugin\Command\Factory' => $base . '/SubscribersPlugin/Command/Factory.php',
     'phpList\plugin\SubscribersPlugin\Command\Move' => $base . '/SubscribersPlugin/Command/Move.php',
     'phpList\plugin\SubscribersPlugin\Command\Remove' => $base . '/SubscribersPlugin/Command/Remove.php',
@@ -47,4 +48,4 @@ return array(
     'phpList\plugin\SubscribersPlugin\Report\Notconfirmed' => $base . '/SubscribersPlugin/Report/Notconfirmed.php',
     'phpList\plugin\SubscribersPlugin\Report\Unsubscribereason' => $base . '/SubscribersPlugin/Report/Unsubscribereason.php',
     'phpList\plugin\SubscribersPlugin\SubscriberPopulator' => $base . '/SubscribersPlugin/SubscriberPopulator.php',
-);
+];
