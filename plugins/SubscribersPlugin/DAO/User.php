@@ -187,9 +187,6 @@ END;
     public function users($listID, $owner, $attributes, $searchTerm, $searchAttr,
         $confirmed = 0, $blacklisted = 0, $start = null, $limit = null)
     {
-        /*
-         *
-         */
         $doSearch = $searchTerm !== '';
         $searchTerm = sql_escape($searchTerm);
         list($attr_join, $attr_fields, $attr_where) = $this->userAttributeJoin($attributes, $searchTerm, $searchAttr);

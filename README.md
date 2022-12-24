@@ -45,6 +45,7 @@ This plugin is free but if you install and find it useful then a donation to sup
 ## Version history ##
 
     version     Description
+    2.32.0+20221224 Add command to set attribute value to empty string
     2.31.1+20220921 Fix poor response time copying subscriber results with a large number of subscribers
     2.31.0+20220112 Add remote access page to import subscribers
     2.30.3+20211009 Rework not confirmed report query to be compatible with ONLY_FULL_GROUP_BY
