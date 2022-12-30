@@ -27,15 +27,15 @@ use phpList\plugin\SubscribersPlugin\Controller\Command as Controller;
  */
 class RemoveAll extends Base
 {
+    /** @var array|null Subscribers who do not belong to any list. */
     private $exclude;
-
-    public function initialise()
-    {
-        $this->exclude = array_flip(array_column(iterator_to_array($this->dao->subscribersNoList()), 'id'));
-    }
 
     public function accept(array $user)
     {
+        if ($this->exclude === null) {
+            $this->exclude = array_flip(array_column(iterator_to_array($this->dao->subscribersNoList()), 'id'));
+        }
+
         return !isset($this->exclude[$user['id']]);
     }
 
