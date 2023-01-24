@@ -45,11 +45,17 @@ class Command extends DAO
 
     public function matchUserPattern($pattern)
     {
+        if (substr($pattern, 0, 1) == '!') {
+            $pattern = substr($pattern, 1);
+            $operator = 'NOT LIKE';
+        } else {
+            $operator = 'LIKE';
+        }
         $pattern = sql_escape($pattern);
         $sql =
             "SELECT u.email as email
             FROM {$this->tables['user']} u
-            WHERE u.email LIKE '%$pattern%'
+            WHERE u.email $operator '%$pattern%'
             ";
 
         return $this->dbCommand->queryColumn($sql, 'email');

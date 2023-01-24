@@ -45,6 +45,7 @@ This plugin is free but if you install and find it useful then a donation to sup
 ## Version history ##
 
     version     Description
+    2.33.0+20230124 Allow ! at start of email address pattern to select addresses that do not match
     2.32.0+20221224 Add command to set attribute value to empty string
     2.31.1+20220921 Fix poor response time copying subscriber results with a large number of subscribers
     2.31.0+20220112 Add remote access page to import subscribers
