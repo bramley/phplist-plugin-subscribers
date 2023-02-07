@@ -1,3 +1,6 @@
+version 2.33.1+20230207
+      Correct .gitignore
+
 version 2.33.0+20230124
       For the Remove command, lazily load the set of subscribers who do not belong to any list
       On the Command page, allow ! at the start of pattern to select email addresses that do not match
