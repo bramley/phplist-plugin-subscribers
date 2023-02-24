@@ -45,6 +45,7 @@ This plugin is free but if you install and find it useful then a donation to sup
 ## Version history ##
 
     version     Description
+    2.33.2+20230225 Display the "copy results" button only when there are some results
     2.33.1+20230207 Minor internal change
     2.33.0+20230124 Allow ! at start of email address pattern to select addresses that do not match
     2.32.0+20221224 Add command to set attribute value to empty string

@@ -1,3 +1,6 @@
+version 2.33.2+20230225
+      Display the "copy results" button only when there are some results
+
 version 2.33.1+20230207
       Correct .gitignore
 

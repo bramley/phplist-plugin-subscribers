@@ -46,16 +46,10 @@ class Simplereport extends Controller
         $toolbar = new Toolbar($this);
         $toolbar->addExportButton();
         $toolbar->addExternalHelpButton(self::HELP);
-        $commandLink = new PageLink(
-            PageURL::createFromGet(['action' => 'command']),
-            $this->i18n->get('Copy results to command'),
-            ['class' => 'button']
-        );
 
         $params = [];
         $params['listing'] = $listing->display();
         $params['toolbar'] = $toolbar->display();
-        $params['command_link'] = $commandLink;
 
         if ($this->report->showRefresh) {
             $url = PageURL::createFromGet(['action' => 'refresh']);
@@ -64,6 +58,13 @@ class Simplereport extends Controller
 
         if (count($this->iterator) == 0) {
             $params['warning'] = $this->report->noSubscribersWarning();
+        } else {
+            $commandLink = new PageLink(
+                PageURL::createFromGet(['action' => 'command']),
+                $this->i18n->get('Copy results to command'),
+                ['class' => 'button']
+            );
+            $params['command_link'] = $commandLink;
         }
         echo $this->render(dirname(__FILE__) . self::TEMPLATE, $params);
     }
