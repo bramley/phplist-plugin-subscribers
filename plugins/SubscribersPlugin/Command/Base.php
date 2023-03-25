@@ -20,6 +20,8 @@
 
 namespace phpList\plugin\SubscribersPlugin\Command;
 
+use CHtml;
+
 /**
  *  This is the parent class for the command classes.
  */
@@ -29,6 +31,16 @@ abstract class Base
     protected $dao;
     protected $i18n;
     protected $additionalFields;
+
+    protected function listsDropDown($selected, $fieldId, $disabled)
+    {
+        return CHtml::dropDownList(
+            sprintf('additional[command][%d][%s]', $this->commandId, $fieldId),
+            $selected,
+            CHtml::listData($this->dao->listsForOwner(null), 'id', 'name'),
+            ['disabled' => $disabled]
+        );
+    }
 
     /**
      * Overridden when a class has processing to be run on construction.

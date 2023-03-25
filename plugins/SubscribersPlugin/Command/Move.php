@@ -20,7 +20,6 @@
 
 namespace phpList\plugin\SubscribersPlugin\Command;
 
-use CHtml;
 use phpList\plugin\SubscribersPlugin\Controller\Command as Controller;
 
 /**
@@ -29,7 +28,9 @@ use phpList\plugin\SubscribersPlugin\Controller\Command as Controller;
 class Move extends Base
 {
     private $fromListId;
+    private $fromListName;
     private $toListId;
+    private $toListName;
     private $removedCount;
     private $addedCount;
 
@@ -83,20 +84,8 @@ class Move extends Base
 
     public function additionalCommandHtml($disabled)
     {
-        $lists = iterator_to_array($this->dao->listsForOwner(null));
-
-        $fromDropDown = CHtml::dropDownList(
-            sprintf('additional[command][%d][fromlistId]', $this->commandId),
-            $this->fromListId,
-            array_column($lists, 'name', 'id'),
-            array('disabled' => $disabled)
-        );
-        $toDropDown = CHtml::dropDownList(
-            sprintf('additional[command][%d][tolistId]', $this->commandId),
-            $this->toListId,
-            array_column($lists, 'name', 'id'),
-            array('disabled' => $disabled)
-        );
+        $fromDropDown = $this->listsDropDown($this->fromListId, 'fromlistId', $disabled);
+        $toDropDown = $this->listsDropDown($this->toListId, 'tolistId', $disabled);
 
         return $fromDropDown . $toDropDown;
     }

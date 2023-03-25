@@ -20,7 +20,6 @@
 
 namespace phpList\plugin\SubscribersPlugin\Command;
 
-use CHtml;
 use phpList\plugin\SubscribersPlugin\Controller\Command as Controller;
 
 /**
@@ -64,13 +63,6 @@ class Add extends Base
 
     public function additionalCommandHtml($disabled)
     {
-        $lists = iterator_to_array($this->dao->listsForOwner(null));
-
-        return CHtml::dropDownList(
-            sprintf('additional[command][%d][listId]', $this->commandId),
-            $this->listId,
-            array_column($lists, 'name', 'id'),
-            ['disabled' => $disabled]
-        );
+        return $this->listsDropDown($this->listId, 'listId', $disabled);
     }
 }
