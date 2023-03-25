@@ -28,6 +28,9 @@ use phpList\plugin\SubscribersPlugin\Controller\Command as Controller;
  */
 class Remove extends Base
 {
+    private $listId;
+    private $listName;
+
     public function initialise()
     {
         if (isset($this->additionalFields['command'][$this->commandId]['listId'])) {

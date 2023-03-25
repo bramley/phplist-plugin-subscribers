@@ -28,6 +28,8 @@ use phpList\plugin\SubscribersPlugin\Controller\Command as Controller;
  */
 class SubscribePage extends Base
 {
+    private $pageId;
+
     public function initialise()
     {
         if (isset($this->additionalFields['command'][$this->commandId]['pageId'])) {
