@@ -1,3 +1,8 @@
+version 2.34.0+20230331
+      Avoid deprecation of dynamic properties
+      Refactoring of creating drop-down list of all lists
+      Order the results on the Advanced Search page by subscriber fields or attributes
+
 version 2.33.2+20230225
       Display the "copy results" button only when there are some results
 

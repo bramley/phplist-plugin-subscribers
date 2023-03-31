@@ -106,11 +106,12 @@ class User extends DAO
      *               [1] attribute fields for the SELECT expression
      *               [2] conditions for the WHERE clause
      */
-    private function userAttributeJoin($attributes, $searchTerm, $searchAttr)
+    private function userAttributeJoin($attributes, $searchTerm, $searchAttr, $orderAttr)
     {
         $attr_fields = '';
         $attr_join = '';
         $attr_where = [];
+        $orderBy = '';
         $doSearch = $searchTerm !== '';
 
         foreach ($attributes as $attr) {
@@ -131,6 +132,10 @@ class User extends DAO
             ON ua{$id}.userid = u.id AND ua{$id}.attributeid = {$id}
 END;
                     $attr_fields .= ", la{$id}.name as attr{$id}";
+
+                    if ($orderAttr == $id) {
+                        $orderBy = "la{$id}.name";
+                    }
                     break;
                 case 'checkboxgroup':
                     if ($doSearch && $searchAttr == $id) {
@@ -156,6 +161,10 @@ END;
         LEFT JOIN {$this->tables['user_attribute']} ua{$id} ON ua{$id}.userid = u.id AND ua{$id}.attributeid = {$id}
 END;
                     $attr_fields .= ", ua{$id}.value as attr{$id}";
+
+                    if ($orderAttr == $id) {
+                        $orderBy = "ua{$id}.value";
+                    }
                     break;
                 case 'checkbox':
                     if ($doSearch && $searchAttr == $id) {
@@ -166,6 +175,10 @@ END;
         LEFT JOIN {$this->tables['user_attribute']} ua{$id} ON ua{$id}.userid = u.id AND ua{$id}.attributeid = {$id}
 END;
                     $attr_fields .= ", ua{$id}.value as attr{$id}";
+
+                    if ($orderAttr == $id) {
+                        $orderBy = "ua{$id}.value";
+                    }
                     break;
                 default:
                     if ($doSearch && $searchAttr == $id) {
@@ -177,20 +190,43 @@ END;
         LEFT JOIN {$this->tables['user_attribute']} ua{$id} ON ua{$id}.userid = u.id AND ua{$id}.attributeid = {$id}
 END;
                     $attr_fields .= ", ua{$id}.value as attr{$id}";
+
+                    if ($orderAttr == $id) {
+                        $orderBy = "ua{$id}.value";
+                    }
                     break;
             }
         }
 
-        return array($attr_join, $attr_fields, $attr_where);
+        return array($attr_join, $attr_fields, $attr_where, $orderBy);
     }
 
-    public function users($listID, $owner, $attributes, $searchTerm, $searchAttr,
+    public function users($listID, $owner, $attributes, $searchTerm, $searchAttr, $orderAttr,
         $confirmed = 0, $blacklisted = 0, $start = null, $limit = null)
     {
         $doSearch = $searchTerm !== '';
         $searchTerm = sql_escape($searchTerm);
-        list($attr_join, $attr_fields, $attr_where) = $this->userAttributeJoin($attributes, $searchTerm, $searchAttr);
+        list($attr_join, $attr_fields, $attr_where, $orderBy) = $this->userAttributeJoin($attributes, $searchTerm, $searchAttr, $orderAttr);
         $limitClause = is_null($start) ? '' : "LIMIT $start, $limit";
+
+        if (ctype_digit($orderAttr)) {
+            // already set
+        } else {
+            switch ($orderAttr) {
+                case 'id':
+                    $orderBy = 'u.id';
+                    break;
+                case 'uniqid':
+                    $orderBy = 'u.uniqid';
+                    break;
+                case 'subspage':
+                    $orderBy = 'u.subscribepage';
+                    break;
+                case 'email':
+                default:
+                    $orderBy = 'u.email';
+            }
+        }
         $w = $attr_where;
 
         if ($doSearch) {
@@ -252,11 +288,11 @@ END;
                     FROM {$this->tables['user']} u
                     $attr_join
                     $where
-                    ORDER by u.id
+                    ORDER BY $orderBy
                     $limitClause
                 ) AS t
             )
-            ORDER by u.id
+            ORDER BY $orderBy
 END;
 
         return $this->dbCommand->queryAll($sql);
@@ -268,7 +304,7 @@ END;
         $searchTerm = sql_escape($searchTerm);
 
         if ($doSearch) {
-            list($attr_join, $attr_fields, $attr_where) = $this->userAttributeJoin($attributes, $searchTerm, $searchAttr);
+            list($attr_join, $attr_fields, $attr_where, $orderBy) = $this->userAttributeJoin($attributes, $searchTerm, $searchAttr, null);
         } else {
             $attr_join = '';
             $attr_where = [];

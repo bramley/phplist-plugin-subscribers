@@ -24,7 +24,6 @@
 
 namespace phpList\plugin\SubscribersPlugin\Model;
 
-use phpList\plugin\Common\DAO\Attribute as DAOAttribute;
 use phpList\plugin\Common\DAO\Lists as DAOList;
 use phpList\plugin\Common\Model;
 use phpList\plugin\SubscribersPlugin\CbgConverter;
@@ -51,6 +50,7 @@ class Details extends Model
         'selectedAttrs' => array(),
         'searchTerm' => null,
         'searchBy' => null,
+        'orderBy' => null,
         'listID' => null,
     );
     protected $persist = array(
@@ -59,6 +59,7 @@ class Details extends Model
         'selectedAttrs' => '',
         'searchTerm' => '',
         'searchBy' => '',
+        'orderBy' => '',
         'listID' => '',
     );
     /*
@@ -88,7 +89,6 @@ class Details extends Model
     /*
      *    Public methods
      */
-    //~ public function __construct(User $dao, DAOAttribute $attributeDAO, DAOList $listDAO)
     public function __construct(User $dao, array $attributes, DAOList $listDAO)
     {
         parent::__construct('SubscribersPl_D');
@@ -101,7 +101,10 @@ class Details extends Model
         $this->lists = $this->listDAO->listsForOwner($this->loginId);
 
         $this->verifySelectedAttributes();
-        $this->referencedAttributes = array_intersect_key($this->attributes, array_flip($this->selectedAttrs) + [$this->searchBy => '']);
+        $this->referencedAttributes = array_intersect_key(
+            $this->attributes,
+            array_flip($this->selectedAttrs) + [$this->searchBy => '', $this->orderBy => '']
+        );
     }
 
     /**
@@ -117,7 +120,7 @@ class Details extends Model
     public function users($start = null, $limit = null)
     {
         $users = $this->dao->users($this->listID, $this->loginId, $this->referencedAttributes,
-            $this->searchTerm, $this->searchBy, $this->confirmed, $this->blacklisted, $start, $limit
+            $this->searchTerm, $this->searchBy, $this->orderBy, $this->confirmed, $this->blacklisted, $start, $limit
         );
 
         $cbgAttributes = array_filter(
