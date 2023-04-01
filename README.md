@@ -45,6 +45,7 @@ This plugin is free but if you install and find it useful then a donation to sup
 ## Version history ##
 
     version     Description
+    2.34.1+20230401 Rework the validation of selected attributes
     2.34.0+20230331 Order the results on the Advanced Search page by subscriber fields or attributes
     2.33.2+20230225 Display the "copy results" button only when there are some results
     2.33.1+20230207 Minor internal change

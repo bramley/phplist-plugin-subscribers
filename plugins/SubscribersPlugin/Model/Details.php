@@ -68,27 +68,6 @@ class Details extends Model
     public $attributes;
     public $lists;
 
-    /*
-     *    Private methods
-     */
-    private function verifySelectedAttributes()
-    {
-        /*
-         * remove selected attributes that no longer exist and re-index
-         */
-        $this->properties['selectedAttrs'] = array_values(
-            array_filter(
-                $this->properties['selectedAttrs'],
-                function ($v) {
-                    return isset($this->attributes[$v]);
-                }
-            )
-        );
-    }
-
-    /*
-     *    Public methods
-     */
     public function __construct(User $dao, array $attributes, DAOList $listDAO)
     {
         parent::__construct('SubscribersPl_D');
@@ -99,11 +78,15 @@ class Details extends Model
         $this->attributes = $attributes;
         $this->listDAO = $listDAO;
         $this->lists = $this->listDAO->listsForOwner($this->loginId);
-
-        $this->verifySelectedAttributes();
+        // remove non-existent selected attributes and ensure that searchBy and orderBy are included
+        $this->selectedAttrs = array_intersect(
+            array_unique(array_merge($this->selectedAttrs, [$this->searchBy, $this->orderBy])),
+            array_keys($this->attributes)
+        );
+        // process only those attributes that are actually used
         $this->referencedAttributes = array_intersect_key(
             $this->attributes,
-            array_flip($this->selectedAttrs) + [$this->searchBy => '', $this->orderBy => '']
+            array_flip($this->selectedAttrs)
         );
     }
 

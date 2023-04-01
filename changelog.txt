@@ -1,3 +1,6 @@
+version 2.34.1+20230401
+      Rework the validation of selected attributes
+
 version 2.34.0+20230331
       Avoid deprecation of dynamic properties
       Refactoring of creating drop-down list of all lists
