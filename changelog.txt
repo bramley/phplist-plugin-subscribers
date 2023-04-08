@@ -1,3 +1,6 @@
+version 2.34.2+20230408
+      Correct setup of list id when importing as a remote page. Fixes #18
+
 version 2.34.1+20230401
       Rework the validation of selected attributes
 

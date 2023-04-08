@@ -85,7 +85,7 @@ class Import2 extends Controller
         $_SESSION['import_record_delimiter'] = "\n";
         $_SESSION['import_field_delimiter'] = ',';
         $_SESSION['test_import'] = false;
-        $_SESSION['lists'] = array($listId);
+        $_SESSION['lists'] = [$listId => $listId];
         $_SESSION['show_warnings'] = true;
         $_SESSION['overwrite'] = true;
         $_SESSION['notify'] = 'no';         // actually confirmation required
