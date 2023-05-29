@@ -28,7 +28,7 @@ namespace phpList\plugin\SubscribersPlugin;
  *
  * @category  phplist
  */
-if (!(\phplistPlugin::isEnabled('CommonPlugin'))) {
+if (!\phplistPlugin::isEnabled('CommonPlugin')) {
     echo 'phplist-plugin-common must be installed and enabled to use this plugin';
 
     return;

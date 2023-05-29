@@ -1,3 +1,7 @@
+version 2.35.0+20230529
+      Show % of all subscribers on Domains report
+      CS Fixer changes
+
 version 2.34.2+20230408
       Correct setup of list id when importing as a remote page. Fixes #18
 

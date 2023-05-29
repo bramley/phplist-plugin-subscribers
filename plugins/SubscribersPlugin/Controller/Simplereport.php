@@ -76,7 +76,7 @@ class Simplereport extends Controller
         unset($get['action']);
         $redirect = http_build_query($get);
         ob_end_clean();
-        header('Location: ' . './?' . $redirect);
+        header('Location: ./?'. $redirect);
 
         exit;
     }

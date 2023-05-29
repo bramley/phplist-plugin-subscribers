@@ -45,6 +45,7 @@ This plugin is free but if you install and find it useful then a donation to sup
 ## Version history ##
 
     version     Description
+    2.35.0+20230529 Show % of all subscribers on Domains report
     2.34.2+20230408 Fix problem with list id when importing file as a remote page, GitHub issue 24
     2.34.1+20230401 Rework the validation of selected attributes
     2.34.0+20230331 Order the results on the Advanced Search page by subscriber fields or attributes

@@ -23,6 +23,7 @@ return $config->setRules([
         'no_multiline_whitespace_around_double_arrow' => false,
         'visibility_required' => false,
         'phpdoc_to_comment' => false,
+        'global_namespace_import' => false,
     ])
     ->setFinder($finder)
 ;

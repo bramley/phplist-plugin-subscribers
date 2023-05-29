@@ -38,17 +38,17 @@ class Event extends DAO
         $limit = is_null($start) ? '' : "LIMIT $start, $limit";
 
         switch ($type) {
-        case 'date':
-            $order = 'ASC';
-            $where = "WHERE date >= '$param'";
-            break;
-        case 'pattern':
-            $order = 'ASC';
-            $where = $param ? "WHERE uh.summary RLIKE '$param' OR uh.detail RLIKE '$param' OR INSTR(uh.ip, '$param') > 0" : '';
-            break;
-        default:
-            $order = 'DESC';
-            $where = '';
+            case 'date':
+                $order = 'ASC';
+                $where = "WHERE date >= '$param'";
+                break;
+            case 'pattern':
+                $order = 'ASC';
+                $where = $param ? "WHERE uh.summary RLIKE '$param' OR uh.detail RLIKE '$param' OR INSTR(uh.ip, '$param') > 0" : '';
+                break;
+            default:
+                $order = 'DESC';
+                $where = '';
         }
 
         $sql =

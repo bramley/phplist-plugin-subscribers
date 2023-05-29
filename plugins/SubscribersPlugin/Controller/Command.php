@@ -153,7 +153,7 @@ class Command extends Controller
 
         return array_unique(
             array_filter(
-            $emails,
+                $emails,
                 function ($item) {
                     return strpos($item, '@') !== false;
                 }
