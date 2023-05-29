@@ -71,6 +71,16 @@ class Command extends DAO
         return $this->dbCommand->queryAll($sql);
     }
 
+    public function totalUsers()
+    {
+        $sql =
+            "SELECT COUNT(*)
+            FROM {$this->tables['user']} u
+            ";
+
+        return $this->dbCommand->queryOne($sql);
+    }
+
     public function countInactiveSubscribersByInterval($interval)
     {
         $sql =

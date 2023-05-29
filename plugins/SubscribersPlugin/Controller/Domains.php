@@ -47,14 +47,17 @@ class Domains extends Controller implements IExportable
          * Displays the number of subscribers for each domain.
          */
         $domains = $this->dao->domains();
-        $populateCallback = function ($w, $start, $limit) use ($domains) {
+        $total = $this->dao->totalUsers();
+        $populateCallback = function ($w, $start, $limit) use ($domains, $total) {
             $w->setTitle($this->i18n->get('Domain subscriber counts'));
             $w->setElementHeading($this->i18n->get('Domain'));
 
             foreach (new LimitIterator($domains, $start, $limit) as $row) {
                 $key = $row['domain'];
+                $percentage = number_format(($row['total'] / $total) * 100, 1);
                 $w->addElement($key, PageURL::CreateFromGet(['report' => 'domainsubscribers', 'domain' => $row['domain']]));
-                $w->addColumn($key, 'Total', $row['total']);
+                $w->addColumn($key, 'Subscribers', $row['total']);
+                $w->addColumn($key, sprintf('%% (of %s)', number_format($total)), $percentage);
                 $w->addColumn($key, 'Active', $row['active']);
             }
         };
