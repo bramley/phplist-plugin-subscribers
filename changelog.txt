@@ -1,3 +1,7 @@
+version 2.35.1+20230714
+      Fix .gitignore
+      Avoid displaying backslashes in attribute values
+
 version 2.35.0+20230529
       Show % of all subscribers on Domains report
       CS Fixer changes

@@ -189,7 +189,7 @@ END;
                     $attr_join .= <<<END
         LEFT JOIN {$this->tables['user_attribute']} ua{$id} ON ua{$id}.userid = u.id AND ua{$id}.attributeid = {$id}
 END;
-                    $attr_fields .= ", ua{$id}.value as attr{$id}";
+                    $attr_fields .= ", REPLACE(ua{$id}.value, '\\\\', '') AS attr{$id}";
 
                     if ($orderAttr == $id) {
                         $orderBy = "ua{$id}.value";
