@@ -1,3 +1,6 @@
+version 2.36.0+20230725
+      Treat search term as a regexp or literal text
+
 version 2.35.1+20230714
       Fix .gitignore
       Avoid displaying backslashes in attribute values

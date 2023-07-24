@@ -50,6 +50,7 @@ class Details extends Model
         'selectedAttrs' => array(),
         'searchTerm' => null,
         'searchBy' => null,
+        'searchIsRegex' => false,
         'orderBy' => null,
         'listID' => null,
     );
@@ -59,6 +60,7 @@ class Details extends Model
         'selectedAttrs' => '',
         'searchTerm' => '',
         'searchBy' => '',
+        'searchIsRegex' => '',
         'orderBy' => '',
         'listID' => '',
     );
@@ -88,6 +90,10 @@ class Details extends Model
             $this->attributes,
             array_flip($this->selectedAttrs)
         );
+        // validate regexp
+        if ($this->searchIsRegex && !$this->dao->isRegexValid($this->searchTerm)) {
+            $this->searchIsRegex = false;
+        }
     }
 
     /**
@@ -103,7 +109,7 @@ class Details extends Model
     public function users($start = null, $limit = null)
     {
         $users = $this->dao->users($this->listID, $this->loginId, $this->referencedAttributes,
-            $this->searchTerm, $this->searchBy, $this->orderBy, $this->confirmed, $this->blacklisted, $start, $limit
+            $this->searchTerm, $this->searchBy, $this->searchIsRegex, $this->orderBy, $this->confirmed, $this->blacklisted, $start, $limit
         );
 
         $cbgAttributes = array_filter(
@@ -127,7 +133,7 @@ class Details extends Model
     {
         return $this->dao->totalUsers(
             $this->listID, $this->loginId, $this->referencedAttributes, $this->searchTerm, $this->searchBy,
-            $this->confirmed, $this->blacklisted
+            $this->searchIsRegex, $this->confirmed, $this->blacklisted
         );
     }
 }

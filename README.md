@@ -45,6 +45,7 @@ This plugin is free but if you install and find it useful then a donation to sup
 ## Version history ##
 
     version     Description
+    2.36.0+20230725 Treat search term as a regexp or literal text
     2.35.1+20230714 Avoid displaying backslashes in attribute values
     2.35.0+20230529 Show % of all subscribers on Domains report
     2.34.2+20230408 Fix problem with list id when importing file as a remote page, GitHub issue 24

@@ -106,7 +106,7 @@ class User extends DAO
      *               [1] attribute fields for the SELECT expression
      *               [2] conditions for the WHERE clause
      */
-    private function userAttributeJoin($attributes, $searchTerm, $searchAttr, $orderAttr)
+    private function userAttributeJoin($attributes, $searchTerm, $searchAttr, $searchIsRegex, $orderAttr)
     {
         $attr_fields = '';
         $attr_join = '';
@@ -182,7 +182,7 @@ END;
                     break;
                 default:
                     if ($doSearch && $searchAttr == $id) {
-                        $template = "COALESCE(ua{$id}.value, '') LIKE '%%%s%%'";
+                        $template = $searchIsRegex ? "COALESCE(ua{$id}.value, '') REGEXP '%s'" : "COALESCE(ua{$id}.value, '') LIKE '%%%s%%'";
                         $expr = $this->searchExpression($searchTerm, $template);
                         $attr_where[] = $expr;
                     }
@@ -201,12 +201,12 @@ END;
         return array($attr_join, $attr_fields, $attr_where, $orderBy);
     }
 
-    public function users($listID, $owner, $attributes, $searchTerm, $searchAttr, $orderAttr,
+    public function users($listID, $owner, $attributes, $searchTerm, $searchAttr, $searchIsRegex, $orderAttr,
         $confirmed = 0, $blacklisted = 0, $start = null, $limit = null)
     {
         $doSearch = $searchTerm !== '';
         $searchTerm = sql_escape($searchTerm);
-        list($attr_join, $attr_fields, $attr_where, $orderBy) = $this->userAttributeJoin($attributes, $searchTerm, $searchAttr, $orderAttr);
+        list($attr_join, $attr_fields, $attr_where, $orderBy) = $this->userAttributeJoin($attributes, $searchTerm, $searchAttr, $searchIsRegex, $orderAttr);
         $limitClause = is_null($start) ? '' : "LIMIT $start, $limit";
 
         if (ctype_digit($orderAttr)) {
@@ -231,7 +231,7 @@ END;
 
         if ($doSearch) {
             if ($searchAttr == 'email') {
-                $template = "u.email LIKE '%%%s%%'";
+                $template = $searchIsRegex ? "u.email REGEXP '%s'" : "u.email LIKE '%%%s%%'";
                 $expr = $this->searchExpression($searchTerm, $template);
                 $w[] = $expr;
             } elseif ($searchAttr == 'id') {
@@ -298,13 +298,13 @@ END;
         return $this->dbCommand->queryAll($sql);
     }
 
-    public function totalUsers($listID, $owner, $attributes, $searchTerm, $searchAttr, $confirmed = 0, $blacklisted = 0)
+    public function totalUsers($listID, $owner, $attributes, $searchTerm, $searchAttr, $searchIsRegex, $confirmed = 0, $blacklisted = 0)
     {
         $doSearch = $searchTerm !== '';
         $searchTerm = sql_escape($searchTerm);
 
         if ($doSearch) {
-            list($attr_join, $attr_fields, $attr_where, $orderBy) = $this->userAttributeJoin($attributes, $searchTerm, $searchAttr, null);
+            list($attr_join, $attr_fields, $attr_where, $orderBy) = $this->userAttributeJoin($attributes, $searchTerm, $searchIsRegex, $searchAttr, null);
         } else {
             $attr_join = '';
             $attr_where = [];
@@ -313,7 +313,7 @@ END;
 
         if ($doSearch) {
             if ($searchAttr == 'email') {
-                $template = "u.email LIKE '%%%s%%'";
+                $template = $searchIsRegex ? "u.email REGEXP '%s'" : "u.email LIKE '%%%s%%'";
                 $expr = $this->searchExpression($searchTerm, $template);
                 $w[] = $expr;
             } elseif ($searchAttr == 'id') {
@@ -370,5 +370,24 @@ WHERE id IN ($cbgIds)
 END;
 
         return $this->dbCommand->queryColumn($sql, 'name');
+    }
+
+    /**
+     * Validate the syntax of a regular expression by trying to use it in a query.
+     *
+     * @return bool
+     */
+    public function isRegexValid($regex)
+    {
+        $regex = sql_escape($regex);
+        $sql = "SELECT '' REGEXP '$regex'";
+
+        try {
+            $this->dbCommand->queryOne($sql);
+        } catch (\Exception $e) {
+            return false;
+        }
+
+        return true;
     }
 }
