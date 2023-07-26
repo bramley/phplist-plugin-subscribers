@@ -182,9 +182,13 @@ END;
                     break;
                 default:
                     if ($doSearch && $searchAttr == $id) {
-                        $template = $searchIsRegex ? "COALESCE(ua{$id}.value, '') REGEXP '%s'" : "COALESCE(ua{$id}.value, '') LIKE '%%%s%%'";
-                        $expr = $this->searchExpression($searchTerm, $template);
-                        $attr_where[] = $expr;
+                        if ($searchIsRegex) {
+                            $attr_where[] = sprintf("COALESCE(ua{$id}.value, '') REGEXP '%s'", $searchTerm);
+                        } else {
+                            $template = "COALESCE(ua{$id}.value, '') LIKE '%%%s%%'";
+                            $expr = $this->searchExpression($searchTerm, $template);
+                            $attr_where[] = $expr;
+                        }
                     }
                     $attr_join .= <<<END
         LEFT JOIN {$this->tables['user_attribute']} ua{$id} ON ua{$id}.userid = u.id AND ua{$id}.attributeid = {$id}
@@ -231,9 +235,13 @@ END;
 
         if ($doSearch) {
             if ($searchAttr == 'email') {
-                $template = $searchIsRegex ? "u.email REGEXP '%s'" : "u.email LIKE '%%%s%%'";
-                $expr = $this->searchExpression($searchTerm, $template);
-                $w[] = $expr;
+                if ($searchIsRegex) {
+                    $w[] = sprintf("u.email REGEXP '%s'", $searchTerm);
+                } else {
+                    $template = "u.email LIKE '%%%s%%'";
+                    $expr = $this->searchExpression($searchTerm, $template);
+                    $w[] = $expr;
+                }
             } elseif ($searchAttr == 'id') {
                 $w[] = "u.id = '$searchTerm'";
             } elseif ($searchAttr == 'uniqid') {
@@ -304,7 +312,7 @@ END;
         $searchTerm = sql_escape($searchTerm);
 
         if ($doSearch) {
-            list($attr_join, $attr_fields, $attr_where, $orderBy) = $this->userAttributeJoin($attributes, $searchTerm, $searchIsRegex, $searchAttr, null);
+            list($attr_join, $attr_fields, $attr_where, $orderBy) = $this->userAttributeJoin($attributes, $searchTerm, $searchAttr, $searchIsRegex, null);
         } else {
             $attr_join = '';
             $attr_where = [];
@@ -313,9 +321,13 @@ END;
 
         if ($doSearch) {
             if ($searchAttr == 'email') {
-                $template = $searchIsRegex ? "u.email REGEXP '%s'" : "u.email LIKE '%%%s%%'";
-                $expr = $this->searchExpression($searchTerm, $template);
-                $w[] = $expr;
+                if ($searchIsRegex) {
+                    $w[] = sprintf("u.email REGEXP '%s'", $searchTerm);
+                } else {
+                    $template = "u.email LIKE '%%%s%%'";
+                    $expr = $this->searchExpression($searchTerm, $template);
+                    $w[] = $expr;
+                }
             } elseif ($searchAttr == 'id') {
                 $w[] = "u.id = '$searchTerm'";
             } elseif ($searchAttr == 'uniqid') {
