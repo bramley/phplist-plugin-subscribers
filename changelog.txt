@@ -1,3 +1,6 @@
+version 2.36.2+20230821
+      Use publicBaseUrl() function
+
 version 2.36.1+20230726
       Do not apply multiple value processing for regex expressions
 

@@ -25,6 +25,8 @@
  *
  * @category  phplist
  */
+use function phpList\plugin\Common\publicBaseUrl;
+
 class SubscribersPlugin extends phplistPlugin
 {
     const VERSION_FILE = 'version.txt';
@@ -191,8 +193,6 @@ class SubscribersPlugin extends phplistPlugin
      */
     public function activate()
     {
-        global $public_scheme, $pageroot;
-
         $i18n = new CommonPlugin_I18N($this);
         $this->pageTitles = array(
             'details' => $i18n->get('Advanced search'),
@@ -202,7 +202,7 @@ class SubscribersPlugin extends phplistPlugin
         $this->subscribeLinkText = getConfig('subscribers_subscribelinktext');
         $this->unsubscribeLinkText = getConfig('subscribers_linktext');
         $this->attributes = stripslashes(getConfig('subscribers_attributes'));
-        $this->rootUrl = sprintf('%s://%s%s/', $public_scheme, getConfig('website'), $pageroot);
+        $this->rootUrl = publicBaseUrl() . '/';
 
         parent::activate();
     }
@@ -218,11 +218,11 @@ class SubscribersPlugin extends phplistPlugin
 
         return array(
             'phpList version 3.3.2 or later' => version_compare(VERSION, '3.3.2') >= 0,
-            'Common Plugin version 3.25.0 or later installed' => (
+            'Common Plugin version 3.29.0 or later installed' => (
                 phpListPlugin::isEnabled('CommonPlugin')
-                && version_compare($plugins['CommonPlugin']->version, '3.25.0') >= 0
+                && version_compare($plugins['CommonPlugin']->version, '3.29.0') >= 0
             ),
-            'PHP version 5.6.0 or greater' => version_compare(PHP_VERSION, '5.6') > 0,
+            'PHP version 7 or greater' => version_compare(PHP_VERSION, '7') > 0,
         );
     }
 
