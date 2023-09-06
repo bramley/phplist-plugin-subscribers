@@ -25,7 +25,7 @@
  *
  * @category  phplist
  */
-use function phpList\plugin\Common\publicBaseUrl;
+use function phpList\plugin\Common\publicUrl;
 
 class SubscribersPlugin extends phplistPlugin
 {
@@ -42,7 +42,6 @@ class SubscribersPlugin extends phplistPlugin
      */
     private $subscribeLinkText;
     private $unsubscribeLinkText;
-    private $rootUrl;
     private $attributes;
 
     /*
@@ -79,7 +78,7 @@ class SubscribersPlugin extends phplistPlugin
             'list' => $listId,
         );
 
-        return $this->rootUrl . '?' . http_build_query($params, '', '&');
+        return publicUrl($params);
     }
 
     private function unsubscribeUrl($messageid, $uid)
@@ -91,7 +90,7 @@ class SubscribersPlugin extends phplistPlugin
             'm' => $messageid,
         );
 
-        return $this->rootUrl . '?' . http_build_query($params, '', '&');
+        return publicUrl($params);
     }
 
     /**
@@ -202,7 +201,6 @@ class SubscribersPlugin extends phplistPlugin
         $this->subscribeLinkText = getConfig('subscribers_subscribelinktext');
         $this->unsubscribeLinkText = getConfig('subscribers_linktext');
         $this->attributes = stripslashes(getConfig('subscribers_attributes'));
-        $this->rootUrl = publicBaseUrl() . '/';
 
         parent::activate();
     }
@@ -218,9 +216,9 @@ class SubscribersPlugin extends phplistPlugin
 
         return array(
             'phpList version 3.3.2 or later' => version_compare(VERSION, '3.3.2') >= 0,
-            'Common Plugin version 3.29.0 or later installed' => (
+            'Common Plugin version 3.29.1 or later installed' => (
                 phpListPlugin::isEnabled('CommonPlugin')
-                && version_compare($plugins['CommonPlugin']->version, '3.29.0') >= 0
+                && version_compare($plugins['CommonPlugin']->version, '3.29.1') >= 0
             ),
             'PHP version 7 or greater' => version_compare(PHP_VERSION, '7') > 0,
         );

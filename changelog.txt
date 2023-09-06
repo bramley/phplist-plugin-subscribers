@@ -1,3 +1,6 @@
+version 2.36.3+20230906
+      Use publicUrl() function
+
 version 2.36.2+20230821
       Use publicBaseUrl() function
 

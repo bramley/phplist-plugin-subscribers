@@ -45,6 +45,7 @@ This plugin is free but if you install and find it useful then a donation to sup
 ## Version history ##
 
     version     Description
+    2.36.3+20230906 Use publicUrl() function
     2.36.2+20230821 Use publicBaseUrl() function
     2.36.1+20230726 Correct processing when search term is a regex
     2.36.0+20230725 Treat search term as a regexp or literal text
