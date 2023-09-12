@@ -1,7 +1,7 @@
 <?php
 /**
  * SubscribersPlugin for phplist.
- * 
+ *
  * This file is a part of SubscribersPlugin.
  *
  * This plugin is free software: you can redistribute it and/or modify
@@ -12,7 +12,7 @@
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * @category  phplist
  *
  * @author    Duncan Cameron
@@ -22,7 +22,7 @@
 
 /**
  * This is the HTML template for the plugin page.
- * 
+ *
  * @category  phplist
  */
 
@@ -43,6 +43,6 @@
     </div>
     <div style='padding-top: 10px;'>
 <?php if (isset($listing)) echo $listing; ?>
-        <p><a href='#top'>[<?php echo $this->i18n->get('top'); ?>]</a></p>
+        <p><a href='#top'>[<?php echo s('top'); ?>]</a></p>
     </div>
 </div>

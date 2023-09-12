@@ -45,5 +45,5 @@
 <?php echo $listing; ?>
 <?php echo $command_link; ?>
     </div>
-        <p><a href='#top'>[<?php echo $this->i18n->get('top') ?>]</a></p>
+        <p><a href='#top'>[<?php echo s('top') ?>]</a></p>
 </div>

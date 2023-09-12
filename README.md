@@ -17,7 +17,7 @@ The plugin also provides a placeholder [LISTUNSUBSCRIBE] to remove a subscriber 
 
 This plugin requires phplist 3.3.2 or later and php version 7 or later.
 
-It also requires the Common Plugin version 3.29.0 or later to be installed.
+It also requires the Common Plugin version 3.29.1 or later to be installed.
 phplist now includes Common Plugin so you should need only to enable it on the Manage Plugins page.
 
 ### Install through phplist ###
@@ -45,6 +45,7 @@ This plugin is free but if you install and find it useful then a donation to sup
 ## Version history ##
 
     version     Description
+    2.37.0+20230912 Add Spanish translations, thanks to Adolfo M. Cagigal
     2.36.3+20230906 Use publicUrl() function
     2.36.2+20230821 Use publicBaseUrl() function
     2.36.1+20230726 Correct processing when search term is a regex

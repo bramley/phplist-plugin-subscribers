@@ -4,7 +4,7 @@ namespace phpList\plugin\SubscribersPlugin;
 
 /**
  * SubscribersPlugin for phplist.
- * 
+ *
  * This file is a part of SubscribersPlugin.
  *
  * This plugin is free software: you can redistribute it and/or modify
@@ -15,7 +15,7 @@ namespace phpList\plugin\SubscribersPlugin;
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * @category  phplist
  *
  * @author    Duncan Cameron
@@ -46,5 +46,5 @@ namespace phpList\plugin\SubscribersPlugin;
     echo $listing;
 } ?>
     </div>
-    <p><a href='#top'>[<?php echo $this->i18n->get('top'); ?>]</a></p>
+    <p><a href='#top'>[<?php echo s('top'); ?>]</a></p>
 </div>

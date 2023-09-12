@@ -1,3 +1,10 @@
+version 2.37.0+20230912
+Adolfo M. Cagigal (1):
+      Add Spanish translations
+
+      Bring English translation file up to date
+      Use s() function for translations in Common Plugin
+
 version 2.36.3+20230906
       Use publicUrl() function
 
