@@ -50,6 +50,7 @@ $lan = array(
     'Campaigns sent' => 'Campaigns sent',
     'Campaigns opened' => 'Campaigns opened',
     'Campaigns clicked' => 'Campaigns clicked',
+    'Copy results to command' => 'Copy results to command',
 /* Subscriber History page */
     'Show events' => 'Show events',
     'All' => 'All',
@@ -86,6 +87,7 @@ $lan = array(
     'Resend confirmation request' => 'Resend confirmation request',
     'Change subscribe page' => 'Change subscribe page',
     'Reset bounce count' => 'Reset bounce count',
+    'Empty attribute value' => 'Empty attribute value',
     'Copy/paste a list of email addresses, then click the Process button' => 'Copy/paste a list of email addresses, then click the Process button',
     'Process' => 'Process',
     'Or select a file of email addresses to upload, then click the Upload button' => 'Or select a file of email addresses to upload, then click the Upload button',
@@ -148,7 +150,9 @@ END
     'Subscribers who do not belong to a list' => 'Subscribers who do not belong to a list',
     'Unsubscribe reasons' => 'Unsubscribe reasons',
     'Bounce count' => 'Bounce count',
+    'Consecutive bounces' => 'Consecutive bounces',
     'Domain subscriber counts' => 'Domain subscriber counts',
+    'Subscribers who have not confirmed' => 'Subscribers who have not confirmed',
     'Run' => 'Run',
 /* Invalid subscribers */
     'All subscribers have a valid email address' => 'All subscribers have a valid email address',
