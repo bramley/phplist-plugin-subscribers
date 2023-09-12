@@ -33,7 +33,7 @@
 $lan = array(
     'plugin_title' => 'Plugin Suscriptores',
 /*  Menu items */
-    'Advanced search' => 'Busqueda Avanzada',
+    'Advanced search' => 'Búsqueda Avanzada',
     'Subscriber commands' => 'Comandos de suscriptores',
     'Subscriber reports' => 'Informes de suscriptores',
 /*  Advanced Search page */
@@ -67,7 +67,7 @@ $lan = array(
     'detail' => 'detalle',
     'IP address' => 'dirección IP',
 /*  Subscriptions page */
-    'period' => 'Periodo',
+    'period' => 'Período',
     'subscriptions' => 'Suscripciones',
     'unconfirmed' => 'No confirmado',
     'blacklisted' => 'En la Lista Negra',
@@ -91,16 +91,16 @@ $lan = array(
   	'Empty attribute value' => 'Vaciar valor de atributo',
     'Copy/paste a list of email addresses, then click the Process button' => 'Copiar/pegar una lista de direcciones de email, después hacer click en el botón Procesar',
     'Process' => 'Procesar',
-    'Or select a file of email addresses to upload, then click the Upload button' => 'O seleccione un fichero de direcciones de email para cargar, despues hacer click en el botón Subir',
+    'Or select a file of email addresses to upload, then click the Upload button' => 'O seleccione un fichero de direcciones de email para cargar, después hacer click en el botón Subir',
     'Upload' => 'Subir',
-    'Or enter a partial email address to be matched, then click the Match button' => 'O introduzca una dirección de email parcial para ser emparejada, despues hacer click en el botón Emparejar',
+    'Or enter a partial email address to be matched, then click the Match button' => 'O introduzca una dirección de email parcial para ser emparejada, después hacer click en el botón Emparejar',
     'Match' => 'Emparejar',
     'Confirm action and subscribers' => 'Confirmar acción y suscriptores',
     'Review the action and the email addresses, then click Apply or Cancel.' => 'Revisar la acción y las direcciones de email, después hacer click en Aplicar o Cancelar.',
     'Apply' => 'Aplicar',
     'Cancel' => 'Cancelar',
     'emails not entered' => 'emails no introducidos',
-    'no valid email addresses entered' => 'no se han introducido direcciones de email validas',
+    'no valid email addresses entered' => 'no se han introducido direcciones de email válidas',
     'error_match_not_entered' => 'se tiene que introducir una dirección de email parcial',
     'error_no_match' => 'No se han encontrado suscriptores emparejados por "%s"',
     'error_no_acceptable' => 'No se han encontrado suscriptores eligibles para la acción seleccionada',
@@ -122,7 +122,7 @@ $lan = array(
     'history_removed_all' => 'Eliminado de las listas %d',
     'history_subscribe_page' => 'Página de Suscripción cambiada de %d a %d',
     'result_blacklisted' => 'Suscriptores añadidos a la Lista Negra: %d',
-    'result_unblacklisted' => 'Suscriptores elinados de la Lista Negra: %d',
+    'result_unblacklisted' => 'Suscriptores eliminados de la Lista Negra: %d',
     'result_confirmed' => 'Suscriptores confirmados: %d',
     'result_unconfirmed' => 'Suscriptores desconfirmados: %d',
     'result_added' => 'Subscriptores añadidos a la lista "%s": %d',
@@ -135,7 +135,7 @@ $lan = array(
     'result_bounce_count' => 'Contador de Rebotes reseteado: %d',
     'result_empty_attribute' => 'Atributo "%s" vaciado para %d suscriptores',
     'Subscriber' => 'Suscriptor',
-    'Text to prepend to the confirmation request email' => 'Texto para anteponer al email de solicutud de confirmación',
+    'Text to prepend to the confirmation request email' => 'Texto para anteponer al email de solicitud de confirmación',
     'resend_prepend' => <<<'END'
 Lamentamos molestarle..
 Estamos realizando una limpieza de nuestra base de datos y aparece que usted se registro previamente en nuestra lista de correo y no confirmo su suscripción.
@@ -146,7 +146,7 @@ END
 /* Reports */
     'Subscriber history' => 'Historial del suscriptor',
     'Subscriptions' => 'Suscripciones',
-    'Subscribers with an invalid email address' => 'Suscriptores con una dirección de email invalida',
+    'Subscribers with an invalid email address' => 'Suscriptores con una dirección de email inválida',
     'Inactive subscribers' => 'Suscriptores Inactivos',
     'Subscribers who do not belong to a list' => 'Suscriptores que no pertenecen a una lista',
     'Unsubscribe reasons' => 'Razones para darse de baja',
@@ -156,15 +156,15 @@ END
   	'Subscribers who have not confirmed' => 'Suscriptores que no se han confirmado',
     'Run' => 'Ejecutar',
 /* Invalid subscribers */
-    'All subscribers have a valid email address' => 'Todos los suscriptores tienen una dirección de email valida',
+    'All subscribers have a valid email address' => 'Todos los suscriptores tienen una dirección de email válida',
 /* Inactive subscribers */
-    'Enter period of inactivity' => 'Introduzca el periodo de inactividad',
-    'Inactivity period' => 'Periodo de inactividad',
+    'Enter period of inactivity' => 'Introduzca el período de inactividad',
+    'Inactivity period' => 'Período de inactividad',
     'Number of campaigns' => 'Número de campañas',
     'Last view' => 'Ultima vista',
     'Recent campaigns' => 'Campañas recientes',
     'Total campaigns' => 'Total de Campañas',
-    "Invalid interval value '%s'" => "Valor de intervalo invalido '%s'",
+    "Invalid interval value '%s'" => "Valor de intervalo inválido '%s'",
 /* Subscribers who do not belong to a list */
     'All subscribers belong to at least one list' => 'Todos los suscriptores pertenecen al menos a una lista',
 /* Unsubscribe reasons */
