@@ -360,7 +360,7 @@ END;
             $attr_join
             $where";
 
-        return $this->dbCommand->queryOne($sql, 't');
+        return $this->dbCommand->queryOne($sql);
     }
 
     /**
@@ -381,7 +381,7 @@ FROM $tableName
 WHERE id IN ($cbgIds)
 END;
 
-        return $this->dbCommand->queryColumn($sql, 'name');
+        return $this->dbCommand->queryColumn($sql);
     }
 
     /**

@@ -76,6 +76,6 @@ class Event extends DAO
             JOIN {$this->tables['user']} u ON uh.userid = u.id
             $where";
 
-        return $this->dbCommand->queryOne($sql, 't');
+        return $this->dbCommand->queryOne($sql);
     }
 }

@@ -108,7 +108,7 @@ class Subscriptions extends DAO
             FROM {$this->tables['user']}
             WHERE YEAR(entered) > 0";
 
-        return $this->dbCommand->queryOne($sql, 't');
+        return $this->dbCommand->queryOne($sql);
     }
 
     /**

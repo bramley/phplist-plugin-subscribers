@@ -58,7 +58,7 @@ class Command extends DAO
             WHERE u.email $operator '%$pattern%'
             ";
 
-        return $this->dbCommand->queryColumn($sql, 'email');
+        return $this->dbCommand->queryColumn($sql);
     }
 
     public function allUsers()
