@@ -64,7 +64,7 @@ class CbgConverter extends \IteratorIterator implements \Countable
      *
      * @return int count() of the inner iterator
      */
-    public function count()
+    public function count(): int
     {
         return $this->getInnerIterator()->count();
     }
