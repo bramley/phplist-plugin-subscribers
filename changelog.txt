@@ -1,3 +1,8 @@
+version 2.37.1+20231212
+      Remove unnecessary parameter to queryOne() and queryColumn()
+      Avoid php warning about return type
+      Use namespaced names for Common plugin classes instead of PEAR names
+
 version 2.37.0+20230912
 Adolfo M. Cagigal (1):
       Add Spanish translations

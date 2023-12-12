@@ -45,6 +45,7 @@ This plugin is free but if you install and find it useful then a donation to sup
 ## Version history ##
 
     version     Description
+    2.37.1+20231212 Minor internal changes
     2.37.0+20230912 Add Spanish translations, thanks to Adolfo M. Cagigal
     2.36.3+20230906 Use publicUrl() function
     2.36.2+20230821 Use publicBaseUrl() function

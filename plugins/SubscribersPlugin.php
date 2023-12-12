@@ -192,7 +192,7 @@ class SubscribersPlugin extends phplistPlugin
      */
     public function activate()
     {
-        $i18n = new CommonPlugin_I18N($this);
+        $i18n = new phpList\plugin\Common\I18N($this);
         $this->pageTitles = array(
             'details' => $i18n->get('Advanced search'),
             'command' => $i18n->get('Subscriber commands'),
