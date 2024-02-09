@@ -1,3 +1,7 @@
+version 2.37.2+20240209
+      Ensure entered field is set when moving subscriber between lists
+      Don't update modified because it is updated automatically
+
 version 2.37.1+20231212
       Remove unnecessary parameter to queryOne() and queryColumn()
       Avoid php warning about return type

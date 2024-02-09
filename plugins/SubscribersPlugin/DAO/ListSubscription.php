@@ -60,8 +60,8 @@ END;
     {
         $query = <<<END
 INSERT IGNORE INTO {$this->tables['listuser']}
-(userid, listid, entered, modified)
-VALUES($userId, $listId, now(), now())
+(userid, listid, entered)
+VALUES($userId, $listId, now())
 END;
 
         return $this->dbCommand->queryAffectedRows($query);
