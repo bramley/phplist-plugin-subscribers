@@ -216,8 +216,8 @@ END;
 
         $sql = <<<END
             INSERT INTO {$this->tables['listuser']}
-            (listid, userid)
-            SELECT $toListId, $userId
+            (listid, userid, entered)
+            SELECT $toListId, $userId, NOW()
             FROM DUAL
             WHERE NOT EXISTS (
                 SELECT *
