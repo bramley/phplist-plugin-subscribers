@@ -5,6 +5,7 @@ namespace phpList\plugin\SubscribersPlugin\DAO;
 use phpList\plugin\Common\DAO;
 use phpList\plugin\Common\DAO\AttributeTrait;
 use phpList\plugin\Common\DAO\ListsTrait;
+use phpList\plugin\Common\DAO\ListUserTrait;
 use phpList\plugin\Common\DAO\UserTrait;
 
 /**
@@ -29,6 +30,7 @@ class Command extends DAO
 {
     use AttributeTrait;
     use ListsTrait;
+    use ListUserTrait;
     use UserTrait;
 
     public function __construct($db)
@@ -159,75 +161,6 @@ class Command extends DAO
 END;
 
         return $this->dbCommand->queryAll($sql);
-    }
-
-    public function isUserOnList($userId, $listId)
-    {
-        $sql =
-            "SELECT 1
-            FROM {$this->tables['listuser']}
-            WHERE userid = $userId AND listid = $listId
-            ";
-
-        return $this->dbCommand->queryOne($sql);
-    }
-
-    public function addToList($userId, $listId)
-    {
-        $sql =
-            "INSERT INTO {$this->tables['listuser']}
-            (userid, listid, entered)
-            VALUES($userId, $listId, now())
-            ";
-
-        return $this->dbCommand->queryAffectedRows($sql);
-    }
-
-    public function removeFromAllLists($userId)
-    {
-        $sql =
-            "DELETE
-            FROM {$this->tables['listuser']}
-            WHERE userid = $userId
-            ";
-
-        return $this->dbCommand->queryAffectedRows($sql);
-    }
-
-    public function removeFromList($userId, $listId)
-    {
-        $sql =
-            "DELETE
-            FROM {$this->tables['listuser']}
-            WHERE userid = $userId AND listid = $listId
-            ";
-
-        return $this->dbCommand->queryAffectedRows($sql);
-    }
-
-    public function moveBetweenLists($userId, $fromListId, $toListId)
-    {
-        $sql = <<<END
-            DELETE
-            FROM {$this->tables['listuser']}
-            WHERE userid = $userId AND listid = $fromListId
-END;
-        $removed = $this->dbCommand->queryAffectedRows($sql);
-
-        $sql = <<<END
-            INSERT INTO {$this->tables['listuser']}
-            (listid, userid, entered)
-            SELECT $toListId, $userId, NOW()
-            FROM DUAL
-            WHERE NOT EXISTS (
-                SELECT *
-                FROM {$this->tables['listuser']}
-                WHERE listid = $toListId AND userid = $userId
-            )
-END;
-        $added = $this->dbCommand->queryAffectedRows($sql);
-
-        return [$removed, $added];
     }
 
     public function subscribePages()

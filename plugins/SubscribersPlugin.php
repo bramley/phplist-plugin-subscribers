@@ -216,9 +216,9 @@ class SubscribersPlugin extends phplistPlugin
 
         return array(
             'phpList version 3.3.2 or later' => version_compare(VERSION, '3.3.2') >= 0,
-            'Common Plugin version 3.29.1 or later installed' => (
+            'Common Plugin version 3.33.0 or later installed' => (
                 phpListPlugin::isEnabled('CommonPlugin')
-                && version_compare($plugins['CommonPlugin']->version, '3.29.1') >= 0
+                && version_compare($plugins['CommonPlugin']->version, '3.33.0') >= 0
             ),
             'PHP version 7 or greater' => version_compare(PHP_VERSION, '7') > 0,
         );

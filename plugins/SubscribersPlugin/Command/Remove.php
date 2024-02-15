@@ -47,7 +47,7 @@ class Remove extends Base
 
     public function process(array $user)
     {
-        $this->dao->removeFromList($user['id'], $this->listId);
+        $this->dao->removeSubscriberFromList($user['id'], $this->listId);
         addUserHistory(
             $user['email'],
             Controller::IDENTIFIER,

@@ -22,6 +22,7 @@ namespace phpList\plugin\SubscribersPlugin\DAO;
 
 use phpList\plugin\Common\DAO as CommonDAO;
 use phpList\plugin\Common\DAO\ListsTrait;
+use phpList\plugin\Common\DAO\ListUserTrait;
 use phpList\plugin\Common\DAO\UserTrait;
 
 /**
@@ -30,6 +31,7 @@ use phpList\plugin\Common\DAO\UserTrait;
 class ListSubscription extends CommonDAO
 {
     use ListsTrait;
+    use ListUserTrait;
     use UserTrait;
 
     public function listsForSubscriberMessage($userId, $mId)
@@ -44,26 +46,5 @@ AND lu.userid = $userId
 END;
 
         return $this->dbCommand->queryAll($query);
-    }
-
-    public function removeSubscriberFromList($userId, $listId)
-    {
-        $query = <<<END
-DELETE FROM {$this->tables['listuser']}
-WHERE listid = $listId AND userid = $userId
-END;
-
-        return $this->dbCommand->queryAffectedRows($query);
-    }
-
-    public function addSubscriberToList($userId, $listId)
-    {
-        $query = <<<END
-INSERT IGNORE INTO {$this->tables['listuser']}
-(userid, listid, entered)
-VALUES($userId, $listId, now())
-END;
-
-        return $this->dbCommand->queryAffectedRows($query);
     }
 }

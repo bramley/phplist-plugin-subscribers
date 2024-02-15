@@ -47,7 +47,7 @@ class Add extends Base
 
     public function process(array $user)
     {
-        if (($rows = $this->dao->addToList($user['id'], $this->listId)) > 0) {
+        if (($rows = $this->dao->addSubscriberToList($user['id'], $this->listId)) > 0) {
             addUserHistory($user['email'], Controller::IDENTIFIER, $this->i18n->get('history_added', $this->listName));
 
             return true;
