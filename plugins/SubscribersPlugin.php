@@ -55,6 +55,7 @@ class SubscribersPlugin extends phplistPlugin
         'details' => array('category' => 'subscribers'),
         'command' => array('category' => 'subscribers'),
         'reports' => array('category' => 'subscribers'),
+        'history' => array('category' => 'subscribers'),
     );
     public $publicPages = array(self::LISTSUBSCRIBE_PAGE, self::UNSUBSCRIBE_PAGE);
     public $remotePages = [self::IMPORT2_PAGE];
@@ -197,6 +198,7 @@ class SubscribersPlugin extends phplistPlugin
             'details' => $i18n->get('Advanced search'),
             'command' => $i18n->get('Subscriber commands'),
             'reports' => $i18n->get('Subscriber reports'),
+            'history' => $i18n->get('Subscriber history'),
         );
         $this->subscribeLinkText = getConfig('subscribers_subscribelinktext');
         $this->unsubscribeLinkText = getConfig('subscribers_linktext');

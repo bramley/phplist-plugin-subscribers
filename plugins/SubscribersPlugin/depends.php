@@ -109,7 +109,7 @@ return [
             $container->get('phpList\plugin\SubscribersPlugin\DAO\Command')
         );
     },
-    'report_history' => function (ContainerInterface $container) {
+    'phpList\plugin\SubscribersPlugin\Controller\History' => function (ContainerInterface $container) {
         return new Controller\History(
             $container->get('phpList\plugin\SubscribersPlugin\Model\History')
         );
