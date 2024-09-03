@@ -45,6 +45,7 @@ This plugin is free but if you install and find it useful then a donation to sup
 ## Version history ##
 
     version     Description
+    2.39.1+20240904 Display a confirmation dialogue when unsubscribing from a list
     2.39.0+20240903 Send notification emails for list subscribe and list unsubscribe
     2.38.0+20240520 Add menu item to run the subscriber history report
     2.37.3+20240215 Use ListTrait trait in Common plugin for the listuser table

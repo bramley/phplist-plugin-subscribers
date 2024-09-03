@@ -119,7 +119,21 @@ class ListSubscription
         $this->displayResultPage($result, $uid);
     }
 
-    private function displayResultPage($result, $uid = '')
+    public function noAction()
+    {
+        $prompt = getConfig('subscribers_unsubscribe_prompt');
+        $js = <<<END
+<script type="text/javascript">
+
+    if (confirm("$prompt")) {
+        window.location = window.location.href + '&confirm=1';
+    }
+</script>
+END;
+        $this->displayResultPage('You have not been removed from the list', $uid, $js);
+    }
+
+    private function displayResultPage($result, $uid = '', $js = '')
     {
         global $pagedata, $PoweredBy;
 
@@ -134,6 +148,7 @@ class ListSubscription
         echo <<<END
     <title>$title</title>
     {$pagedata['header']}
+    $js
     <div class='note'>$r</div>
     <p>$preferences</p>
     $PoweredBy

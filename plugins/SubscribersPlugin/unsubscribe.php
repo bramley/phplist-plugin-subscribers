@@ -5,4 +5,10 @@ namespace phpList\plugin\SubscribersPlugin;
 require 'ListSubscription.php';
 
 $subscribe = new ListSubscription();
-$subscribe->messageUnsubscribe();
+$confirm = $_GET['confirm'] ?? 0;
+
+if ($confirm) {
+    $subscribe->messageUnsubscribe();
+} else {
+    $subscribe->noAction();
+}

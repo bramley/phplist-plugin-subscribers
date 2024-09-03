@@ -170,6 +170,13 @@ class SubscribersPlugin extends phplistPlugin
                 'allowempty' => false,
                 'category' => 'Subscription',
             ),
+            'subscribers_unsubscribe_prompt' => array(
+                'value' => s('You are about to be removed from the list. Continue?'),
+                'description' => s('Confirmation prompt for list unsubscribe'),
+                'type' => 'text',
+                'allowempty' => false,
+                'category' => 'Subscription',
+            ),
             'subscribers_attributes' => array(
                 'value' => s(''),
                 'description' => s('Additional attributes for the list subscribe and list unsubscribe html &lt;a> elements'),

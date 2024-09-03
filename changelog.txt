@@ -1,3 +1,6 @@
+version 2.39.1+20240904
+      Display a confirmation dialogue when unsubscribing from a list
+
 version 2.39.0+20240903
       Send notification emails for list subscribe and list unsubscribe
       CS fixer
