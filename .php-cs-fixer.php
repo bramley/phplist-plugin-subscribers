@@ -2,6 +2,7 @@
 
 $finder = PhpCsFixer\Finder::create()
     ->exclude('plugins/SubscribersPlugin/view')
+    ->exclude('plugins/SubscribersPlugin/lan')
     ->in(__DIR__)
 ;
 $config = new PhpCsFixer\Config();
@@ -24,6 +25,8 @@ return $config->setRules([
         'visibility_required' => false,
         'phpdoc_to_comment' => false,
         'global_namespace_import' => false,
+        'nullable_type_declaration_for_default_null_value' => false,
+        'fully_qualified_strict_types' => false,
     ])
     ->setFinder($finder)
 ;

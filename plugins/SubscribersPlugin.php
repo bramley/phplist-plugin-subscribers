@@ -157,25 +157,25 @@ class SubscribersPlugin extends phplistPlugin
         $this->coderoot = dirname(__FILE__) . '/' . self::PLUGIN . '/';
         $this->settings = array(
             'subscribers_subscribelinktext' => array(
-              'value' => s('Subscribe'),
-              'description' => s('The text of the list subscribe link'),
-              'type' => 'text',
-              'allowempty' => false,
-              'category' => 'Subscription',
+                'value' => s('Subscribe'),
+                'description' => s('The text of the list subscribe link'),
+                'type' => 'text',
+                'allowempty' => false,
+                'category' => 'Subscription',
             ),
             'subscribers_linktext' => array(
-              'value' => s('Unsubscribe from this list'),
-              'description' => s('The text of the list unsubscribe link'),
-              'type' => 'text',
-              'allowempty' => false,
-              'category' => 'Subscription',
+                'value' => s('Unsubscribe from this list'),
+                'description' => s('The text of the list unsubscribe link'),
+                'type' => 'text',
+                'allowempty' => false,
+                'category' => 'Subscription',
             ),
             'subscribers_attributes' => array(
-              'value' => s(''),
-              'description' => s('Additional attributes for the list subscribe and list unsubscribe html &lt;a> elements'),
-              'type' => 'text',
-              'allowempty' => true,
-              'category' => 'Subscription',
+                'value' => s(''),
+                'description' => s('Additional attributes for the list subscribe and list unsubscribe html &lt;a> elements'),
+                'type' => 'text',
+                'allowempty' => true,
+                'category' => 'Subscription',
             ),
         );
         parent::__construct();
