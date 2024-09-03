@@ -33,6 +33,7 @@ class ListSubscription
             return;
         }
         $listId = $_GET['list'];
+        $mid = $_GET['m'] ?? '';
 
         if (!($user = $this->dao->userByUniqid($uid))) {
             $this->displayResultPage($this->translator->s('Unknown uid %s', $uid), '');
@@ -58,6 +59,8 @@ class ListSubscription
                 'Added to list',
                 "Added to list '$listName'"
             );
+            $subject = sprintf('List subscription through campaign %s', $mid);
+            sendAdminCopy($subject, $body, [$listId]);
         } else {
             $body = $this->translator->s('Subscriber %s already belongs to list %s', $email, $listName);
         }
@@ -88,13 +91,15 @@ class ListSubscription
         }
         $userId = $row['id'];
         $email = $row['email'];
-        $removed = array();
+        $removed = [];
+        $removedIds = [];
 
         foreach ($this->dao->listsForSubscriberMessage($userId, $mid) as $row) {
             $count = $this->dao->removeSubscriberFromList($userId, $row['listid']);
 
             if ($count > 0) {
                 $removed[] = $row['name'];
+                $removedIds[] = $row['listid'];
                 addUserHistory(
                     $email,
                     'Removed from list',
@@ -106,6 +111,8 @@ class ListSubscription
         if (count($removed) > 0) {
             $joined = implode(', ', $this->wrapInQuotes($removed));
             $result = $this->translator->s('Subscriber %s has been removed from %s', $email, $joined);
+            $subject = sprintf('List unsubscription through campaign %d', $mid);
+            sendAdminCopy($subject, $result, $removedIds);
         } else {
             $result = $this->translator->s('Subscriber %s has not been removed from any lists', $email);
         }

@@ -70,13 +70,14 @@ class SubscribersPlugin extends phplistPlugin
         return sprintf('<a href="%s" %s>%s</a>', htmlspecialchars($url), $attributes, htmlspecialchars($linkText));
     }
 
-    private function listSubscribeUrl($listId, $uid)
+    private function listSubscribeUrl($listId, $uid, $messageId)
     {
         $params = array(
             'p' => self::LISTSUBSCRIBE_PAGE,
             'pi' => self::PLUGIN,
             'uid' => $uid,
             'list' => $listId,
+            'm' => $messageId,
         );
 
         return publicUrl($params);
@@ -246,15 +247,15 @@ class SubscribersPlugin extends phplistPlugin
 
         $result = $this->replacePlaceholders(
             $content,
-            function (array $matches) use ($userdata) {
+            function (array $matches) use ($userdata, $messageid) {
                 return $this->link(
                     $this->subscribeLinkText,
-                    $this->listSubscribeUrl($matches[1], $userdata['uniqid']),
+                    $this->listSubscribeUrl($matches[1], $userdata['uniqid'], $messageid),
                     $this->attributes
                 );
             },
-            function (array $matches) use ($userdata) {
-                return htmlspecialchars($this->listSubscribeUrl($matches[1], $userdata['uniqid']));
+            function (array $matches) use ($userdata, $messageid) {
+                return htmlspecialchars($this->listSubscribeUrl($matches[1], $userdata['uniqid'], $messageid));
             },
             $this->link($this->unsubscribeLinkText, $unsubscribeUrl, $this->attributes),
             htmlspecialchars($unsubscribeUrl)
@@ -282,13 +283,13 @@ class SubscribersPlugin extends phplistPlugin
         $unsubscribeUrl = $this->unsubscribeUrl($messageid, $userdata['uniqid']);
         $result = $this->replacePlaceholders(
             $content,
-            function (array $matches) use ($userdata) {
-                $subscribeUrl = $this->listSubscribeUrl($matches[1], $userdata['uniqid']);
+            function (array $matches) use ($userdata, $messageid) {
+                $subscribeUrl = $this->listSubscribeUrl($matches[1], $userdata['uniqid'], $messageid);
 
                 return "$this->subscribeLinkText $subscribeUrl";
             },
-            function (array $matches) use ($userdata) {
-                return $this->listSubscribeUrl($matches[1], $userdata['uniqid']);
+            function (array $matches) use ($userdata, $messageid) {
+                return $this->listSubscribeUrl($matches[1], $userdata['uniqid'], $messageid);
             },
             "$this->unsubscribeLinkText $unsubscribeUrl",
             $unsubscribeUrl
