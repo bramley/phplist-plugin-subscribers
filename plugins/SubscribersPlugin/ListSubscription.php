@@ -121,7 +121,8 @@ class ListSubscription
 
     public function noAction()
     {
-        $prompt = getConfig('subscribers_unsubscribe_prompt');
+        $uid = $_GET['uid'];
+        $prompt = str_replace('"', '\"', getConfig('subscribers_unsubscribe_prompt'));
         $js = <<<END
 <script type="text/javascript">
 
