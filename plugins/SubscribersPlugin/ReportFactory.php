@@ -23,7 +23,6 @@ namespace phpList\plugin\SubscribersPlugin;
 class ReportFactory
 {
     private $reports = [
-        'history' => ['params' => ['report' => 'history'], 'caption' => 'Subscriber history'],
         'subscriptions' => ['params' => ['report' => 'subscriptions'], 'caption' => 'Subscriptions'],
         'invalid' => ['params' => ['report' => 'invalid'], 'caption' => 'Subscribers with an invalid email address'],
         'inactive' => ['params' => ['report' => 'inactive'], 'caption' => 'Inactive subscribers'],
