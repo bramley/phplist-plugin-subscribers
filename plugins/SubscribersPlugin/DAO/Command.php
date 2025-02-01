@@ -63,14 +63,36 @@ class Command extends DAO
         return $this->dbCommand->queryColumn($sql);
     }
 
+    /**
+     * Query for all subscribers.
+     * To avoid possible problems with large number of subscribers limit the size of the result set which may
+     * mean executing several queries.
+     *
+     * @return \Generator
+     */
     public function allUsers()
     {
-        $sql =
-            "SELECT email, id, confirmed, blacklisted
-            FROM {$this->tables['user']} u
-            ";
+        $start = 0;
+        $chunk = 50000;
 
-        return $this->dbCommand->queryAll($sql);
+        while (true) {
+            $sql = <<<END
+                SELECT email, id, confirmed, blacklisted
+                FROM {$this->tables['user']} u
+                ORDER BY id
+                LIMIT $start, $chunk
+END;
+            $result = $this->dbCommand->queryAll($sql);
+
+            if ($result->count() == 0) {
+                return;
+            }
+
+            foreach ($result as $row) {
+                yield $row;
+            }
+            $start += $chunk;
+        }
     }
 
     public function totalUsers()
