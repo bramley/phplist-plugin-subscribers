@@ -45,6 +45,7 @@ This plugin is free but if you install and find it useful then a donation to sup
 ## Version history ##
 
     version     Description
+    2.40.0+20250202 Improve performance when there is a large number of subscribers
     2.39.3+20250107 Remove the Subscriber History report from the Subscriber reports page
     2.39.2+20240904 Restore use of $_GET['uid'], escape prompt for javascript
     2.39.1+20240904 Display a confirmation dialogue when unsubscribing from a list

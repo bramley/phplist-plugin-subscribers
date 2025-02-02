@@ -1,3 +1,9 @@
+version 2.40.0+20250202
+      Improve performance of selecting all subscribers when there is a large number of subscribers
+      Improve exporting of large number of subscribers
+      Revise code comments
+      Revise dependencies
+
 version 2.39.3+20250107
       Remove the Subscriber History report from the Subscriber reports page
 
