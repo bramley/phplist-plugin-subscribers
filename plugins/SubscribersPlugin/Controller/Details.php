@@ -3,6 +3,7 @@
 namespace phpList\plugin\SubscribersPlugin\Controller;
 
 use phpList\plugin\Common\Controller;
+use phpList\plugin\Common\CountableIterator;
 use phpList\plugin\Common\IExportable;
 use phpList\plugin\Common\ImageTag;
 use phpList\plugin\Common\IPopulator;
@@ -112,9 +113,33 @@ class Details extends Controller implements IPopulator, IExportable
         return 'subscribers';
     }
 
+    /**
+     * To avoid potential problem with large number of subscribers uses a generator to return results
+     * from consecutive queries.
+     *
+     * @return CountableIterator
+     */
     public function exportRows()
     {
-        return $this->model->users();
+        $rowsGenerator = function () {
+            $start = 0;
+            $chunk = 50000;
+
+            while (true) {
+                $result = $this->model->users($start, $chunk);
+
+                if ($result->count() == 0) {
+                    return;
+                }
+
+                foreach ($result as $row) {
+                    yield $row;
+                }
+                $start += $chunk;
+            }
+        };
+
+        return new CountableIterator($rowsGenerator(), $this->model->totalUsers());
     }
 
     public function exportFieldNames()
