@@ -12,7 +12,7 @@
 /**
  * Class to convert checkbox group attribute values from id to name.
  *
- * It wraps a DBResultIterator overriding the current() method to convert the
+ * It wraps a CountableIterator overriding the current() method to convert the
  * user attribute value to a list of names.
  */
 

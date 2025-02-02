@@ -299,7 +299,7 @@ END;
      * Find subscribers who have subscribed but not confirmed.
      * Choose those who have only Subscription or Re-Subscription records in the user history.
      *
-     * @return DBResultIterator
+     * @return CountableIterator
      */
     public function notConfirmed()
     {
