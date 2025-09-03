@@ -1,19 +1,4 @@
 <?php
-
-namespace phpList\plugin\SubscribersPlugin\Controller;
-
-use phpList\plugin\Common\Controller;
-use phpList\plugin\Common\CountableIterator;
-use phpList\plugin\Common\IExportable;
-use phpList\plugin\Common\ImageTag;
-use phpList\plugin\Common\IPopulator;
-use phpList\plugin\Common\Listing;
-use phpList\plugin\Common\PageLink;
-use phpList\plugin\Common\PageURL;
-use phpList\plugin\Common\Toolbar;
-use phpList\plugin\Common\Widget;
-use phpList\plugin\SubscribersPlugin\Model\Details as Model;
-
 /**
  * SubscribersPlugin for phplist.
  *
@@ -34,6 +19,21 @@ use phpList\plugin\SubscribersPlugin\Model\Details as Model;
  * @copyright 2011-2017 Duncan Cameron
  * @license   http://www.gnu.org/licenses/gpl.html GNU General Public License, Version 3
  */
+
+namespace phpList\plugin\SubscribersPlugin\Controller;
+
+use phpList\plugin\Common\ChunkedResultIterator;
+use phpList\plugin\Common\Controller;
+use phpList\plugin\Common\CountableIterator;
+use phpList\plugin\Common\IExportable;
+use phpList\plugin\Common\ImageTag;
+use phpList\plugin\Common\IPopulator;
+use phpList\plugin\Common\Listing;
+use phpList\plugin\Common\PageLink;
+use phpList\plugin\Common\PageURL;
+use phpList\plugin\Common\Toolbar;
+use phpList\plugin\Common\Widget;
+use phpList\plugin\SubscribersPlugin\Model\Details as Model;
 
 /**
  * This class is the controller for the plugin providing the action methods
@@ -121,25 +121,11 @@ class Details extends Controller implements IPopulator, IExportable
      */
     public function exportRows()
     {
-        $rowsGenerator = function () {
-            $start = 0;
-            $chunk = 50000;
+        $rows = new ChunkedResultIterator(50000, function ($start, $chunk) {
+            return $this->model->users($start, $chunk);
+        });
 
-            while (true) {
-                $result = $this->model->users($start, $chunk);
-
-                if ($result->count() == 0) {
-                    return;
-                }
-
-                foreach ($result as $row) {
-                    yield $row;
-                }
-                $start += $chunk;
-            }
-        };
-
-        return new CountableIterator($rowsGenerator(), $this->model->totalUsers());
+        return new CountableIterator($rows, $this->model->totalUsers());
     }
 
     public function exportFieldNames()

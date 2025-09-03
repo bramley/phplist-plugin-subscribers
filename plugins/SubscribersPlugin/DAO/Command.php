@@ -1,13 +1,4 @@
 <?php
-
-namespace phpList\plugin\SubscribersPlugin\DAO;
-
-use phpList\plugin\Common\DAO;
-use phpList\plugin\Common\DAO\AttributeTrait;
-use phpList\plugin\Common\DAO\ListsTrait;
-use phpList\plugin\Common\DAO\ListUserTrait;
-use phpList\plugin\Common\DAO\UserTrait;
-
 /**
  * SubscribersPlugin for phplist.
  *
@@ -26,6 +17,17 @@ use phpList\plugin\Common\DAO\UserTrait;
  * @copyright 2011-2017 Duncan Cameron
  * @license   http://www.gnu.org/licenses/gpl.html GNU General Public License, Version 3
  */
+
+namespace phpList\plugin\SubscribersPlugin\DAO;
+
+use phpList\plugin\Common\ChunkedResultIterator;
+use phpList\plugin\Common\CountableIterator;
+use phpList\plugin\Common\DAO;
+use phpList\plugin\Common\DAO\AttributeTrait;
+use phpList\plugin\Common\DAO\ListsTrait;
+use phpList\plugin\Common\DAO\ListUserTrait;
+use phpList\plugin\Common\DAO\UserTrait;
+
 class Command extends DAO
 {
     use AttributeTrait;
@@ -68,31 +70,22 @@ class Command extends DAO
      * To avoid possible problems with large number of subscribers limit the size of the result set which may
      * mean executing several queries.
      *
-     * @return \Generator
+     * @return \Iterator
      */
     public function allUsers()
     {
-        $start = 0;
-        $chunk = 50000;
-
-        while (true) {
+        $iterator = new ChunkedResultIterator(50000, function ($start, $chunk) {
             $sql = <<<END
                 SELECT email, id, confirmed, blacklisted
                 FROM {$this->tables['user']} u
                 ORDER BY id
                 LIMIT $start, $chunk
 END;
-            $result = $this->dbCommand->queryAll($sql);
 
-            if ($result->count() == 0) {
-                return;
-            }
+            return $this->dbCommand->queryAll($sql);
+        });
 
-            foreach ($result as $row) {
-                yield $row;
-            }
-            $start += $chunk;
-        }
+        return new CountableIterator($iterator, $this->totalUsers());
     }
 
     public function totalUsers()

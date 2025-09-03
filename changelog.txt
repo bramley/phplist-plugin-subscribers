@@ -1,3 +1,6 @@
+version 2.40.1+20250903
+      Use utility class for chunked result
+
 version 2.40.0+20250202
       Improve performance of selecting all subscribers when there is a large number of subscribers
       Improve exporting of large number of subscribers
