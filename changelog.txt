@@ -1,3 +1,7 @@
+version 2.41.0+20260126
+      Add attribute columns to list member and users pages
+      Remove obsolete dependencies
+
 version 2.40.1+20250903
       Use utility class for chunked result
 

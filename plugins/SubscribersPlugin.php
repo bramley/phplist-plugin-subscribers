@@ -224,14 +224,12 @@ class SubscribersPlugin extends phplistPlugin
     {
         global $plugins;
 
-        return array(
-            'phpList version 3.3.2 or later' => version_compare(VERSION, '3.3.2') >= 0,
+        return [
             'Common Plugin version 3.35.0 or later installed' => (
                 phpListPlugin::isEnabled('CommonPlugin')
                 && version_compare($plugins['CommonPlugin']->version, '3.35.0') >= 0
             ),
-            'PHP version 7 or greater' => version_compare(PHP_VERSION, '7') > 0,
-        );
+        ];
     }
 
     /**
@@ -308,9 +306,9 @@ class SubscribersPlugin extends phplistPlugin
     /**
      * Add columns of attribute values to the users and list members pages.
      *
-     * @param array          $user  user data
-     * @param string         $rowId the message content
-     * @param WebblerListing $ls    Webbler listing
+     * @param array          $user
+     * @param string         $rowId
+     * @param WebblerListing $ls
      */
     public function displayUsers($user, $rowId, $ls)
     {
