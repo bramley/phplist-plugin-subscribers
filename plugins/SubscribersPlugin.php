@@ -304,4 +304,30 @@ class SubscribersPlugin extends phplistPlugin
 
         return $result;
     }
+
+    /**
+     * Add columns of attribute values to the users and list members pages.
+     *
+     * @param array          $user  user data
+     * @param string         $rowId the message content
+     * @param WebblerListing $ls    Webbler listing
+     */
+    public function displayUsers($user, $rowId, $ls)
+    {
+        static $attributes, $selectedAttributes;
+
+        if (is_null($attributes)) {
+            $depends = require $this->coderoot . 'depends.php';
+            $container = new \phpList\plugin\Common\Container($depends);
+            $attributeDAO = $container->get('phpList\plugin\Common\DAO\Attribute');
+            $attributes = $attributeDAO->attributesById(20);
+            $model = $container->get('phpList\plugin\SubscribersPlugin\Model\Details');
+            $selectedAttributes = $model->selectedAttrs;
+        }
+
+        foreach ($selectedAttributes as $attributeId) {
+            $value = UserAttributeValue($user['id'], $attributeId);
+            $ls->addColumn($rowId, $attributes[$attributeId]['name'], $value);
+        }
+    }
 }
