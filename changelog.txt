@@ -1,3 +1,6 @@
+version 2.41.1+20260516
+      On Commands page group lists by category
+
 version 2.41.0+20260126
       Add attribute columns to list member and users pages
       Remove obsolete dependencies

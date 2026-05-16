@@ -225,9 +225,9 @@ class SubscribersPlugin extends phplistPlugin
         global $plugins;
 
         return [
-            'Common Plugin version 3.35.0 or later installed' => (
+            'Common Plugin version 3.35.3 or later installed' => (
                 phpListPlugin::isEnabled('CommonPlugin')
-                && version_compare($plugins['CommonPlugin']->version, '3.35.0') >= 0
+                && version_compare($plugins['CommonPlugin']->version, '3.35.3') >= 0
             ),
         ];
     }
