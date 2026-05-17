@@ -22,6 +22,8 @@ namespace phpList\plugin\SubscribersPlugin\Command;
 
 use CHtml;
 
+use function phpList\plugin\Common\listDataByCategory;
+
 /**
  *  This is the parent class for the command classes.
  */
@@ -34,12 +36,10 @@ abstract class Base
 
     protected function listsDropDown($selected, $fieldId, $disabled)
     {
-        $group = getConfig('list_categories') ? 'category' : '';
-
         return CHtml::dropDownList(
             sprintf('additional[command][%d][%s]', $this->commandId, $fieldId),
             $selected,
-            CHtml::listData($this->dao->listsForOwner(null), 'id', 'name', $group),
+            listDataByCategory($this->dao->listsForOwner(null)),
             ['disabled' => $disabled]
         );
     }

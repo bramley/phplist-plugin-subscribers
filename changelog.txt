@@ -1,3 +1,6 @@
+version 2.41.2+20260517
+      Use common function to order lists by category
+
 version 2.41.1+20260516
       On Commands page group lists by category
 

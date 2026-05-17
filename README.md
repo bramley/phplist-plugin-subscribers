@@ -45,6 +45,7 @@ This plugin is free but if you install and find it useful then a donation to sup
 ## Version history ##
 
     version     Description
+    2.41.2+20260517 Use common function to order lists by category
     2.41.1+20260516 On Commands page group lists by category
     2.41.0+20260126 Add attribute columns to list member and users pages
     2.40.1+20250903 Code refactoring
